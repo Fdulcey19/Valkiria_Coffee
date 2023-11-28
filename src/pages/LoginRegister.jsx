@@ -3,7 +3,14 @@ import logo from "../assets/images/logo.png";
 import viper from "../assets/images/viper.png";
 import chapola from "../assets/images/chapola.png";
 
+import { LoginSocialFacebook } from "reactjs-social-login";
+import { FacebookLoginButton } from "react-social-login-buttons";
+import { useState } from "react";
+
 function LoginRegister() {
+ 
+    const [profile, setProfile] = useState(null);
+   
   return (
     <>
       <body className="login" style={{ height: "100vh" }}>
@@ -73,8 +80,33 @@ function LoginRegister() {
                     <img src={logo} alt="" />
                   </div>
                   </div>
+                  <div>
+      {!profile ? (
+        <LoginSocialFacebook
+          appId="1349175712656406"
+          onResolve={(response) => {
+            console.log(response);
+            setProfile(response.data);
+          }}
+          onReject={(error) => {
+            console.log(error);
+          }}
+        >
+          <FacebookLoginButton />
+        </LoginSocialFacebook>
+      ) : (
+        ""
+      )}
 
-                  
+      {profile ? (
+        <div>
+          <h1>{profile.name}</h1>
+          <img src={profile.picture.data.url} />
+        </div>
+      ) : (
+        ""
+      )}
+    </div>
                   <form action="#">
                     <div className="mb-4">
                       <label
@@ -116,7 +148,7 @@ function LoginRegister() {
 
                     <div className="d-grid">
                       <Link
-                        to="/dash"
+                       
                         type="submit"
                         className="btn btn-inicio-sesion text-white fs-6"
                       >
