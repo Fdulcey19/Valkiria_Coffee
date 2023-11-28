@@ -1,0 +1,850 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+}
+:root {
+    /* Colors */
+    --body-color: #eae8e8;
+    --sidebar-color: #FFFFFF;
+    --White-color: #FFFFFF;
+    --primary-color: #0A0A0B;
+    --secondary-color: #3a3a3f;
+    --primary-color-light: #e5e6e8;
+    --togle-color: #DDD;
+    --text-color: #3A3A3F;
+    --green-color: #00B74A;
+
+    --primary-gradient: linear-gradient(90deg, rgba(130,132,142,1) 0%, rgba(88,89,98,1) 55%);
+    --secondary-gradient: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 64%);
+
+    
+    /* Transitions */
+  
+    --tran-02: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+
+    /* Box Shadow */
+
+    --primary-box-shadow: 10px 10px 30px 0px rgba(0, 0, 0, 0.75);
+    --secondary-box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.57);
+    --dow-box-shadow: 15px 13px 19px -6px rgba(0, 0, 0, 0.12);
+  }
+
+  
+.login {
+  margin-top: 0px;
+  background: url('../images/Ilustraciones/Vector2-03.png') no-repeat, url('../images/Ilustraciones/Vector1-02.png') no-repeat;
+  background-size: contain;
+}
+
+.login .name{
+  font-size: 40px;
+  font-weight: 700;
+  padding-top: 60px;
+}
+
+.btn-login {
+  background: var(--primary-gradient);
+  color: var(--primary-color-light);
+}
+
+.btn-inicio-sesion{
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.btn-inicio-sesion:hover {
+  background: var(--primary-gradient);
+    color: white;
+  scale: 1.01;
+}
+
+.text-1{
+    color: var(--primary-color);
+}
+
+.text-login{
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+.small-placeholder::placeholder {
+    font-size: 12px; /* Tamaño de fuente del placeholder */
+  }
+
+.login .logo img{
+    min-width: 50px;
+    max-width: 250px;
+    margin-bottom: 50px;
+}
+
+.login-form{
+  margin-top: 80px;
+}
+
+
+.logos{
+  position: absolute;
+  top: 65%;
+}
+
+.logos .images img{
+  position: absolute;
+  width:150px;
+}
+
+
+.logos .logo-2 img{
+  padding-top: 40px;
+  top: 20%;
+  width: 200px;
+  left: 200px;
+}
+/* Ola Css */
+
+
+
+/* Sidebar */
+
+.body_inicio {
+  height: 100vh;
+  background-color: var(--body-color);
+}
+
+
+/* === Resuable Css === */
+.sidebar.close {
+  width: 85px;
+}
+
+.sidebar.close .text{
+  opacity: 0;
+}
+
+.sidebar .text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: var(--tran-02);
+  white-space: nowrap;
+  opacity: 1;
+}
+
+.sidebar .image {
+  min-width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Sidebar === */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px;
+  padding: 10px 14px;
+  background-color: var(--sidebar-color);
+  transition: var(--tran-05);
+  z-index: 100;
+}
+
+
+.sidebar li {
+  height: 50px;
+  margin-top: 10px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar li .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  font-size: 20px;
+}
+
+.sidebar li .icon,
+.sidebar li .text {
+  color: var(--text-color);
+  transition: var(--tran-02);
+}
+
+.sidebar header {
+  position: relative;
+}
+
+.sidebar .img-text img {
+  width: 60px;
+  border-radius: 6px;
+}
+
+.sidebar header .img-text {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+header .image-text .header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-text .name {
+  font-weight: 700px;
+  font-size: 20px;
+  margin-left: 35px;
+}
+
+
+.sidebar header .toggle {
+  position: absolute;
+  top: 50%;
+  right: -25px;
+  height: 25px;
+  width: 25px;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--sidebar-color);
+  font-size: 22px;
+  transform: translateY(-50%) rotate(180dg);
+  transition: var(--tran-03);
+}
+.sidebar.close header .toggle{
+  transform: translateY(-50%);
+}
+.sidebar ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.sidebar .search-box {
+  background: var(--primary-color-light);
+  border-radius: 6px;
+}
+
+.sidebar .search-box input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+}
+.sidebar .search-box input:hover{
+  background: var(--primary-color);
+  transition: var(--tran-04);
+}
+.sidebar li a {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: var(--tran-04);
+}
+
+.sidebar li a:hover {
+  background-color: var(--primary-color);
+}
+
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text {
+  color: var(--sidebar-color);
+}
+
+.sidebar .menu{
+  margin-top: 25px;
+}
+
+.sidebar .menu-bar{
+  height: calc(100% - 30px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ======================================================================================== */
+/* ==============            HOME            ================ */
+/* ======================================================================================== */
+.home{
+  background-color: var(--primary-color-light);
+  height: calc(100vh - 50px);
+  left: 250px;
+  width: calc(100% - 250px);
+  position: relative;
+  transition: var(--tran-05);
+  background: var(--body-color);
+  padding: 20px 40px;
+  overflow-x: auto; 
+}
+.home .text{
+  font-size: 25px;
+  font-weight: 500;
+  color: var(--text-color);
+  padding: 20px 40px;
+  
+}
+.sidebar .close  ~ .home{
+  left: 85px;
+  width: calc(100% - 85px);
+}
+
+/* ======================================================================================== */
+/* ==============            NAV BAR            ================ */
+/* ======================================================================================== */
+
+.NavContain{
+  position: relative;
+  top: 0;
+  height: 50px;
+  width: 100%;
+}
+
+.Vector{
+  position: absolute;
+  top: 0;
+  left: calc(100% - 301px);
+  height: 50px;
+  width: 300px;
+}
+
+.LogOut{
+  position: absolute;
+  top: 20%;
+  left: calc(100% - 170px);
+  height: 28px;
+  width: 150px;
+  border-radius: 30px;
+  background: var(--primary-color-light);
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+.LogOut:hover{
+  background: var(--primary-color);
+  color: var(--primary-color-light);
+  transition: var(--tran-04);
+  scale: 1.1;
+}
+
+/* ======================================================================================== */
+/* ==============            CONTENIDO BODY (PRECIO PERGAMINO)            ================ */
+/* ======================================================================================== */
+
+.precio-pergamino{
+    background: var(--White-color);
+    height: 120px;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    box-shadow: var(--secondary-box-shadow);
+}
+
+.precio-pergamino .text{
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.precio-pergamino .subtitulo{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color);
+    position: absolute;
+    top: 0;
+}
+
+.precio-pergamino .precio{
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--text-color);
+    position: absolute;
+    top: 25%;
+}
+
+.precio-pergamino .hora {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-color);
+    position: absolute;
+    top: 10%;
+    left: calc(100% - 190px);
+    display: flex;
+    width: 250px;
+    z-index: 100;
+  }
+
+.precio-pergamino .button-reload{
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--primary-color-light);
+    position: absolute;
+    top: 45%;
+    left: calc(100% - 160px);
+    border-radius: 20px;
+    padding: 5px 25px;
+    background: var(--primary-color);
+    border: 0px solid var(--text-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.precio-pergamino .button-reload i{
+    margin-left: 5px;
+}
+
+.precio-pergamino .button-reload:hover{
+    background: var(--primary-color);
+    transition: var(--tran-04);
+    scale: 1.1;
+}
+
+/* ======================================================================================== */
+/* ==============           PRECIO INDICADORES (LATERAL)            ================ */
+/* ======================================================================================== */
+
+.container-indicadores {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: column;
+    height: 550px;
+    background-color: var(--White-color);
+    border-radius: 20px;
+    padding: 0;
+    margin: 10px 0px;
+    box-shadow: var(--primary-box-shadow);
+    position: relative;
+  }
+
+ .fondo{
+    position: absolute;
+    top: 34%;
+    left: 15%;
+    width:45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 20%;
+  }
+  
+  
+  .container-indicadores .indicador {
+    background-color: var(--White-color);
+    height: 120px;
+    min-width: 80%;
+    border-radius: 20px;
+    padding: 0;
+    margin: 20px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    box-shadow: var(--dow-box-shadow);
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .container-indicadores .indicador .text {
+    font-size: 14px; 
+    font-weight: 400;
+    color: var(--text-color);
+    padding: 0;
+    margin: 0;
+  }
+
+  .container-indicadores .indicador .subtitulo{
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    font-weight: 700;
+  }
+
+  .container-indicadores .indicador .precio{
+    position: absolute;
+    top: 40px;
+    left: 30px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .container-indicadores .indicador .img{
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    max-width: 60px;
+    padding: 5px 10px;
+    background: var(--White-color);
+    box-shadow: var(--dow-box-shadow);
+    border-radius: 12px;
+  }
+
+  .container-indicadores .indicador .vermas{
+    position: absolute;
+    top: calc(100% - 40px);
+    left: 38%;
+  }
+
+  .container-indicadores .indicador .vermas a{
+    color: var(--primary-color);
+    font-size: 14px;
+  }
+
+  .container-indicadores .button-reload{
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--primary-color-light);
+    position: absolute;
+    top: calc(100% - 50px);
+    border-radius: 20px;
+    padding: 5px 25px;
+    background: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-indicadores .button-reload i{
+    margin-left: 5px;
+}
+
+.container-indicadores .button-reload:hover{
+    background: var(--primary-color);
+    transition: var(--tran-04);
+    scale: 1.1;
+}
+
+
+/* ======================================================================================== */
+/* ==============            PRECIO MERCADO            ================ */
+/* ======================================================================================== */
+
+
+.precio-mercado{
+    height: 100px;
+    width: 98%;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.precio-diferencia{
+  margin-top: 40px;
+}
+
+.precio-mercado .contenedores{
+  background: var(--White-color);
+  height: 60px;
+  width: 47%;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: var(--dow-box-shadow);
+}
+
+.precio-mercado .contenedores .text{
+  position: absolute;
+  top: -50px;
+  left: -40px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.precio-mercado .contenedores input {
+  position: absolute;
+  height: 30px;
+  width: 80%;
+  font-size: 22px;
+  font-weight: 600;
+  top: 12px;
+  left: 25px;
+  padding-left: 5px;
+  background-color: var(--White-color);
+  border-radius: 20px;
+  border: 0;
+}
+
+.precio-mercado .contenedores input:focus {
+  border: none; 
+  outline: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+
+/* ======================================================================================== */
+/* ==============            PRECIOS EXTRAS            ================ */
+/* ======================================================================================== */
+
+
+.precio-extra{
+  margin-top: -35px;
+}
+
+.precio-extra .contenedores{
+  height: 50px;
+}
+
+.precio-extra .contenedores .text-2{
+  position: relative;
+  font-weight: 600;
+  font-size: 20px;
+  top: -30px;
+  left: 0px;
+}
+
+.precio-extra .contenedores .text{
+  font-size: 20px;
+  left: -20px;
+  top: -8px;
+}
+.precio-extra .contenedores .signo{
+  position: absolute;
+  font-weight: 600;
+  font-size: 20px;
+  top: 12px;
+  left: 130px;
+}
+
+.precio-mercado .contenedores .signo-2{
+  position: absolute;
+  font-weight: 600;
+  font-size: 20px;
+  top: 12px;
+  left: 12px;
+}
+
+.precio-extra .contenedores input{
+  font-size: 20px;
+  left: 145px;
+  width: auto;
+}
+
+/* ======================================================================================== */
+/* ==============            HOME            ================ */
+/* ======================================================================================== */
+
+
+.precio-venta .contenedores{
+  background: var(--primary-color);
+}
+
+.precio-venta .contenedores .text{
+  color: var(--primary-color-light);
+  top: -2px;
+  left: -10px;
+}
+
+.precio-venta .contenedores input{
+  background: var(--primary-color);
+  color: var(--primary-color-light);
+  top: 17px;
+  left: 120px;
+  width: auto;
+}
+
+.contain-compartir .button-compartir{
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--primary-color-light);
+  position: absolute;
+  top: 30px;
+  left: 40%;
+  border-radius: 20px;
+  padding: 5px 25px;
+  background: var(--green-color);
+  border: 0px solid;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  text-decoration: none;
+
+}
+
+.contain-compartir .button-compartir:hover{
+  transition: var(--tran-04);
+  scale: 1.1;
+}
+
+.contain-compartir .button-compartir i{
+  margin-left: 10px;
+}
+
+/* ======================================================================================== */
+/* ==============            Nuevo Futuro           ================ */
+/* ======================================================================================== */
+
+.precio-factor{
+  margin-top: 10px;
+}
+
+
+.precio-factor .contenedores{
+  background: var(--White-color);
+  height: 60px;
+  width: 24%;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: var(--dow-box-shadow);
+}
+
+.precio-factor .contenedores .text-3{
+  top: -55px;
+  left: -30px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.precio-factor .container-compartir{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.precio-factor .container-compartir .botton-compartir{
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--primary-color-light);
+  position: absolute;
+  top: 30px;
+  left: 83%;
+  border-radius: 20px;
+  padding: 5px 25px;
+  background: var(--green-color);
+  border: 0px solid;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  text-decoration: none;
+}
+
+/* ======================================================================================== */
+/* ==============            Valkiria Share         ================ */
+/* ======================================================================================== */
+
+
+
+
+.home .Title{
+  font-size: 24px;
+  font-weight: 700;
+  margin: 50px 0px 40px 40px;
+}
+
+.home .valkiria-share .text-2{
+  font-size: 14px;
+  top: -10px;
+  left: 0px;
+  font-weight: 100;
+}
+
+.home .valkiria-share .contenedores{
+  display: flex;
+}
+
+.home .valkiria-share .text-price{
+  font-size: 20px;
+  top: -5px;
+  left: 0px;
+  font-weight: 700;
+  width: 120px;
+}
+
+.home .valkiria-share .signo-2{
+  left: 155px;
+  top: 18px;
+}
+
+.home .valkiria-share .price{
+  left: 170px;
+  max-width: 120px;
+  top: 18px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.home .valkiria-share .text-2 .Subtitle{
+  font-weight: 700;
+}
+
+.home .m-top {
+  margin-top: -25px;
+}
+
+.home .Terminos{
+  font-size: 13px;
+  text-align: center;
+  width: 90%;
+}
+
+.home .container-descargar{
+  position: absolute;
+  left: 80%;
+}
+
+.home .button-descargar{
+  font-size: 20px;
+  width: 180px;
+  height: 40px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.home .button-descargar i{
+  margin-left: 5px;
+  font-size: 22px;
+  top: 12px;
+  margin-top: 4px;
+  margin-left: 10px;
+}
+
+.home .valkiria{
+  background-color: white;
+  box-shadow: none;
+}
+
+.home .valkiria img{
+  width: 80%;
+}
+
+.home .fondo-valkiria{
+  position: absolute;
+  width: 70%;
+  top: 26%;
+  left: 5%;
+}
+
+
