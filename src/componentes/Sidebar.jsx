@@ -28,7 +28,7 @@ function Sidebar() {
             onClick={handleToggleClick}
           ></i>
         </header>
-        <div className="menu-bar">
+        <div className={ isToggle ? "menu-bar toogle" : "menu-bar"}>
           <div className="menu">
             <ul className="menu-links">
               <li className="nav-links search-box">
