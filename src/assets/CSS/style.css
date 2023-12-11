@@ -649,7 +649,7 @@ header .image-text .header-text {
 .precio-extra .contenedores input{
   font-size: 20px;
   left: 145px;
-  width: auto;
+  max-width: 120px;
 }
 
 /* ======================================================================================== */

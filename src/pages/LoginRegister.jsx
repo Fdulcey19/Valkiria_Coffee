@@ -148,7 +148,7 @@ function LoginRegister() {
 
                     <div className="d-grid">
                       <Link
-                       
+                        to="dash"
                         type="submit"
                         className="btn btn-inicio-sesion text-white fs-6"
                       >

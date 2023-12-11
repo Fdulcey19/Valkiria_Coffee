@@ -122,6 +122,23 @@ function NuevoFuturoShare() {
                   </span>
                 </div>
               </div>
+              {/* Taza */}
+              <div className="precio-mercado valkiria-share m-top">
+                <div className="contenedores col-12 col-md-6">
+                  <span className="text text-price">Taza</span>
+                  <span className="signo-2">$</span>
+                  <input type="text" className="info price" value={137000} />
+                </div>
+                <div className="contenedores col-12 col-md-6">
+                  <span className="text text-2">
+                    <span className="Subtitle">Kilos:</span> 500 &ge; ,{" "}
+                    <span className="Subtitle">Factor:</span> 93,{" "}
+                    <span className="Subtitle">Taza:</span> 84 - 84,5{" "}
+                    <span className="text-danger fw-bold">Estricta</span>{" "}
+                    <span className="Subtitle">Humedad:</span>: 10 - 12,5
+                  </span>
+                </div>
+              </div>
               {/* Fin Container */}
               {/* Terminos y condiciones */}
               <div className="precio-mercado valkiria-share ">
