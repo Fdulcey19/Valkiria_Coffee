@@ -38,7 +38,9 @@
     --dow-box-shadow: 15px 13px 19px -6px rgba(0, 0, 0, 0.12);
   }
 
-  
+  .text_2{
+    font-weight: 700;
+  }
 .login {
   margin-top: 0px;
   background: url('../images/Ilustraciones/Vector2-03.png') no-repeat, url('../images/Ilustraciones/Vector1-02.png') no-repeat;
@@ -48,7 +50,11 @@
 .login .name{
   font-size: 40px;
   font-weight: 700;
-  padding-top: 60px;
+  padding-top: 0px;
+}
+
+.login .subtitle{
+  width: 150%;
 }
 
 .btn-login {
@@ -132,7 +138,7 @@
 .sidebar .text {
   font-size: 16px;
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--primary-color);
   transition: var(--tran-02);
   white-space: nowrap;
   opacity: 1;
@@ -177,7 +183,7 @@
 
 .sidebar li .icon,
 .sidebar li .text {
-  color: var(--text-color);
+  color: var(--primary-color);
   transition: var(--tran-02);
 }
 
@@ -296,7 +302,7 @@ header .image-text .header-text {
   overflow-x: auto; 
 }
 .home .text{
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
   color: var(--text-color);
   padding: 20px 40px;
@@ -382,7 +388,7 @@ header .image-text .header-text {
 }
 
 .precio-pergamino .precio{
-    font-size: 34px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--text-color);
     position: absolute;
@@ -438,12 +444,17 @@ header .image-text .header-text {
     align-items: center;
     flex-direction: column;
     height: 550px;
+    width: 110%;
     background-color: var(--White-color);
     border-radius: 20px;
     padding: 0;
     margin: 10px 0px;
     box-shadow: var(--primary-box-shadow);
     position: relative;
+  }
+
+  .container_share{
+    height: 450px;
   }
 
  .fondo{
@@ -473,9 +484,11 @@ header .image-text .header-text {
     flex-direction: column;
     position: relative;
   }
-  
+  .container-indicadores  .primer_indicador{
+    margin-top: -20px;
+  }
   .container-indicadores .indicador .text {
-    font-size: 14px; 
+    font-size: 10px; 
     font-weight: 400;
     color: var(--text-color);
     padding: 0;
@@ -484,6 +497,7 @@ header .image-text .header-text {
 
   .container-indicadores .indicador .subtitulo{
     position: absolute;
+    font-size: 12px;
     top: 10px;
     left: 60px;
     font-weight: 700;
@@ -491,10 +505,21 @@ header .image-text .header-text {
 
   .container-indicadores .indicador .precio{
     position: absolute;
-    top: 40px;
-    left: 30px;
-    font-size: 20px;
+    top: 50px;
+    left: 10px;
+    font-size: 16px;
     font-weight: 700;
+  }
+
+  .container-indicadores .precio_indicador{
+    position: absolute;
+    top: 55px;
+    left: 75px;
+    font-size: 8px;
+  }
+
+  .flecha{
+    font-weight: 600;
   }
 
   .container-indicadores .indicador .img{
@@ -518,7 +543,9 @@ header .image-text .header-text {
     color: var(--primary-color);
     font-size: 14px;
   }
-
+  .container-indicadores .indicador .share{
+    font-weight: 400;
+  }
   .container-indicadores .button-reload{
     font-size: 18px;
     font-weight: 500;
@@ -579,7 +606,7 @@ header .image-text .header-text {
   position: absolute;
   top: -50px;
   left: -40px;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -587,7 +614,7 @@ header .image-text .header-text {
   position: absolute;
   height: 30px;
   width: 80%;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   top: 12px;
   left: 25px;
@@ -620,13 +647,13 @@ header .image-text .header-text {
 .precio-extra .contenedores .text-2{
   position: relative;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
   top: -30px;
   left: 0px;
 }
 
 .precio-extra .contenedores .text{
-  font-size: 20px;
+  font-size: 16px;
   left: -20px;
   top: -8px;
 }
@@ -635,20 +662,20 @@ header .image-text .header-text {
   font-weight: 600;
   font-size: 20px;
   top: 12px;
-  left: 130px;
+  left: 110px;
 }
 
 .precio-mercado .contenedores .signo-2{
   position: absolute;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 18px;
   top: 12px;
   left: 12px;
 }
 
 .precio-extra .contenedores input{
-  font-size: 20px;
-  left: 145px;
+  font-size: 18px;
+  left: 125px;
   max-width: 120px;
 }
 
@@ -724,7 +751,7 @@ header .image-text .header-text {
 .precio-factor .contenedores .text-3{
   top: -55px;
   left: -30px;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -775,10 +802,16 @@ header .image-text .header-text {
 
 .home .valkiria-share .contenedores{
   display: flex;
+  width: 40%;
+}
+
+.home .valkiria-share .contenedores_derecha{
+  display: flex;
+  width: 55%;
 }
 
 .home .valkiria-share .text-price{
-  font-size: 20px;
+  font-size: 18px;
   top: -5px;
   left: 0px;
   font-weight: 700;
@@ -786,20 +819,34 @@ header .image-text .header-text {
 }
 
 .home .valkiria-share .signo-2{
-  left: 155px;
-  top: 18px;
+  left: 135px;
+  top: 15px;
 }
 
 .home .valkiria-share .price{
-  left: 170px;
-  max-width: 120px;
-  top: 18px;
+  left: 150px;
+  max-width: 90px;
+  top: 12px;
   user-select: none;
   pointer-events: none;
 }
 
 .home .valkiria-share .text-2 .Subtitle{
   font-weight: 700;
+  font-size: 10px;
+  padding: -10px;
+}
+
+.retroceder{
+  position: relative;
+  top: 30px;
+  left: 40px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--primary-color);
+  border: none;
+  background-color: var(--primary-color-light);
+ 
 }
 
 .home .m-top {

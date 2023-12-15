@@ -3,7 +3,7 @@ import axios from "axios";
 import colombia from "../assets/images/Iconos/colombia.png";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -22,6 +22,8 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const updateDateTime = () => {
       setCurrentDateTime(new Date());
@@ -35,19 +37,29 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://valkiria-backend-felipe-dulceys-projects.vercel.app");
+        const response = await axios.get(
+          //  Ruta de la API del Servidor
+          "https://valkiria-backend-felipe-dulceys-projects.vercel.app"
+          // Ruta de la API Local
+          // "http://localhost:3000"
+        );
         setData(response.data);
         // Suma correctamente valorPuntoDiferencia y data.arroba
-        const precioMercado = parseFloat(response.data.arroba) + parseFloat(valorPuntoDiferencia);
-        const precioOrigen = parseFloat(response.data.arroba) + parseFloat(valorOrigen);
-        const precioTaza = parseFloat(response.data.arroba) + parseFloat(valorTaza);
-        const precioMicLote = parseFloat(response.data.arroba) + parseFloat(valorMicLote);
-        const precioMedLote = parseFloat(response.data.arroba) + parseFloat(valorMedLote);
+        const precioMercado =
+          parseFloat(response.data.arroba) + parseFloat(valorPuntoDiferencia);
+        const precioOrigen =
+          parseFloat(response.data.arroba) + parseFloat(valorOrigen);
+        const precioTaza =
+          parseFloat(response.data.arroba) + parseFloat(valorTaza);
+        const precioMicLote =
+          parseFloat(response.data.arroba) + parseFloat(valorMicLote);
+        const precioMedLote =
+          parseFloat(response.data.arroba) + parseFloat(valorMedLote);
         setValorPrecioMercado(precioMercado);
         setValorOrigenSumado(precioOrigen);
         setValorTazaSumado(precioTaza);
         setValorMicLoteSumado(precioMicLote);
-        setValorMedLoteSumado(precioMedLote)
+        setValorMedLoteSumado(precioMedLote);
       } catch (error) {
         setError(error);
       } finally {
@@ -60,8 +72,13 @@ function Home() {
     const intervalDataId = setInterval(fetchData, 3000);
 
     return () => clearInterval(intervalDataId);
-  }, [valorPuntoDiferencia, valorOrigen, valorTaza, valorMicLote, valorMedLote]);
-
+  }, [
+    valorPuntoDiferencia,
+    valorOrigen,
+    valorTaza,
+    valorMicLote,
+    valorMedLote,
+  ]);
 
   const updateData = async (e) => {
     setLoading(true);
@@ -70,16 +87,21 @@ function Home() {
       const response = await axios.get("http://localhost:3000");
       setData(response.data);
       // Suma correctamente valorPuntoDiferencia y data.arroba
-      const precioMercado = parseFloat(response.data.arroba) + parseFloat(valorPuntoDiferencia);
-        const precioOrigen = parseFloat(response.data.arroba) + parseFloat(valorOrigen);
-        const precioTaza = parseFloat(response.data.arroba) + parseFloat(valorTaza);
-        const precioMicLote = parseFloat(response.data.arroba) + parseFloat(valorMicLote);
-        const precioMedLote = parseFloat(response.data.arroba) + parseFloat(valorMedLote);
-        setValorPrecioMercado(precioMercado);
-        setValorOrigenSumado(precioOrigen);
-        setValorTazaSumado(precioTaza);
-        setValorMicLoteSumado(precioMicLote);
-        setValorMedLoteSumado(precioMedLote)
+      const precioMercado =
+        parseFloat(response.data.arroba) + parseFloat(valorPuntoDiferencia);
+      const precioOrigen =
+        parseFloat(response.data.arroba) + parseFloat(valorOrigen);
+      const precioTaza =
+        parseFloat(response.data.arroba) + parseFloat(valorTaza);
+      const precioMicLote =
+        parseFloat(response.data.arroba) + parseFloat(valorMicLote);
+      const precioMedLote =
+        parseFloat(response.data.arroba) + parseFloat(valorMedLote);
+      setValorPrecioMercado(precioMercado);
+      setValorOrigenSumado(precioOrigen);
+      setValorTazaSumado(precioTaza);
+      setValorMicLoteSumado(precioMicLote);
+      setValorMedLoteSumado(precioMedLote);
     } catch (error) {
       setError(error);
     } finally {
@@ -103,7 +125,6 @@ function Home() {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
-
 
   return (
     <body className="home">
@@ -160,7 +181,7 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorOrigenSumado.toLocaleString()}
+                  value={Math.round(valorOrigenSumado).toLocaleString()}
                   onChange={(e) => setValorOrigenSumado(e.target.value)}
                 />
               </div>
@@ -233,9 +254,23 @@ function Home() {
             </div>
             <div className="precio-mercado precio-venta col-12 col-6">
               <div className="btn contain-compartir col-12 col-md-6">
-                <Link to={"/dash/share"} className="button-compartir">
+                <button
+                  className="button-compartir"
+                  onClick={() => {
+                    navigate("/dash/share", {
+                      state: {
+                        origenSumado: valorOrigenSumado,
+                        tazaSumado: valorTazaSumado,
+                        micLoteSumado: valorMicLoteSumado,
+                        medLoteSumado: valorMedLoteSumado,
+                        dolar: data.dolar,
+                        lastCoffe: data.lastCoffe,
+                      },
+                    });
+                  }}
+                >
                   Compartir <i className="bx bxs-share-alt"></i>
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -244,7 +279,21 @@ function Home() {
             <div className="container-indicadores">
               <div className="indicador">
                 <span className="text subtitulo">Precio Libra</span>
-                <span className="text precio">{data.libra}</span>
+                <span className="text precio">
+                  {Math.round(data.libra).toLocaleString()}
+                </span>
+                <span
+                  className="text precio_indicador"
+                  style={{
+                    color: data.indicador.resultState > 0 ? "red" : "green",
+                  }}
+                >
+                  <span className="flecha">
+                    {data.indicador.resultState > 0 ? "↓" : "↑"}
+                  </span>
+                  {data.indicador.cambioValorVar}{" "}
+                  {data.indicador.cambioValorPorcentaje}
+                </span>
                 <img className="img" src={colombia} alt="" />
                 <span className="vermas">
                   <a href="">Ver Mas</a>
@@ -253,6 +302,21 @@ function Home() {
               <div className="indicador">
                 <span className="text subtitulo">Precio USD</span>
                 <span className="text precio">{data.dolar}</span>
+                <span
+                  className="text precio_indicador"
+                  style={{
+                    color:
+                      data.indicadorDolar.resultStateDollar > 0
+                        ? "green"
+                        : "red",
+                  }}
+                >
+                  <span className="flecha">
+                    {data.indicadorDolar.resultStateDollar > 0 ? "↑" : "↓"}
+                  </span>
+                  {data.indicadorDolar.dollarPriceChange}{" "}
+                  {data.indicadorDolar.dollarPricePorChange}
+                </span>
                 <img className="img" src={eeuu} alt="" />
                 <span className="vermas">
                   <a href="">Ver Mas</a>
@@ -261,6 +325,18 @@ function Home() {
               <div className="indicador">
                 <span className="text subtitulo">Café EE.UU.</span>
                 <span className="text precio">{data.lastCoffe}</span>
+                <span
+                  className="text precio_indicador"
+                  style={{
+                    color: data.indicador.resultState > 0 ? "red" : "green",
+                  }}
+                >
+                  <span className="flecha">
+                    {data.indicador.resultState > 0 ? "↓" : "↑"}
+                  </span>
+                  {data.indicador.cambioValorVar}{" "}
+                  {data.indicador.cambioValorPorcentaje}
+                </span>
                 <img className="img" src={eeuu} alt="" />
                 <span className="vermas">
                   <a href="">Ver Mas</a>

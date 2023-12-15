@@ -2,9 +2,19 @@ import { useRef } from "react";
 import html2canvas from "html2canvas";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
+import { NavLink, useLocation } from "react-router-dom";
 
 function ValkiriaShare() {
   const containerRef = useRef(null);
+  const location = useLocation();
+  const {
+    origenSumado,
+    tazaSumado,
+    micLoteSumado,
+    medLoteSumado,
+    dolar,
+    lastCoffe,
+  } = location.state;
 
   const getFormattedDateTime = () => {
     const now = new Date();
@@ -38,6 +48,9 @@ function ValkiriaShare() {
         });
     }
   };
+
+  // Función para formatear números eliminando decimales
+  const formatNumber = (number) => Math.round(number);
   return (
     <div className="home home-share">
       <div>
@@ -51,19 +64,27 @@ function ValkiriaShare() {
         </div>
         <div ref={containerRef}>
           {/* Contenido que quieres convertir en imagen */}
+          <NavLink to="/dash" className="btn retroceder">
+            <li className="link">← Atrás</li>
+          </NavLink>
+
           <h2 className="Title">Precios Extras </h2>
 
           <div className="row">
             <div className="col-12 col-md-9 ">
-                <img className="fondo-valkiria" src={logo} alt="" />
+              <img className="fondo-valkiria" src={logo} alt="" />
               {/* Origen */}
               <div className="precio-mercado valkiria-share">
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores col-12 col-md-5">
                   <span className="text text-price">Origen</span>
                   <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={150000} />
+                  <input
+                    type="text"
+                    className="info price"
+                    value={formatNumber(origenSumado)}
+                  />
                 </div>
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores contenedores_derecha  col-12 col-md-7">
                   <span className="text text-2">
                     <span className="Subtitle">Kilos:</span> Indefinidos ,{" "}
                     <span className="Subtitle">Factor:</span> 93,{" "}
@@ -74,12 +95,16 @@ function ValkiriaShare() {
               </div>
               {/* Especial */}
               <div className="precio-mercado valkiria-share m-top">
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores col-12 col-md-5">
                   <span className="text text-price">Especial</span>
                   <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={152000} />
+                  <input
+                    type="text"
+                    className="info price"
+                    value={formatNumber(tazaSumado)}
+                  />
                 </div>
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores contenedores_derecha col-12 col-md-7">
                   <span className="text text-2">
                     <span className="Subtitle">Kilos:</span> Indefinidos ,{" "}
                     <span className="Subtitle">Factor:</span> 91,{" "}
@@ -90,12 +115,16 @@ function ValkiriaShare() {
               </div>
               {/* Microlote */}
               <div className="precio-mercado valkiria-share m-top">
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores col-12 col-md-5">
                   <span className="text text-price">Microlote</span>
                   <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={148000} />
+                  <input
+                    type="text"
+                    className="info price"
+                    value={formatNumber(micLoteSumado)}
+                  />
                 </div>
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores contenedores_derecha col-12 col-md-7">
                   <span className="text text-2">
                     <span className="Subtitle">Kilos:</span> 125 &ge; ,{" "}
                     <span className="Subtitle">Factor:</span> 90,{" "}
@@ -107,12 +136,16 @@ function ValkiriaShare() {
               </div>
               {/* Mediano Lote */}
               <div className="precio-mercado valkiria-share m-top">
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores  col-12 col-md-5">
                   <span className="text text-price">Med.Lote</span>
                   <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={137000} />
+                  <input
+                    type="text"
+                    className="info price"
+                    value={formatNumber(medLoteSumado)}
+                  />
                 </div>
-                <div className="contenedores col-12 col-md-6">
+                <div className="contenedores contenedores_derecha col-12 col-md-7">
                   <span className="text text-2">
                     <span className="Subtitle">Kilos:</span> 500 &ge; ,{" "}
                     <span className="Subtitle">Factor:</span> 93,{" "}
@@ -137,13 +170,15 @@ function ValkiriaShare() {
               {/* Fin */}
             </div>
             <div className="col-12 col-md-3">
-              <div className="container-indicadores">
+              <div className="container-indicadores container_share">
                 <div className="indicador valkiria">
                   <img src={logo} alt="" />
                 </div>
-                <div className="indicador">
+                <div className="indicador primer_indicador">
                   <span className="text subtitulo">Precio USD</span>
-                  <span className="text precio">$ 142.193,200</span>
+                  <span className="text precio share">
+                    $ <span className="text_2">{dolar}</span> COP
+                  </span>
                   <img className="img" src={eeuu} alt="" />
                   <span className="vermas">
                     <a href="">Ver Mas</a>
@@ -151,7 +186,9 @@ function ValkiriaShare() {
                 </div>
                 <div className="indicador">
                   <span className="text subtitulo">Café EE.UU.</span>
-                  <span className="text precio">$ 142.193,200</span>
+                  <span className="text precio share">
+                    $ <span className="text_2">{lastCoffe}</span> USD
+                  </span>
                   <img className="img" src={eeuu} alt="" />
                   <span className="vermas">
                     <a href="">Ver Mas</a>
