@@ -65,7 +65,7 @@ function ValkiriaShare() {
         <div ref={containerRef}>
           {/* Contenido que quieres convertir en imagen */}
           <NavLink to="/dash" className="btn retroceder">
-            <li className="link">← Atrás</li>
+            <li className="link"><i className='bx bx-arrow-back fw-bold'></i> Atrás</li>
           </NavLink>
 
           <h2 className="Title">Precios Extras </h2>

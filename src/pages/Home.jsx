@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import colombia from "../assets/images/Iconos/colombia.png";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
 import { useNavigate } from "react-router-dom";
+import {
+  getPosts,
+  getPrecioMedLote,
+  getPrecioMercado,
+  getPrecioMicLote,
+  getPrecioOrigen,
+  getValorTaza,
+} from "../domain/services";
 
 function Home() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
@@ -24,6 +31,15 @@ function Home() {
 
   const navigate = useNavigate();
 
+  function LoadingSpinner() {
+    return (
+      <div>
+        <div className="loader"></div>
+        <p className="loader_text">Loading...</p>
+      </div>
+    );
+  }
+
   useEffect(() => {
     const updateDateTime = () => {
       setCurrentDateTime(new Date());
@@ -35,42 +51,8 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          //  Ruta de la API del Servidor
-          "https://valkiria-backend-felipe-dulceys-projects.vercel.app"
-          // Ruta de la API Local
-          // "http://localhost:3000"
-        );
-        setData(response.data);
-        // Suma correctamente valorPuntoDiferencia y data.arroba
-        const precioMercado =
-          parseFloat(response.data.arroba) + parseFloat(valorPuntoDiferencia);
-        const precioOrigen =
-          parseFloat(response.data.arroba) + parseFloat(valorOrigen);
-        const precioTaza =
-          parseFloat(response.data.arroba) + parseFloat(valorTaza);
-        const precioMicLote =
-          parseFloat(response.data.arroba) + parseFloat(valorMicLote);
-        const precioMedLote =
-          parseFloat(response.data.arroba) + parseFloat(valorMedLote);
-        setValorPrecioMercado(precioMercado);
-        setValorOrigenSumado(precioOrigen);
-        setValorTazaSumado(precioTaza);
-        setValorMicLoteSumado(precioMicLote);
-        setValorMedLoteSumado(precioMedLote);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-
     const intervalDataId = setInterval(fetchData, 3000);
-
     return () => clearInterval(intervalDataId);
   }, [
     valorPuntoDiferencia,
@@ -80,23 +62,21 @@ function Home() {
     valorMedLote,
   ]);
 
-  const updateData = async (e) => {
-    setLoading(true);
+  const fetchData = async () => {
     try {
-      e.preventDefault();
-      const response = await axios.get("http://localhost:3000");
+      const response = await getPosts();
       setData(response.data);
       // Suma correctamente valorPuntoDiferencia y data.arroba
-      const precioMercado =
-        parseFloat(response.data.arroba) + parseFloat(valorPuntoDiferencia);
-      const precioOrigen =
-        parseFloat(response.data.arroba) + parseFloat(valorOrigen);
-      const precioTaza =
-        parseFloat(response.data.arroba) + parseFloat(valorTaza);
-      const precioMicLote =
-        parseFloat(response.data.arroba) + parseFloat(valorMicLote);
-      const precioMedLote =
-        parseFloat(response.data.arroba) + parseFloat(valorMedLote);
+      const precioMercado = getPrecioMercado(response, valorPuntoDiferencia);
+
+      const precioOrigen = getPrecioOrigen(response, valorOrigen);
+
+      const precioTaza = getValorTaza(response, valorTaza);
+
+      const precioMicLote = getPrecioMicLote(response, valorMicLote);
+
+      const precioMedLote = getPrecioMedLote(response, valorMedLote);
+
       setValorPrecioMercado(precioMercado);
       setValorOrigenSumado(precioOrigen);
       setValorTazaSumado(precioTaza);
@@ -109,6 +89,12 @@ function Home() {
     }
   };
 
+  const handleReload = () => {
+    // Recargar el componente
+    fetchData();
+    window.location.replace(window.location.pathname);
+  };
+
   const formattedDateTime = currentDateTime.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
@@ -119,11 +105,17 @@ function Home() {
   });
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner />;
   }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return (
+      <div className="Reload d-flex flex-column align-content-center">
+        <p>Error: {error.message}</p>
+        <button className="btn btn-dark button" onClick={()=>handleReload()}><i className="bx bx-reset"></i> Reload Componente</button>
+      </div>,
+      ()=>handleReload()
+    );
   }
 
   return (
@@ -136,11 +128,11 @@ function Home() {
               <span className="text subtitulo">Precio Pergamino</span>
               <span className="text precio">{`$ ${data.arroba.toLocaleString()}`}</span>
               <span className="text hora">{formattedDateTime}</span>
-              <button className="button-reload" onClick={updateData}>
+              <button className="button-reload" onClick={()=>handleReload()}>
                 Reload <i className="bx bx-reset"></i>
               </button>
             </div>
-            <div className="precio-mercado mt-5 col-12 col-6">
+            <div className="precio-mercado mt-4 col-12 col-6">
               <div className="contenedores">
                 <span className="text">Punto Diferencia</span>
                 <span className="signo-2">$</span>
@@ -162,7 +154,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className="precio-mercado precio-extra mt-3 mb-1 col-12 col-6">
+            <div className="precio-mercado precio-extra precio-inicio col-12 col-6">
               <div className="contenedores">
                 <span className="text-2">Precios Extras</span>
                 <span className="text">Origen</span>
@@ -296,7 +288,12 @@ function Home() {
                 </span>
                 <img className="img" src={colombia} alt="" />
                 <span className="vermas">
-                  <a href="">Ver Mas</a>
+                  <a
+                    href="https://es.investing.com/commodities/us-coffee-c"
+                    target="blank"
+                  >
+                    Ver Mas
+                  </a>
                 </span>
               </div>
               <div className="indicador">
@@ -319,11 +316,19 @@ function Home() {
                 </span>
                 <img className="img" src={eeuu} alt="" />
                 <span className="vermas">
-                  <a href="">Ver Mas</a>
+                  <a
+                    href="https://es.investing.com/currencies/usd-cop"
+                    target="blank"
+                  >
+                    Ver Mas
+                  </a>
                 </span>
               </div>
               <div className="indicador">
-                <span className="text subtitulo">Café EE.UU.</span>
+                <span className="text subtitulo">
+                  Café EE.UU.{" "}
+                  {data.indicador.clock === "positivo" ? "🕑" : "⏰"}
+                </span>
                 <span className="text precio">{data.lastCoffe}</span>
                 <span
                   className="text precio_indicador"
@@ -339,7 +344,12 @@ function Home() {
                 </span>
                 <img className="img" src={eeuu} alt="" />
                 <span className="vermas">
-                  <a href="">Ver Mas</a>
+                  <a
+                    href="https://es.investing.com/commodities/us-coffee-c"
+                    target="blank"
+                  >
+                    Ver Mas
+                  </a>
                 </span>
               </div>
               <button className="button-reload">

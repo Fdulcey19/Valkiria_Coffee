@@ -24,7 +24,7 @@ function LoginRegister() {
                 >
                   <span>
                     <a
-                      className="text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
+                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
                       href="#"
                     >
                       Terminos y condiciones
@@ -32,7 +32,7 @@ function LoginRegister() {
                   </span>
                   <span>
                     <a
-                      className="text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
+                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
                       href="#"
                     >
                       Politica de Privacidad
@@ -40,7 +40,7 @@ function LoginRegister() {
                   </span>
                   <span>
                     <a
-                      className="text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
+                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
                       href="#"
                     >
                       Contactanos
@@ -48,7 +48,7 @@ function LoginRegister() {
                   </span>
                   <span>
                     <a
-                      className="text-decoration-none text-black-50 mx-2 fw-bold d-inline-block mt-lg-3"
+                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block mt-lg-3"
                       href="#"
                     >
                       Version

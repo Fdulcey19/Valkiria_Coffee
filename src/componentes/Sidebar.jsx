@@ -8,6 +8,12 @@ function Sidebar() {
 
   const handleToggleClick = () => {
     setIsToggle(!isToggle);
+    
+    // Agregar o quitar la clase 'closed' al elemento .home
+    const homeElement = document.querySelector('.home');
+    if (homeElement) {
+      homeElement.classList.toggle('closed', !isToggle);
+    }
   };
 
   return (
