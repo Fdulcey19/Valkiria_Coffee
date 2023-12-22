@@ -46,7 +46,7 @@ function Sidebar() {
               <li className="nav-links">
                 <Link to="/dash">
                   <i className="bx bx-bar-chart-alt-2 icon"></i>
-                  <span className="text nav-text">Valkirya</span>
+                  <span className="text nav-text">Valkiria</span>
                 </Link>
               </li>
               <li className="nav-links">

@@ -534,14 +534,14 @@ header .image-text .header-text {
   .container-indicadores .indicador .subtitulo{
     position: absolute;
     font-size: 12px;
-    top: 10px;
+    top: 0px;
     left: 60px;
     font-weight: 700;
   }
 
   .container-indicadores .indicador .precio{
     position: absolute;
-    top: 50px;
+    top: 40px;
     left: 10px;
     font-size: 16px;
     font-weight: 700;
@@ -549,13 +549,9 @@ header .image-text .header-text {
 
   .container-indicadores .precio_indicador{
     position: absolute;
-    top: 55px;
+    top: 45px;
     left: 75px;
     font-size: 8px;
-  }
-
-  .flecha{
-    font-weight: 600;
   }
 
   .container-indicadores .indicador .img{
@@ -569,9 +565,25 @@ header .image-text .header-text {
     border-radius: 12px;
   }
 
+  .container-indicadores .clock{
+    position: absolute;
+    top: 70px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .texto-verde {
+    color: green;
+  }
+  
+  .texto-rojo {
+    color: red;
+  }
+
   .container-indicadores .indicador .vermas{
     position: absolute;
-    top: calc(100% - 40px);
+    top: calc(100% - 30px);
     left: 38%;
   }
 
@@ -640,9 +652,9 @@ header .image-text .header-text {
 
 .precio-mercado .contenedores .text{
   position: absolute;
-  top: -50px;
-  left: -40px;
-  font-size: 16px;
+  top: -45px;
+  left: -30px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -652,7 +664,7 @@ header .image-text .header-text {
   width: 80%;
   font-size: 18px;
   font-weight: 600;
-  top: 12px;
+  top: 5px;
   left: 25px;
   padding-left: 5px;
   background-color: var(--White-color);
@@ -660,10 +672,23 @@ header .image-text .header-text {
   border: 0;
 }
 
+.contenedores-nuevo{
+  margin-bottom: 50px;
+  height: 40px important;
+}
+
 .precio-mercado .contenedores input:focus {
   border: none; 
   outline: none;
   background-color: rgba(0, 0, 0, 0);
+}
+
+.contenedores-nuevo{
+  margin-bottom: -30px;
+}
+
+.precio-factor .contenedores{
+  height: 20px;
 }
 
 
@@ -709,7 +734,7 @@ header .image-text .header-text {
   position: absolute;
   font-weight: 600;
   font-size: 18px;
-  top: 14px;
+  top: 7px;
   left: 12px;
 }
 
@@ -774,24 +799,25 @@ header .image-text .header-text {
 /* ==============            Nuevo Futuro           ================ */
 /* ======================================================================================== */
 
-.precio-factor{
-  margin-top: 10px;
-}
 
+.precio-factor{
+  margin-top: 5px;
+}
 
 .precio-factor .contenedores{
   background: var(--White-color);
-  height: 60px;
+  height: 40px;
   width: 24%;
+  margin-top: -20px;
   border-radius: 20px;
   position: relative;
   box-shadow: var(--dow-box-shadow);
 }
 
 .precio-factor .contenedores .text-3{
-  top: -55px;
+  top: -50px;
   left: -30px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 
