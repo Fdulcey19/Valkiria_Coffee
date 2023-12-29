@@ -470,9 +470,9 @@ function NuevoFuturo() {
               </div>
               <div className="indicador">
                 <span className="text subtitulo">Precio USD</span>
-                <span className="text precio">{data.dolar}</span>
+                <span className="text precio">$ {data.dolar}</span>
                 <span
-                  className="text precio_indicador"
+                  className="text precio_indicador precio_indicador_dolar"
                   style={{
                     color:
                       data.indicadorDolar.resultStateDollar > 0
@@ -498,7 +498,7 @@ function NuevoFuturo() {
               </div>
               <div className="indicador">
                 <span className="text subtitulo clock">Café EE.UU. </span>
-                <span className="text precio">{data.lastCoffe}</span>
+                <span className="text precio">$ {data.lastCoffe}</span>
                 <span
                   className="text precio_indicador"
                   style={{

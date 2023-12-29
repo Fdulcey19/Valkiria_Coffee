@@ -67,7 +67,7 @@ function LoginRegister() {
             </div>
             <div className="col-lg-6 col-12">
               <div className="d-flex justify-content-lg-end justify-content-center login-form">
-                <div className="w-75 p-5 bg-white rounded-5 shadow ">
+                <div className="login-contain p-5 bg-white rounded-5 shadow ">
                   <div className="text-center">
                     {/* Inicio de Sesion */}
                     {/* Logo */}

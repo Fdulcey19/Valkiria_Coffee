@@ -287,9 +287,9 @@ function Home() {
               </div>
               <div className="indicador">
                 <span className="text subtitulo">Precio USD</span>
-                <span className="text precio">{data.dolar}</span>
+                <span className="text precio">$ {data.dolar}</span>
                 <span
-                  className="text precio_indicador"
+                  className="text precio_indicador precio_indicador_dolar"
                   style={{
                     color:
                       data.indicadorDolar.resultStateDollar > 0
@@ -318,7 +318,7 @@ function Home() {
                   Café EE.UU.{" "}
                   {data.indicador.clock === "positivo" ? "🕑" : "⏰"}
                 </span>
-                <span className="text precio">{data.lastCoffe}</span>
+                <span className="text precio">$ {data.lastCoffe}</span>
                 <span
                   className="text precio_indicador"
                   style={{
