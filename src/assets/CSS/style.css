@@ -10,7 +10,7 @@
 }
 :root {
     /* Colors */
-    --body-color: #eae8e8;
+    --body-color: #ffffff;
     --sidebar-color: #FFFFFF;
     --White-color: #FFFFFF;
     --primary-color: #0A0A0B;
@@ -308,25 +308,7 @@ header .image-text .header-text {
   left: 85px;
   width: calc(100% - 85px);
 }
-/* ======================================================================================== */
-/* ==============       SIDEBAR TABLE            ================ */
-/* ======================================================================================== */
-@media (max-width: 1080px) {
-  /* Estilos para pantallas más pequeñas */
-  .home {
-      left: 85px;
-      width: calc(100% - 85px);
-  }
 
-  /* Estilos para .home cuando la barra lateral está cerrada en pantallas más pequeñas */
-  .home.closed {
-    left: 85px;
-    width: calc(100% - 85px);
-  }
-  .login .links{
-    font-size: 10px;
-  }
-}
 /* ======================================================================================== */
 /* ==============            HOME            ================ */
 /* ======================================================================================== */
@@ -347,6 +329,74 @@ header .image-text .header-text {
   color: var(--text-color);
   padding: 20px 40px;
   
+}
+
+
+/* ======================================================================================== */
+/* ==============       SIDEBAR TABLE            ================ */
+/* ======================================================================================== */
+@media (max-width: 1200px) {
+
+  /* Estilos para .home cuando la barra lateral está cerrada en pantallas más pequeñas */
+  .home.closed {
+    left: 85px;
+    width: calc(100% - 85px);
+  }
+  .login .links{
+    font-size: 10px;
+  }
+  .home{
+    height: calc(100vh - 50px);
+  left: 85px;
+  width: calc(100% - 85px);
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 85px;
+  padding: 10px 14px;
+  background-color: var(--sidebar-color);
+  transition: var(--tran-05);
+  z-index: 100;
+  
+}
+
+.header-text {
+  display: block;
+}
+
+.sidebar.close header .header-text {
+  display: none;
+}
+
+.sidebar .nav-text {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 5s ease, visibility 0.3s ease; /* Agrega una transición suave */
+}
+
+.sidebar.close {
+  width: 250px;
+  transition: var(--tran-03);
+}
+
+.sidebar.close .nav-text {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* Agrega una transición suave */
+}
+
+.sidebar header .toggle {
+  transform: translateY(50%) rotate(180deg);
+  transition: var(--tran-03);
+}
+
+.sidebar.close header .toggle {
+  transform: translateY(-50%) rotate(-180deg); /* Apunta a la izquierda cuando está abierto */
+}
+
 }
 
 /* ======================================================================================== */
@@ -479,7 +529,7 @@ header .image-text .header-text {
     justify-content: start;
     align-items: center;
     flex-direction: column;
-    height: 550px;
+    height: 500px;
     width: 110%;
     background-color: var(--White-color);
     border-radius: 20px;
@@ -495,15 +545,15 @@ header .image-text .header-text {
 
  .fondo{
     position: absolute;
-    top: 34%;
-    left: 15%;
-    width:45%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 20%;
+    top: 25%;
+    left: 5%;
+    width:70%;
+    opacity: 60%;
   }
-  
+
+  .valkiria .fondo{
+    width:70%;
+  }
   
   .container-indicadores .indicador {
     background-color: var(--White-color);
@@ -520,6 +570,12 @@ header .image-text .header-text {
     flex-direction: column;
     position: relative;
   }
+
+  .container-indicadores .libra {
+    background-color: var(--White-color);
+    height: 90px;
+  }
+
   .container-indicadores  .primer_indicador{
     margin-top: -20px;
   }
@@ -544,6 +600,14 @@ header .image-text .header-text {
     top: 40px;
     left: 10px;
     font-size: 16px;
+    font-weight: 700;
+  }
+
+  .container-indicadores .indicador .precio-libra{
+    position: absolute;
+    top: 40px;
+    left: 20%;
+    font-size: 20px;
     font-weight: 700;
   }
 
@@ -654,7 +718,7 @@ header .image-text .header-text {
   position: absolute;
   top: -45px;
   left: -30px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -662,19 +726,70 @@ header .image-text .header-text {
   position: absolute;
   height: 30px;
   width: 80%;
-  font-size: 18px;
-  font-weight: 600;
-  top: 5px;
-  left: 25px;
+  font-size: 22px;
+  font-weight: 700;
+  top: 20px;
+  left: 30px;
   padding-left: 5px;
   background-color: var(--White-color);
   border-radius: 20px;
   border: 0;
 }
 
+.precio-mercado .contenedores .signo-2{
+  position: absolute;
+  font-weight: 600;
+  font-size: 20px;
+  top: 20px;
+  left: 12px;
+}
+
+.nuevo .precio-mercado .contenedores input{
+  position: absolute;
+  font-weight: 600;
+  font-size: 18px;
+  top: 10px;
+  left: 30px;
+}
+
+.nuevo .precio-mercado .punto-diferencia input{
+  position: absolute;
+  font-weight: 700;
+  font-size: 1.4rem;
+  top: 20px;
+  left: 30px;
+}
+
+
+.nuevo .precio-mercado .contenedores .signo-2{
+  position: absolute;
+  font-weight: 600;
+  font-size: 20px;
+  top: 10px;
+  left: 12px;
+}
+
+.nuevo .signo-2-mercado{
+  position: absolute;
+  font-weight: 600;
+  font-size: 22px;
+  top: 18px;
+  left: 12px;
+}
+
+
+.precio-mercado .contenedores .signo-2{
+  position: absolute;
+  font-weight: 600;
+  font-size: 20px;
+  top: 20px;
+  left: 12px;
+}
+
 .contenedores-nuevo{
   margin-bottom: 50px;
   height: 40px important;
+  font-size: 16px;
 }
 
 .precio-mercado .contenedores input:focus {
@@ -730,20 +845,19 @@ header .image-text .header-text {
   left: 110px;
 }
 
-.precio-mercado .contenedores .signo-2{
-  position: absolute;
-  font-weight: 600;
-  font-size: 18px;
-  top: 7px;
-  left: 12px;
-}
-
 .precio-extra .contenedores input{
   font-size: 18px;
   left: 125px;
   max-width: 120px;
+  font-weight: 600;
 }
 
+.valkiria .precio-extra .contenedores input{
+  font-size: 18px;
+  left: 125px;
+  max-width: 120px;
+  top: 11px;
+}
 /* ======================================================================================== */
 /* ==============            HOME            ================ */
 /* ======================================================================================== */
@@ -770,7 +884,7 @@ header .image-text .header-text {
 .contain-compartir .button-compartir{
   font-size: 21px;
   font-weight: 500;
-  color: var(--primary-color-light);
+  color: var(--White-color);
   position: absolute;
   top: 10px;
   left: 40%;
@@ -783,6 +897,7 @@ header .image-text .header-text {
   align-items: center;
   list-style: none;
   text-decoration: none;
+  box-shadow: var(--primary-box-shadow);
 
 }
 
@@ -833,7 +948,7 @@ header .image-text .header-text {
   font-weight: 500;
   color: var(--primary-color-light);
   position: absolute;
-  top: 30px;
+  top: 20px;
   left: 83%;
   border-radius: 20px;
   padding: 5px 25px;
@@ -889,11 +1004,26 @@ header .image-text .header-text {
 .home .valkiria-share .price{
   left: 150px;
   max-width: 90px;
-  top: 12px;
+  top: 17px;
+  font-size: 18px;
   user-select: none;
   pointer-events: none;
 }
 
+.nuevo-share .valkiria-share .price{
+  left: 150px;
+  max-width: 90px;
+  top: 18px;
+  font-size: 18px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.nuevo-share .valkiria-share .text-price{
+  font-size: 18px;
+  top: -2px;
+  left: 0px;
+}
 .home .valkiria-share .text-2 .Subtitle{
   font-weight: 700;
   font-size: 10px;
@@ -947,20 +1077,23 @@ header .image-text .header-text {
   margin-left: 10px;
 }
 
+.nuevo-share .button-descargar{
+  margin-top: -30px;
+}
 .home .valkiria{
   background-color: white;
   box-shadow: none;
 }
 
-.home .valkiria img{
-  width: 80%;
-}
-
 .home .fondo-valkiria{
   position: absolute;
   width: 70%;
-  top: 26%;
+  top: 18%;
   left: 5%;
+}
+
+.valkiria img{
+  width: 90%;
 }
 
 /* ======================================================================================== */

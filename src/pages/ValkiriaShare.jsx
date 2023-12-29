@@ -63,7 +63,7 @@ function ValkiriaShare() {
           </button>
         </div>
         <div ref={containerRef}>
-          {/* Contenido que quieres convertir en imagen */}
+          {/* Contenido para convertir en imagen */}
           <NavLink to="/dash" className="btn retroceder">
             <li className="link"><i className='bx bx-arrow-back fw-bold'></i> Atrás</li>
           </NavLink>
@@ -181,7 +181,6 @@ function ValkiriaShare() {
                   </span>
                   <img className="img" src={eeuu} alt="" />
                   <span className="vermas">
-                    <a href="">Ver Mas</a>
                   </span>
                 </div>
                 <div className="indicador">
@@ -191,8 +190,8 @@ function ValkiriaShare() {
                   </span>
                   <img className="img" src={eeuu} alt="" />
                   <span className="vermas">
-                    <a href="">Ver Mas</a>
                   </span>
+            
                 </div>
               </div>
             </div>

@@ -120,7 +120,7 @@ function Home() {
 
   return (
     <body className="home">
-      <div className="container">
+      <div className="container valkiria">
         <div className="row">
           <div className="col-12 col-md-9">
             <img className="fondo" src={logo} alt="" />
@@ -154,6 +154,7 @@ function Home() {
                 />
               </div>
             </div>
+            {/* Origen */}
             <div className="precio-mercado precio-extra precio-inicio col-12 col-6">
               <div className="contenedores">
                 <span className="text-2">Precios Extras</span>
@@ -178,6 +179,8 @@ function Home() {
                 />
               </div>
             </div>
+            
+            {/* Taza */}
             <div className="precio-mercado precio-extra col-12 col-6">
               <div className="contenedores">
                 <span className="text">Taza</span>
@@ -195,11 +198,13 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorTazaSumado.toLocaleString()}
+                  value={Math.round(valorTazaSumado).toLocaleString()}
                   onChange={(e) => setValorTazaSumado(e.target.value)}
                 />
               </div>
             </div>
+            
+            {/* Micro Lote */}
             <div className="precio-mercado precio-extra col-12 col-6">
               <div className="contenedores">
                 <span className="text">Mic-Lote</span>
@@ -217,11 +222,13 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorMicLoteSumado.toLocaleString()}
+                  value={Math.round(valorMicLoteSumado).toLocaleString()}
                   onChange={(e) => setValorMicLoteSumado(e.target.value)}
                 />
               </div>
             </div>
+            
+            {/* Mediano Lote */}
             <div className="precio-mercado precio-extra col-12 col-6">
               <div className="contenedores">
                 <span className="text">Med-Lote</span>
@@ -239,7 +246,7 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorMedLoteSumado.toLocaleString()}
+                  value={Math.round(valorMedLoteSumado).toLocaleString()}
                   onChange={(e) => setValorMedLoteSumado(e.target.value)}
                 />
               </div>
@@ -269,32 +276,14 @@ function Home() {
           <div className="col-12 col-md-3">
             {/* Inicio Indicadores */}
             <div className="container-indicadores">
-              <div className="indicador">
+              <div className="indicador libra">
                 <span className="text subtitulo">Precio Libra</span>
-                <span className="text precio">
-                  {Math.round(data.libra).toLocaleString()}
+                <span className="text precio precio-libra">
+                  $ {(data.libra).toLocaleString()}
                 </span>
-                <span
-                  className="text precio_indicador"
-                  style={{
-                    color: data.indicador.resultState > 0 ? "red" : "green",
-                  }}
-                >
-                  <span className="flecha">
-                    {data.indicador.resultState > 0 ? "↓" : "↑"}
-                  </span>
-                  {data.indicador.cambioValorVar}{" "}
-                  {data.indicador.cambioValorPorcentaje}
-                </span>
+                
                 <img className="img" src={colombia} alt="" />
-                <span className="vermas">
-                  <a
-                    href="https://es.investing.com/commodities/us-coffee-c"
-                    target="blank"
-                  >
-                    Ver Mas
-                  </a>
-                </span>
+    
               </div>
               <div className="indicador">
                 <span className="text subtitulo">Precio USD</span>
@@ -304,12 +293,12 @@ function Home() {
                   style={{
                     color:
                       data.indicadorDolar.resultStateDollar > 0
-                        ? "green"
-                        : "red",
+                        ? "red"
+                        : "green",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicadorDolar.resultStateDollar > 0 ? "↑" : "↓"}
+                    {data.indicadorDolar.resultStateDollar > 0 ? "↓" : "↑"}
                   </span>
                   {data.indicadorDolar.dollarPriceChange}{" "}
                   {data.indicadorDolar.dollarPricePorChange}
@@ -333,16 +322,27 @@ function Home() {
                 <span
                   className="text precio_indicador"
                   style={{
-                    color: data.indicador.resultState > 0 ? "red" : "green",
+                    color: data.indicador.resultState > 0 ? "green" : "red",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicador.resultState > 0 ? "↓" : "↑"}
+                    {data.indicador.resultState > 0 ? "↑" : "↓"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
                   {data.indicador.cambioValorPorcentaje}
                 </span>
                 <img className="img" src={eeuu} alt="" />
+                <span
+                  className={`clock ${
+                    data.indicador.clock === "positivo"
+                      ? "texto-verde"
+                      : "texto-rojo"
+                  }`}
+                >
+                  {data.indicador.clock === "positivo"
+                    ? "🕑 Mercado Abierto"
+                    : "⏰ Mercado Cerrado"}
+                </span>
                 <span className="vermas">
                   <a
                     href="https://es.investing.com/commodities/us-coffee-c"
@@ -352,9 +352,6 @@ function Home() {
                   </a>
                 </span>
               </div>
-              <button className="button-reload">
-                Reload <i className="bx bx-reset"></i>
-              </button>
             </div>
             {/* Fin Indicadores */}
           </div>

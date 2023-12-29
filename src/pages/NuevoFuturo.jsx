@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import colombia from "../assets/images/Iconos/colombia.png";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
@@ -19,12 +18,12 @@ function NuevoFuturo() {
 
   const [valorPuntoDiferencia, setValorPuntoDiferencia] = useState(2000);
   const [valorPrecioMercado, setValorPrecioMercado] = useState(144000);
-  const [valorFactorOrganico, setValorFactorOrganico] = useState(10000);
+  const [valorFactorOrganico, setValorFactorOrganico] = useState(12000);
   const [valorFactorOrganico92, setValorFactorOrganico92] = useState(152000);
   const [valorFactorOrganicoBonificacion, setValorFactorOrganicoBonificacion] =
     useState(4000);
   const [valorFactorOrganico88, setValorFactorOrganico88] = useState(156000);
-  const [valorFactorCombencional, setValorFactorCombencional] = useState(10000);
+  const [valorFactorCombencional, setValorFactorCombencional] = useState(6000);
   const [valorFactorCombencional92, setValorFactorCombencional92] =
     useState(152000);
   const [
@@ -33,13 +32,13 @@ function NuevoFuturo() {
   ] = useState(4000);
   const [valorFactorCombencional88, setValorFactorCombencional88] =
     useState(156000);
-  const [valorFactorEstandar, setValorFactorEstandar] = useState(10000);
+  const [valorFactorEstandar, setValorFactorEstandar] = useState(9000);
   const [valorFactorEstandar92, setValorFactorEstandar92] = useState(152000);
   const [valorFactorEstandarBonificacion, setValorFactorEstandarBonificacion] =
     useState(4000);
   const [valorFactorEstandar88, setValorFactorEstandar88] = useState(156000);
 
-  const [valorFactorTazaN, setValorFactorTazaN] = useState(10000);
+  const [valorFactorTazaN, setValorFactorTazaN] = useState(14000);
   const [valorFactorTazaN92, setValorFactorTazaN92] = useState(152000);
   const [valorFactorTazaNBonificacion, setValorFactorTazaNBonificacion] =
     useState(4000);
@@ -165,7 +164,7 @@ function NuevoFuturo() {
 
   return (
     <div className="home">
-      <div className="container">
+      <div className="container nuevo">
         <div className="row">
           <div className="col-12 col-md-9">
             <img className="fondo" src={logo} alt="" />
@@ -177,10 +176,10 @@ function NuevoFuturo() {
                 Reload <i className="bx bx-reset"></i>
               </button>
             </div>
-            <div className="precio-mercado mt-3 col-12 col-6">
-              <div className="contenedores">
+            <div className="precio-mercado punto-diferencia mt-3 col-12 col-6">
+              <div className="contenedores punto-diferencia">
                 <span className="text">Punto Diferencia</span>
-                <span className="signo-2">$</span>
+                <span className="signo-2-mercado">$</span>
                 <input
                   type="text"
                   className="info"
@@ -188,9 +187,9 @@ function NuevoFuturo() {
                   onChange={(e) => setValorPuntoDiferencia(e.target.value)}
                 />
               </div>
-              <div className="contenedores col-12 col-md-6">
+              <div className="contenedores punto-diferencia col-12 col-md-6">
                 <span className="text">Precio Mercado</span>
-                <span className="signo-2">$</span>
+                <span className="signo-2-mercado">$</span>
                 <input
                   type="text"
                   className="info"
@@ -207,8 +206,12 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorOrganico.toLocaleString()}
-                  onChange={(e) => setValorFactorOrganico(e.target.value)}
+                  value={Math.round(valorFactorOrganico).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorOrganico(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -217,8 +220,12 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorOrganico92.toLocaleString()}
-                  onChange={(e) => setValorFactorOrganico92(e.target.value)}
+                  value={Math.round(valorFactorOrganico92).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorOrganico92(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -227,9 +234,13 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorOrganicoBonificacion.toLocaleString()}
+                  value={Math.round(
+                    valorFactorOrganicoBonificacion
+                  ).toLocaleString()}
                   onChange={(e) =>
-                    setValorFactorOrganicoBonificacion(e.target.value)
+                    setValorFactorOrganicoBonificacion(
+                      Math.round(parseFloat(e.target.value))
+                    )
                   }
                 />
               </div>
@@ -239,13 +250,16 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorOrganico88.toLocaleString()}
-                  onChange={(e) => setValorFactorOrganico88(e.target.value)}
+                  value={Math.round(valorFactorOrganico88).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorOrganico88(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
             </div>
 
-            {/*  */}
             {/* Combencional */}
             <div className="precio-mercado contenedores-nuevo precio-factor col-12 col-6">
               <div className="contenedores">
@@ -254,8 +268,12 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorCombencional.toLocaleString()}
-                  onChange={(e) => setValorFactorCombencional(e.target.value)}
+                  value={Math.round(valorFactorCombencional).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorCombencional(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -264,8 +282,12 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorCombencional92.toLocaleString()}
-                  onChange={(e) => setValorFactorCombencional92(e.target.value)}
+                  value={Math.round(valorFactorCombencional92).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorCombencional92(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -274,9 +296,13 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorCombencionalBonificacion.toLocaleString()}
+                  value={Math.round(
+                    valorFactorCombencionalBonificacion
+                  ).toLocaleString()}
                   onChange={(e) =>
-                    setValorFactorCombencionalBonificacion(e.target.value)
+                    setValorFactorCombencionalBonificacion(
+                      Math.round(parseFloat(e.target.value))
+                    )
                   }
                 />
               </div>
@@ -286,13 +312,16 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorCombencional88.toLocaleString()}
-                  onChange={(e) => setValorFactorCombencional88(e.target.value)}
+                  value={Math.round(valorFactorCombencional88).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorCombencional88(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
             </div>
 
-            {/*  */}
             {/* Estandar */}
             <div className="precio-mercado contenedores-nuevo precio-factor col-12 col-6">
               <div className="contenedores">
@@ -301,8 +330,12 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorEstandar.toLocaleString()}
-                  onChange={(e) => setValorFactorEstandar(e.target.value)}
+                  value={Math.round(valorFactorEstandar).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorEstandar(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -311,8 +344,12 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorEstandar92.toLocaleString()}
-                  onChange={(e) => setValorFactorEstandar92(e.target.value)}
+                  value={Math.round(valorFactorEstandar92).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorEstandar92(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -321,9 +358,13 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorEstandarBonificacion.toLocaleString()}
+                  value={Math.round(
+                    valorFactorEstandarBonificacion
+                  ).toLocaleString()}
                   onChange={(e) =>
-                    setValorFactorEstandarBonificacion(e.target.value)
+                    setValorFactorEstandarBonificacion(
+                      Math.round(parseFloat(e.target.value))
+                    )
                   }
                 />
               </div>
@@ -333,13 +374,16 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorEstandar88.toLocaleString()}
-                  onChange={(e) => setValorFactorEstandar88(e.target.value)}
+                  value={Math.round(valorFactorEstandar88).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorEstandar88(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
             </div>
 
-            {/*  */}
             {/* Taza */}
             <div className="precio-mercado contenedores-nuevo precio-factor col-12 col-6">
               <div className="contenedores">
@@ -348,8 +392,10 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorTazaN.toLocaleString()}
-                  onChange={(e) => setValorFactorTazaN(e.target.value)}
+                  value={Math.round(valorFactorTazaN).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorTazaN(Math.round(parseFloat(e.target.value)))
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -358,8 +404,12 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorTazaN92.toLocaleString()}
-                  onChange={(e) => setValorFactorTazaN92(e.target.value)}
+                  value={Math.round(valorFactorTazaN92).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorTazaN92(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -368,9 +418,13 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorTazaNBonificacion.toLocaleString()}
+                  value={Math.round(
+                    valorFactorTazaNBonificacion
+                  ).toLocaleString()}
                   onChange={(e) =>
-                    setValorFactorTazaNBonificacion(e.target.value)
+                    setValorFactorTazaNBonificacion(
+                      Math.round(parseFloat(e.target.value))
+                    )
                   }
                 />
               </div>
@@ -380,49 +434,39 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorFactorTazaN88.toLocaleString()}
-                  onChange={(e) => setValorFactorTazaN88(e.target.value)}
+                  value={Math.round(valorFactorTazaN88).toLocaleString()}
+                  onChange={(e) =>
+                    setValorFactorTazaN88(
+                      Math.round(parseFloat(e.target.value))
+                    )
+                  }
                 />
               </div>
             </div>
+
             {/* Boton Compartir */}
-            <div className="precio-factor col-12 col-6">
-              <div className="btn container-compartir col-12 col-md-6">
-                <Link className="botton-compartir" to={"share"}>
+            <div className="precio-mercado precio-venta col-12 col-6">
+              <div className="btn contain-compartir col-12 col-md-6">
+                <button
+                  className="button-compartir"
+                  
+                >
                   Compartir <i className="bx bxs-share-alt"></i>
-                </Link>
+                </button>
               </div>
             </div>
           </div>
-
+                  {/* Indicadores */}
           <div className="col-12 col-md-3">
             <div className="container-indicadores">
-              <div className="indicador">
+              <div className="indicador libra">
                 <span className="text subtitulo">Precio Libra</span>
-                <span className="text precio">
-                  {Math.round(data.libra).toLocaleString()}
+                <span className="text precio precio-libra">
+                  $ {(data.libra).toLocaleString()}
                 </span>
-                <span
-                  className="text precio_indicador"
-                  style={{
-                    color: data.indicador.resultState > 0 ? "red" : "green",
-                  }}
-                >
-                  <span className="flecha">
-                    {data.indicador.resultState > 0 ? "↓" : "↑"}
-                  </span>
-                  {data.indicador.cambioValorVar}{" "}
-                  {data.indicador.cambioValorPorcentaje}
-                </span>
+                
                 <img className="img" src={colombia} alt="" />
-                <span className="vermas">
-                  <a
-                    href="https://es.investing.com/commodities/us-coffee-c"
-                    target="blank"
-                  >
-                    Ver Mas
-                  </a>
-                </span>
+            
               </div>
               <div className="indicador">
                 <span className="text subtitulo">Precio USD</span>
@@ -432,12 +476,12 @@ function NuevoFuturo() {
                   style={{
                     color:
                       data.indicadorDolar.resultStateDollar > 0
-                        ? "green"
-                        : "red",
+                        ? "red"
+                        : "green",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicadorDolar.resultStateDollar > 0 ? "↑" : "↓"}
+                    {data.indicadorDolar.resultStateDollar > 0 ? "↓" : "↑"}
                   </span>
                   {data.indicadorDolar.dollarPriceChange}{" "}
                   {data.indicadorDolar.dollarPricePorChange}
@@ -458,11 +502,11 @@ function NuevoFuturo() {
                 <span
                   className="text precio_indicador"
                   style={{
-                    color: data.indicador.resultState > 0 ? "red" : "green",
+                    color: data.indicador.resultState > 0 ? "green" : "red",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicador.resultState > 0 ? "↓" : "↑"}
+                    {data.indicador.resultState > 0 ? "↑" : "↓"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
                   {data.indicador.cambioValorPorcentaje}
@@ -488,9 +532,6 @@ function NuevoFuturo() {
                   </a>
                 </span>
               </div>
-              <button className="button-reload">
-                Reload <i className="bx bx-reset"></i>
-              </button>
             </div>
           </div>
         </div>
