@@ -22,9 +22,9 @@ function Sidebar() {
       <nav className={`sidebar ${isToggle ? "close" : ""}`}>
         <header>
           <div className="img-text">
-            <span className="image">
+            <div className="image">
               <img src={logo} alt="logo" />
-            </span>
+            </div>
             <div className="text header-text">
               <span className="name">VALKIRIA </span>
             </div>
@@ -56,7 +56,7 @@ function Sidebar() {
                 </Link>
               </li>
               <li className="nav-links">
-                <Link to="/configuracion">
+                <Link to="/dash/Configuracion">
                 <i className='bx bxs-cog icon'></i>
                   <span className="text nav-text">Configuración</span>
                 </Link>

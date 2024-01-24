@@ -1,9 +1,34 @@
-import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import viper from "../assets/images/viper.png";
 import chapola from "../assets/images/chapola.png";
 
+import { useForm } from "react-hook-form";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 function LoginRegister() {
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  
+  const { signIn, isAuthenticated} = useAuth();
+  const navigate = useNavigate();
+
+  const onSubmit = handleSubmit((data) => {
+    signIn(data);
+    console.log(data);
+  });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dash");
+    }
+  }, [isAuthenticated]);
+
   return (
     <>
       <body className="login" style={{ height: "100vh" }}>
@@ -12,16 +37,13 @@ function LoginRegister() {
             <div className="col-lg-6 d-none d-lg-block pb-5 ">
               <div className="position-relative h-100">
                 <div className="text-white w-50">
-                  <p className="fs-3 fw-bold name">VALKIRIA</p>
-                  <p className="fs-5 subtitle">
+                  <p className="fw-bold name">VALKIRIA</p>
+                  <p className="subtitle">
                     SOLUCIONES INFORMATICAS QUE FUNCIONAN PARA SU EMPRESA
                     CAFETERA{" "}
                   </p>
                 </div>
-                <div
-                  className="position-absolute  text-center"
-                  style={{ bottom: "0%" }}
-                >
+                <div className="terminos text-center">
                   <span>
                     <a
                       className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
@@ -76,7 +98,8 @@ function LoginRegister() {
                     </div>
                   </div>
                   <div>
-                    <form action="#">
+                    {/* ------------------------------------------- */}
+                    <form onSubmit={onSubmit}>
                       <div className="mb-4">
                         <label
                           htmlFor="email"
@@ -85,12 +108,15 @@ function LoginRegister() {
                           Usuario
                         </label>
                         <input
-                          type="email"
+                          type="text"
+                          {...register("username", { required: true })}
                           className="form-control form-control-lg fs-6 small-placeholder"
-                          name="email"
                           placeholder="Usuario"
                           style={{ height: "50px" }}
                         />
+                        {errors.username && (
+                          <p className="text-danger">Username is required</p>
+                        )}
                       </div>
                       <div className="mb-2">
                         <label
@@ -101,16 +127,19 @@ function LoginRegister() {
                         </label>
                         <input
                           type="password"
+                          {...register("password", { required: true })}
                           className="form-control form-control-lg fs-6 small-placeholder"
-                          name="password"
                           placeholder="Contraseña"
                           style={{ height: "50px" }}
                         />
+                        {errors.password && (
+                          <p className="text-danger">Password is required</p>
+                        )}
                       </div>
                       <div className="mb-4 w-100">
                         <span className="w-100 d-flex justify-content-end ">
                           <a
-                            className="text-decoration-none mt-3 text-1 text-login"
+                            className="text-decoration-none mt-3 text-1 text-3 text-login"
                             href="#"
                           >
                             Has olvidado tu contraseña?
@@ -119,15 +148,15 @@ function LoginRegister() {
                       </div>
 
                       <div className="d-grid">
-                        <Link
-                          to="dash"
+                        <button
                           type="submit"
                           className="btn btn-inicio-sesion text-white fs-6"
                         >
                           Iniciar Sesion
-                        </Link>
+                        </button>
                       </div>
                     </form>
+                    {/* ------------------------- */}
                   </div>
                 </div>
               </div>

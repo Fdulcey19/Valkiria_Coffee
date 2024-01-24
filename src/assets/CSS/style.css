@@ -19,6 +19,8 @@
     --togle-color: #DDD;
     --text-color: #3A3A3F;
     --green-color: #00B74A;
+    --blue-color-light: #9BD3FC;
+    --green-color-light: #6BFF47;
 
     --primary-gradient: linear-gradient(90deg, rgba(130,132,142,1) 0%, rgba(88,89,98,1) 55%);
     --secondary-gradient: linear-gradient(90deg, var(--secondary-color) 0%, var(--primary-color) 64%);
@@ -55,6 +57,7 @@
 
 .login .subtitle{
   width: 150%;
+  font-size: 16px;
 }
 
 .btn-login {
@@ -129,6 +132,48 @@
   margin-top: 0%;
   width: 75%;
 }
+
+.terminos{
+  position: absolute;
+  top: 90%;
+}
+
+/* Register */
+
+.container-register{
+  width: 100%;
+  margin-top: 0px;
+}
+
+.container-register input{
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 20px;
+  border: 0;
+  padding-left: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: var(--dow-box-shadow);
+  user-select: text;
+}
+
+.container-register span{
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.container-register button{
+  height: 50px;
+  padding: 0px 100px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 20px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color-light);
+  margin-top: 50px;
+}
+
 /* Ola Css */
 
 
@@ -406,12 +451,30 @@ header .image-text .header-text {
   width: 95%;
 }
 .login .name{
-  margin-top: 0px;
+  margin-top: 30px;
+  font-size: 28px;
 }
 
 .login .subtitle{
-  width: 200%;
+  width: 120%;
   font-weight: 600;
+  font-size: 12px;
+}
+.login-contain .text-3{
+  font-size: 12px;
+  font-weight: 500;
+}
+.logos{
+  position: absolute;
+  top: 70%;
+}
+
+.logos .images img{
+  width: 120px
+}
+.logos .logo-2 img{
+  width: 150px;
+  left: 150px;
 }
 }
 
@@ -592,8 +655,8 @@ header .image-text .header-text {
     height: 90px;
   }
 
-  .container-indicadores  .primer_indicador{
-    margin-top: -20px;
+  .container-indicadores .primer_indicador{
+    margin-top: 10px;
   }
   .container-indicadores .indicador .text {
     font-size: 10px; 
@@ -906,7 +969,7 @@ header .image-text .header-text {
   font-weight: 500;
   color: var(--White-color);
   position: absolute;
-  top: 10px;
+  top: -10px;
   left: 40%;
   border-radius: 20px;
   padding: 5px 25px;
@@ -943,7 +1006,7 @@ header .image-text .header-text {
   background: var(--White-color);
   height: 40px;
   width: 24%;
-  margin-top: -20px;
+  margin-top: -70px;
   border-radius: 20px;
   position: relative;
   box-shadow: var(--dow-box-shadow);
@@ -1065,11 +1128,8 @@ header .image-text .header-text {
 .home .m-top {
   margin-top: -25px;
 }
-
-.home .Terminos{
-  font-size: 13px;
-  text-align: center;
-  width: 90%;
+.terminos-nuevo{
+  text-align: justify;
 }
 
 .home .container-descargar{
@@ -1117,6 +1177,86 @@ header .image-text .header-text {
 }
 
 /* ======================================================================================== */
+/* ==============      Nuevo Futuro Share       ================ */
+/* ======================================================================================== */
+ 
+.nuevo-share .estandar{
+  position: absolute;
+  left: 50px;
+}
+
+.nuevo-share .Convencional{
+  position: absolute;
+  left: 38%;
+}
+
+.nuevo-share .text-1{
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.nuevo-share .text{
+  margin-left: -40px;
+  font-size: 12px;
+}
+
+.nuevo-share .fondo-valkiria {
+  position: absolute; 
+  opacity: 50%;
+  z-index: 0; /* Un valor negativo enviará el elemento al fondo */
+  /* Otros estilos según sea necesario */
+}
+
+.nuevo-share .info{
+  background-color: var(--White-color);
+  height: 40px;
+  font-size: 20px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 5px 20px;
+  width: 90%;
+  border: none;
+  z-index: 0;
+}
+
+.nuevo-share .text-price{
+  margin-left: -18px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.nuevo-share .contenedores{
+  margin-top: 40px;
+}
+
+.nuevo-share .contenedores .input-estandar{
+  background-color: var(--blue-color-light);
+}
+
+.nuevo-share .contenedores .input-organico{
+  background-color: var(--green-color-light);
+}
+.nuevo-share .Terminos{
+  margin-top: 20px;
+  font-size: 13px;
+  text-align: justify;
+  width: 80%;
+}
+
+.nuevo-share .nuevo{
+  position: absolute;
+  left: 81%;
+  top: -25px;
+  width: 18%;
+}
+
+.home-fondo{
+  background-image: url('../images/logo.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+/* ======================================================================================== */
 /* ==============            Loanding       ================ */
 /* ======================================================================================== */
 
@@ -1159,4 +1299,157 @@ header .image-text .header-text {
 
 .Reload .button{
   width: 250px;
+}
+
+
+/* ======================================================================================== */
+/* ==============            Precios       ================ */
+/* ======================================================================================== */
+
+
+
+.precios .container-valkiria{
+  width: 500px;
+  background-color: #f3f3f3;
+  position: absolute;
+  left: 25%;
+  height: 500px;
+  margin-top: 30px;
+  border-radius: 40px;
+  box-shadow: var(--secondary-box-shadow);
+  padding: 40px 40px;
+}
+
+.precios .container-valkiria .container{
+  transition: var(--tran-05);
+  height: 50px;
+  position: relative;
+  margin-bottom: 25px;
+  left: 10%;
+}
+
+.precios .container-valkiria .container input{
+  height: 40px;
+  border-radius: 30px;
+  border: 0;
+  width: 80%;
+  padding-left: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.precios .container-valkiria .container span{
+  position: absolute;
+  top: -24px;
+  left: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.precios .container-nuevo-futuro{
+  transition: var(--tran-04);
+}
+.precios .container-nuevo-futuro .container_pry{
+  display: flex;
+}
+
+.precios .container-nuevo-futuro .container{
+  height: 50px;
+  position: relative;
+  margin-bottom: 25px;
+  left: 5%;
+}
+.precios .container-nuevo-futuro .container input{
+  height: 40px;
+  border-radius: 30px;
+  border: 0;
+  width: 90%;
+  padding-left: 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.precios .btn-guardar{
+  border-radius: 20px;
+  background-color: #07a546;
+  color: white;
+  height: 40px;
+  padding: 0px 20px;
+}
+
+.precios .btn-guardar:hover{
+  scale: 1.1;
+  background-color: #128f44;
+  
+}
+
+/* NotFound.css */
+
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.not-found-contain {
+  text-align: center;
+}
+
+.not-found-text {
+  color: #333;
+}
+
+.not-found-text h1 {
+  font-size: 5rem;
+  margin-bottom: 0;
+}
+
+.not-found-text h3 {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+
+.not-found-text p {
+  margin: 1rem 0;
+}
+
+.not-found-text a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.not-found-text a:hover {
+  text-decoration: underline;
+}
+
+/* LoadingComponent.css */
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: var(--primary-color);; /* Color del texto */
+  font-weight: 700;
+}
+
+.loading:before {
+  content: "";
+  border: 4px solid var(--primary-color); /* Color del borde del círculo */
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  width: 24px; /* Tamaño del círculo */
+  height: 24px; /* Tamaño del círculo */
+  animation: spin 1s linear infinite; /* Animación de rotación */
+  margin-right: 0.5rem; /* Espaciado entre el círculo y el texto */
+  margin-bottom: 0.3rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

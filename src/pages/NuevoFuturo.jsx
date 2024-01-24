@@ -476,12 +476,12 @@ function NuevoFuturo() {
                   style={{
                     color:
                       data.indicadorDolar.resultStateDollar > 0
-                        ? "red"
-                        : "green",
+                        ? "green"
+                        : "red",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicadorDolar.resultStateDollar > 0 ? "↓" : "↑"}
+                    {data.indicadorDolar.resultStateDollar > 0 ? "↑" : "↓"}
                   </span>
                   {data.indicadorDolar.dollarPriceChange}{" "}
                   {data.indicadorDolar.dollarPricePorChange}
@@ -502,11 +502,11 @@ function NuevoFuturo() {
                 <span
                   className="text precio_indicador"
                   style={{
-                    color: data.indicador.resultState > 0 ? "green" : "red",
+                    color: data.indicador.resultState > 0 ? "red" : "green",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicador.resultState > 0 ? "↑" : "↓"}
+                    {data.indicador.resultState > 0 ? "↓" : "↑"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
                   {data.indicador.cambioValorPorcentaje}

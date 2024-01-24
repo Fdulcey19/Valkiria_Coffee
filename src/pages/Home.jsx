@@ -11,8 +11,11 @@ import {
   getPrecioOrigen,
   getValorTaza,
 } from "../domain/services";
+import { usePrecios } from "../context/PreciosContex";
 
 function Home() {
+  const { getPrecios } = usePrecios();
+
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [valorPuntoDiferencia, setValorPuntoDiferencia] = useState(2000);
   const [valorPrecioMercado, setValorPrecioMercado] = useState();
@@ -39,6 +42,11 @@ function Home() {
       </div>
     );
   }
+
+  useEffect(() => {
+    getPrecios();
+  }, [])
+
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -110,11 +118,18 @@ function Home() {
 
   if (error) {
     return (
-      <div className="Reload d-flex flex-column align-content-center">
-        <p>Error: {error.message}</p>
-        <button className="btn btn-dark button" onClick={()=>handleReload()}><i className="bx bx-reset"></i> Reload Componente</button>
-      </div>,
-      ()=>handleReload()
+      (
+        <div className="Reload d-flex flex-column align-content-center">
+          <p>Error: {error.message}</p>
+          <button
+            className="btn btn-dark button"
+            onClick={() => handleReload()}
+          >
+            <i className="bx bx-reset"></i> Reload Componente
+          </button>
+        </div>
+      ),
+      () => handleReload()
     );
   }
 
@@ -128,7 +143,7 @@ function Home() {
               <span className="text subtitulo">Precio Pergamino</span>
               <span className="text precio">{`$ ${data.arroba.toLocaleString()}`}</span>
               <span className="text hora">{formattedDateTime}</span>
-              <button className="button-reload" onClick={()=>handleReload()}>
+              <button className="button-reload" onClick={() => handleReload()}>
                 Reload <i className="bx bx-reset"></i>
               </button>
             </div>
@@ -179,7 +194,7 @@ function Home() {
                 />
               </div>
             </div>
-            
+
             {/* Taza */}
             <div className="precio-mercado precio-extra col-12 col-6">
               <div className="contenedores">
@@ -203,7 +218,7 @@ function Home() {
                 />
               </div>
             </div>
-            
+
             {/* Micro Lote */}
             <div className="precio-mercado precio-extra col-12 col-6">
               <div className="contenedores">
@@ -227,7 +242,7 @@ function Home() {
                 />
               </div>
             </div>
-            
+
             {/* Mediano Lote */}
             <div className="precio-mercado precio-extra col-12 col-6">
               <div className="contenedores">
@@ -279,11 +294,10 @@ function Home() {
               <div className="indicador libra">
                 <span className="text subtitulo">Precio Libra</span>
                 <span className="text precio precio-libra">
-                  $ {(data.libra).toLocaleString()}
+                  $ {data.libra.toLocaleString()}
                 </span>
-                
+
                 <img className="img" src={colombia} alt="" />
-    
               </div>
               <div className="indicador">
                 <span className="text subtitulo">Precio USD</span>
@@ -293,12 +307,12 @@ function Home() {
                   style={{
                     color:
                       data.indicadorDolar.resultStateDollar > 0
-                        ? "red"
-                        : "green",
+                        ? "green"
+                        : "red",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicadorDolar.resultStateDollar > 0 ? "↓" : "↑"}
+                    {data.indicadorDolar.resultStateDollar > 0 ? "↑" : "↓"}
                   </span>
                   {data.indicadorDolar.dollarPriceChange}{" "}
                   {data.indicadorDolar.dollarPricePorChange}
@@ -322,11 +336,11 @@ function Home() {
                 <span
                   className="text precio_indicador"
                   style={{
-                    color: data.indicador.resultState > 0 ? "green" : "red",
+                    color: data.indicador.resultState > 0 ? "red" : "green",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicador.resultState > 0 ? "↑" : "↓"}
+                    {data.indicador.resultState > 0 ? "↓" : "↑"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
                   {data.indicador.cambioValorPorcentaje}

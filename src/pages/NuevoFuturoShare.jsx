@@ -2,6 +2,7 @@ import { useRef } from "react";
 import html2canvas from "html2canvas";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
+import nuevo from '../assets/images/nuevo.png'
 
 function NuevoFuturoShare() {
   const containerRef = useRef(null);
@@ -40,150 +41,123 @@ function NuevoFuturoShare() {
   };
   return (
     <div className="home home-share nuevo-share">
-      <div>
-        <div className="container-descargar">
-          <button
-            className="btn btn-success button-descargar"
-            onClick={handleGenerateImage}
-          >
-            Compartir <i className="bx bxl-whatsapp compartir"></i>
-          </button>
-        </div>
-        <div ref={containerRef}>
-          {/* Contenido que quieres convertir en imagen */}
-          <h2 className="Title">Precios Extras </h2>
+      <div className="container container-descargar">
+        <button
+          className="btn btn-success button-descargar"
+          onClick={handleGenerateImage}
+        >
+          Compartir <i className="bx bxl-whatsapp compartir"></i>
+        </button>
+      </div>
+      <div ref={containerRef}>
+        {/* Contenido que quieres convertir en imagen */}
+        <h2 className="Title">Precios Extras </h2>
 
-          <div className="row">
-            <div className="col-12 col-md-9">
-              <img className="fondo-valkiria" src={logo} alt="" />
-
-              {/* Origen */}
-              <div className="row precio-mercado valkiria-share">
-                <div className="contenedores col-12 col-md-4">
-                  <span className="text text-price">Origen</span>
+        <div className="row">
+          <div className=" row col-12 col-md-9 home-fondo">
+            
+            <div className="container">
+            {/* Primera Fila */}
+              {/* Estandar */}
+              <div className="row col-12 mt-5">
+                <span className="estandar text-1">Estandar</span>
+                <span className="Convencional text-1">Convencional</span>
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor 92</span>
                   <input type="text" className="info price" value={150000} />
                 </div>
-                <div className="contenedores contenedores_derecha col-12 col-md-8">
-                  <span className="text text-2">
-                    <span className="Subtitle">Kilos:</span> Indefinidos,{" "}
-                    <span className="Subtitle">Factor:</span> 93,{" "}
-                    <span className="Subtitle">Taza:</span> 80 - 83,75{" "}
-                    <span className="Subtitle">Humedad:</span>: 10 - 12,5
-                  </span>
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor +88</span>
+                  <input type="text" className="info price" value={150000} />
+                </div>
+                {/* Convencional */}
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor 92</span>
+                  <input
+                    type="text"
+                    className="info price input-estandar"
+                    value={150000}
+                  />
+                </div>
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor +88</span>
+                  <input
+                    type="text"
+                    className="info price input-estandar"
+                    value={150000}
+                  />
                 </div>
               </div>
-
-              {/* Especial */}
-              <div className="precio-mercado valkiria-share m-top">
-                <div className="contenedores col-12 col-md-6">
-                  <span className="text text-price">Especial</span>
-                  <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={152000} />
+            {/* Segunda Fila */}
+              {/* Organico */}
+              <div className="row col-12 mt-3">
+                <span className="estandar text-1">Organico</span>
+                <span className="Convencional text-1">Taza</span>
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor 92</span>
+                  <input type="text" className="info price input-organico" value={150000} />
                 </div>
-                <div className="contenedores contenedores_derecha col-12 col-md-6">
-                  <span className="text text-2">
-                    <span className="Subtitle">Kilos:</span> Indefinidos,{" "}
-                    <span className="Subtitle">Factor:</span> 91,{" "}
-                    <span className="Subtitle">Taza:</span> 81 - 84,75{" "}
-                    <span className="Subtitle">Humedad:</span>: 10 - 12
-                  </span>
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor +88</span>
+                  <input type="text" className="info price input-organico" value={150000} />
                 </div>
-              </div>
-
-              {/* Microlote */}
-              <div className="precio-mercado valkiria-share m-top">
-                <div className="contenedores col-12 col-md-6">
-                  <span className="text text-price">Microlote</span>
-                  <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={148000} />
+                {/* Taza */}
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor 92</span>
+                  <input
+                    type="text"
+                    className="info price"
+                    value={150000}
+                  />
                 </div>
-                <div className="contenedores contenedores_derecha col-12 col-md-6">
-                  <span className="text text-2">
-                    <span className="Subtitle">Kilos:</span> 125 &ge;,{" "}
-                    <span className="Subtitle">Factor:</span> 90,{" "}
-                    <span className="Subtitle">Taza:</span> 85 - 85,75{" "}
-                    <span className="text-danger fw-bold">Estricta</span>{" "}
-                    <span className="Subtitle">Humedad:</span>: 10 - 11,5
-                  </span>
+                <div className="col-3 contenedores">
+                  <span className="text text-price">Factor +88</span>
+                  <input
+                    type="text"
+                    className="info price"
+                    value={150000}
+                  />
                 </div>
               </div>
-
-              {/* Mediano Lote */}
-              <div className="precio-mercado valkiria-share m-top">
-                <div className="contenedores col-12 col-md-6">
-                  <span className="text text-price">Med.Lote</span>
-                  <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={137000} />
-                </div>
-                <div className="contenedores contenedores_derecha col-12 col-md-6">
-                  <span className="text text-2">
-                    <span className="Subtitle">Kilos:</span> 500 &ge;,{" "}
-                    <span className="Subtitle">Factor:</span> 93,{" "}
-                    <span className="Subtitle">Taza:</span> Limpia{" "}
-                    <span className="text-danger fw-bold">Estricta</span>{" "}
-                    <span className="Subtitle">Humedad:</span>: 10 - 12,5
-                  </span>
-                </div>
-              </div>
-
-              {/* Taza */}
-              <div className="precio-mercado valkiria-share m-top">
-                <div className="contenedores col-12 col-md-6">
-                  <span className="text text-price">Taza</span>
-                  <span className="signo-2">$</span>
-                  <input type="text" className="info price" value={137000} />
-                </div>
-                <div className="contenedores contenedores_derecha col-12 col-md-6">
-                  <span className="text text-2">
-                    <span className="Subtitle">Kilos:</span> 500 &ge;,{" "}
-                    <span className="Subtitle">Factor:</span> 93,{" "}
-                    <span className="Subtitle">Taza:</span> 84 - 84,5{" "}
-                    <span className="text-danger fw-bold">Estricta</span>{" "}
-                    <span className="Subtitle">Humedad:</span>: 10 - 12,5
-                  </span>
-                </div>
-              </div>
-
-              {/* Fin Container */}
-              {/* Terminos y condiciones */}
-              <div className="precio-mercado valkiria-share ">
-                <p className="Terminos">
-                  se recomienda comunicarce con los encargados de bodega antes
-                  de entregar su café-las ofertas tienen un vencimiento de 4
-                  dias habiles -los lotes mayores a 250 kilos pueden tener un
-                  retraso en la cancelacion de 12 a 36 horas-LOS ANUNCIOS
-                  DEVERAN SER CONFIRMADOS, de cafes convencionales y estandar se
-                  reciben de 8.30 de la mañana a 5.30 de la tarde -los organicos
-                  solamente mientras el precio del dia este vigente de la tabla
-                  federacion Nacional de cafeteros, los lotes devén de cumplir
-                  mínimamente tazas limpias (sin defectos) con humedades
-                  del 10.00-12.00%
-                </p>
-              </div>
-              {/* Fin */}
-              {/* Indicadores */}
             </div>
-            <div className="col-12 col-md-3">
-              <div className="container-indicadores">
-                <div className="indicador valkiria">
-                  <img src={logo} alt="" />
-                </div>
-                <div className="indicador">
-                  <span className="text subtitulo">Precio USD</span>
-                  <span className="text precio">$ 142.193,200</span>
-                  <img className="img" src={eeuu} alt="" />
-                  <span className="vermas">
-                    <a href="">Ver Mas</a>
-                  </span>
-                </div>
-                <div className="indicador">
-                  <span className="text subtitulo">Café EE.UU.</span>
-                  <span className="text precio">$ 142.193,200</span>
-                  <img className="img" src={eeuu} alt="" />
-                  <span className="vermas">
-                    <a href="">Ver Mas</a>
-                  </span>
-                </div>
+            {/* Terminos y condiciones */}
+            <div className="precio-mercado valkiria-share terminos-nuevo">
+              <p className="Terminos">
+                Se recomienda comunicarce con los encargados de bodega antes de
+                entregar su café-las ofertas tienen un vencimiento de 4 dias
+                habiles -los lotes mayores a 250 kilos pueden tener un retraso
+                en la cancelacion de 12 a 36 horas-LOS ANUNCIOS DEVERAN SER
+                CONFIRMADOS, de cafes convencionales y estandar se reciben de
+                8.30 de la mañana a 5.30 de la tarde -los organicos solamente
+                mientras el precio del dia este vigente de la tabla federacion
+                Nacional de cafeteros, los lotes devén de cumplir mínimamente
+                tazas limpias (sin defectos) con humedades del 10.00-12.00%
+              </p>
+              <img className="nuevo" src={nuevo} alt="" />
+            </div>
+            {/* Fin */}
+            {/* Indicadores */}
+          </div>
+          <div className="col-12 col-md-3">
+            <div className="container-indicadores">
+              <div className="indicador valkiria">
+                <img src={logo} alt="" />
+              </div>
+              <div className="indicador">
+                <span className="text subtitulo">Precio USD</span>
+                <span className="text precio">$ 142.193,200</span>
+                <img className="img" src={eeuu} alt="" />
+                <span className="vermas">
+                  <a href="">Ver Mas</a>
+                </span>
+              </div>
+              <div className="indicador">
+                <span className="text subtitulo">Café EE.UU.</span>
+                <span className="text precio">$ 142.193,200</span>
+                <img className="img" src={eeuu} alt="" />
+                <span className="vermas">
+                  <a href="">Ver Mas</a>
+                </span>
               </div>
             </div>
           </div>
