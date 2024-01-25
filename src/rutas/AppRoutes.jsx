@@ -21,6 +21,9 @@ function AppRoutes() {
           <Route path="/register" element={<RegisterPage />} />
 
           <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<HomePage />} />
+          </Route>
+
             <Route path="/dash" element={<Sidebar />}>
               <Route index element={<Home />} />
               <Route path="nuevo" element={<NuevoFuturo />} />
@@ -28,8 +31,6 @@ function AppRoutes() {
               <Route path="nuevo/share" element={<NuevoFuturoShare />} />
               <Route path="Configuracion" element={<Configuracion />} />
             </Route>
-          </Route>
-
           {/* Ruta para manejar 404 Not Found */}
           <Route path="*" element={<Navigate to="/404" />} />
           <Route path="/404" element={<NotFound />} />
