@@ -3,7 +3,6 @@ import axios from 'axios'
 export const getPosts = async () => {
     try {
          const responseAllData = await axios.get("https://valkiria-backend-felipe-dulceys-projects.vercel.app");
-        // const responseAllData = await axios.get("http://localhost:3000");
         return responseAllData
     } catch {
         console.log("Error al obtener los datos".error);

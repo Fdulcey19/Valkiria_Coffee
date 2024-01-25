@@ -2,7 +2,6 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { loginRequest, registerRequest, verifyTokenRequest } from "../api/auth";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
-import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -53,6 +52,8 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       setUser(res.data);
 
+      localStorage.setItem('token', res.data.token);
+
       Swal.fire({
         icon: "success",
         title: "Login Successful",
@@ -85,7 +86,8 @@ export const AuthProvider = ({ children }) => {
       confirmButtonText: "Si, Salir!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Cookies.remove("token"); // Elimina la cookie del token
+        // Eliminar el token del localStorage
+        localStorage.removeItem('token');
         setIsAuthenticated(false);
         setUser(null);
         Swal.fire({
@@ -100,16 +102,15 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function checkLogin() {
       console.log("Checking login...");
-      const cookies = Cookies.get();
-      console.log("Cookies:", cookies);
-      if (!cookies.token) {
+      const tokenLocal = localStorage.getItem('token')
+      if (!tokenLocal) {
         setIsAuthenticated(false);
         setUser(null);
         setLoading(false);
         return;
       }
       try {
-        const res = await verifyTokenRequest(cookies.token);
+        const res = await verifyTokenRequest(tokenLocal);
         console.log(res);
         if (!res.data) {
           setIsAuthenticated(false);
