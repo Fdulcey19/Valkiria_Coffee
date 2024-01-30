@@ -4,26 +4,26 @@ import chapola from "../assets/images/chapola.png";
 
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect,  } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../componentes/Facebook/Button";
-import * as storage from "../componentes/Facebook/storage";
+// import * as storage from "../componentes/Facebook/storage";
 
 function LoginRegister() {
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  const onLogin = (user) => {
-    // Almacenar en el localStorage
-    storage.setUser(user);
-    setUser(user);
-  };
+  // const onLogin = (user) => {
+  //   // Almacenar en el localStorage
+  //   storage.setUser(user);
+  //   setUser(user);
+  // };
 
-  useEffect(() => {
-    const user = storage.getUser(); // Obtener el usuario del localStorage
-    if (user) {
-      setUser(user);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const user = storage.getUser(); // Obtener el usuario del localStorage
+  //   if (user) {
+  //     setUser(user);
+  //   }
+  // }, []);
   //
   const {
     register,
@@ -170,7 +170,7 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                        {!user && <Button className="button-descargar" onLogin={onLogin} />}
+                        <Button className="button-descargar"  />
                       </div>
                     </form>
                     {/* ------------------------- */}
