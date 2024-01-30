@@ -14,11 +14,9 @@ function LoginRegister() {
   const [user, setUser] = useState(null);
   const onLogin = (user) => {
     // Almacenar en el local storage
-    storage.setUser(user); // Esto guarda el usuario en localStorage
-  
-    // Guardar el token por separado si es necesario (en este caso, ya está en user.accessToken)
     console.log("User desde LoginRegister",user);
-    storage.setItem("accessToken", user.accessToken);
+    storage.setUser(user); // Esto guarda el usuario en localStorage
+    // Guardar el token por separado si es necesario (en este caso, ya está en user.accessToken)
     setUser(user);
   };
 
