@@ -6,25 +6,16 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useEffect,  } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../componentes/Facebook/Button";
+import { Button } from "../componentes/Facebook/Button";
 // import * as storage from "../componentes/Facebook/storage";
 
 function LoginRegister() {
-  // const [user, setUser] = useState(null);
+  
+  const onLogin = (user) => {
+    // Almacenar en el localStorage
+    console.log(user);
+  };
 
-  // const onLogin = (user) => {
-  //   // Almacenar en el localStorage
-  //   storage.setUser(user);
-  //   setUser(user);
-  // };
-
-  // useEffect(() => {
-  //   const user = storage.getUser(); // Obtener el usuario del localStorage
-  //   if (user) {
-  //     setUser(user);
-  //   }
-  // }, []);
-  //
   const {
     register,
     handleSubmit,
@@ -171,7 +162,7 @@ function LoginRegister() {
                           Iniciar Sesion
                         </button>
                       </div>
-                        <Button/>
+                      <Button onLogin={onLogin} />
                     </form>
                     {/* ------------------------- */}
                   </div>
