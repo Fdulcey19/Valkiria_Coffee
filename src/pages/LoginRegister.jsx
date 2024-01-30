@@ -177,7 +177,7 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                        {!user && <Button onLogin={onLogin} />}
+                        {!user ? <Button onLogin={onLogin} /> : null}
                       </div>
                     </form>
                     {/* ------------------------- */}
