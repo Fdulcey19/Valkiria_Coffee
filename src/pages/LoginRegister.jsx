@@ -4,20 +4,37 @@ import chapola from "../assets/images/chapola.png";
 
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useEffect,  } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../componentes/Facebook/Button";
-// import * as storage from "../componentes/Facebook/storage";
+import Button from "../componentes/Facebook/Button";
+import * as storage from "../componentes/Facebook/storage";
 
 function LoginRegister() {
-
+  // Facebook
+  const [user, setUser] = useState(null);
+  const onLogin = (user) => {
+    // almacenar en el localstorage
+    storage.setUser(user);
+    setUser(user);
+  }
+  
+  useEffect(() => {
+    const checksession = ()=>{
+        const user = storage.getUser();  //obtener el usuario del localstorage
+        if(user){
+            setUser(user);
+        }
+    }
+    checksession();
+  }, []);
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const { signIn, isAuthenticated } = useAuth();
+  
+  const { signIn, isAuthenticated} = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
@@ -156,12 +173,7 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                      </div>
-                      <div>
-                        <span className="text-1 text-login">
-                          O inicia sesion con
-                        </span>
-                      <Button/>
+                        {!user && <Button onLogin={onLogin} /> }
                       </div>
                     </form>
                     {/* ------------------------- */}
