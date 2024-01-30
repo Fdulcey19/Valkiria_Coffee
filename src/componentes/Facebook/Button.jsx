@@ -28,7 +28,7 @@ function Button() {
       });
     }
     return (
-      <button onClick={facebookLogin} className="button-compartir">
+      <button onClick={facebookLogin} className="btn btn-success">
         <i className="bx bxl-facebook"></i> Continuar con Facebook
       </button>
     );

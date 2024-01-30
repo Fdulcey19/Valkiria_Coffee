@@ -170,8 +170,8 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                        <Button/>
                       </div>
+                        <Button/>
                     </form>
                     {/* ------------------------- */}
                   </div>
