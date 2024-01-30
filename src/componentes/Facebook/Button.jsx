@@ -30,12 +30,13 @@ function Button(onLogin) {
                 ...userData,
                 accessToken: response.authResponse.accessToken,
               };
+              JSON.stringify(response.authResponse.accessToken);
               onLogin(user);
             });
           }
       };
   return (
-    <button onClick={facebookLogin} className="btn_facebook"><i className='bx bxl-facebook'></i> Continuar con Facebook</button>
+    <button onClick={facebookLogin} className="button-compartir"><i className='bx bxl-facebook'></i> Continuar con Facebook</button>
   )
 }
 
