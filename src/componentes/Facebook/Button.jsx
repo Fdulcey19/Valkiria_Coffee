@@ -31,7 +31,7 @@ function Button(onLogin) {
           };
   
           // Almacena el usuario en local storage
-          window.localStorage.setItem("Token", JSON.stringify(user.accessToken));
+          window.localStorage.setItem("Token", JSON.stringify(user));
   
           // Llama a la función onLogin con la información del usuario
           onLogin(user);
