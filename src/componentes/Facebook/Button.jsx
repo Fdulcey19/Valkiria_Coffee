@@ -21,20 +21,22 @@ function Button(onLogin) {
       const facebookLoginHandler = (response) => {
         console.log("Respuesta de facebook", response);
         if (response.status === "connected") {
-          console.log("Ya estas conectado");
-          // Leer los datos del perfil
-        }  else {
-            window.FB.api("me?fields=id,name,email,picture", (userData) => {
+            console.log("Ya estás conectado");
+        
+            // Llamada a la API de Facebook para obtener información del usuario
+            window.FB.api("/me?fields=id,name,email,picture", { access_token: response.authResponse.accessToken }, (userData) => {
               console.log("Datos del usuario de Facebook", userData);
+              
               const user = {
                 ...userData,
                 accessToken: response.authResponse.accessToken,
               };
-              const token = response.authResponse.accessToken;
-                console.log(token);
-                
+        
+              // Llama a la función onLogin con la información del usuario
               onLogin(user);
             });
+          } else {
+            console.log("No estás conectado");
           }
       };
   return (
