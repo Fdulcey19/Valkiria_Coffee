@@ -166,7 +166,7 @@ function LoginRegister() {
                         <span className="text-1 text-login">
                           O inicia sesion con
                         </span>
-                      <Button onLogin={onLogin} >Facebook W</Button>
+                      <Button onLogin={onLogin}/>
                       </div>
                     </form>
                     {/* ------------------------- */}
