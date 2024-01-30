@@ -11,11 +11,6 @@ import { Button } from "../componentes/Facebook/Button";
 
 function LoginRegister() {
 
-  const onLogin = (user) => {
-    // Almacenar en el localStorage
-    console.log(user);
-  };
-
   const {
     register,
     handleSubmit,
@@ -166,7 +161,7 @@ function LoginRegister() {
                         <span className="text-1 text-login">
                           O inicia sesion con
                         </span>
-                      <Button onLogin={onLogin}/>
+                      <Button/>
                       </div>
                     </form>
                     {/* ------------------------- */}
