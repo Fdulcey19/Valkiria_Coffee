@@ -162,7 +162,12 @@ function LoginRegister() {
                           Iniciar Sesion
                         </button>
                       </div>
+                      <div>
+                        <span className="text-1 text-login">
+                          O inicia sesion con
+                        </span>
                       <Button onLogin={onLogin} />
+                      </div>
                     </form>
                     {/* ------------------------- */}
                   </div>
