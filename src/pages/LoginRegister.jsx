@@ -170,7 +170,7 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                        <Button className="button-descargar"  />
+                        <Button/>
                       </div>
                     </form>
                     {/* ------------------------- */}
