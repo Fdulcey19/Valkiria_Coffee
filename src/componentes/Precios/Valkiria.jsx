@@ -6,9 +6,10 @@ function Valkiria() {
 
   const { createPrecios } = usePrecios();
   
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data);
-    createPrecios(data);
+    const res = await createPrecios(data);
+    console.log(res);
   });
 
   return (

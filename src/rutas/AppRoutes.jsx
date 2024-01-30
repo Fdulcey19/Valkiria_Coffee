@@ -9,10 +9,7 @@ import Configuracion from "../pages/Configuracion";
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
 import ProtectedRoute from "../helpers/ProtectedRoute";
-
-function NotFound() {
-  return <h1>404 Not Found</h1>;
-}
+import NotFound from "../pages/NotFound";
 
 function AppRoutes() {
   return (

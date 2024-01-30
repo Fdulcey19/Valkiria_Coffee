@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }) => {
       setUser(res.data);
       Swal.fire({
         icon: "success",
-        title: "Registration Successful",
-        text: "You have successfully registered.",
+        title: "Registro exitoso",
+        text: "Tu registro fue exitoso.",
         timer: 3000,
         showConfirmButton: false,
       });
@@ -35,8 +35,8 @@ export const AuthProvider = ({ children }) => {
       console.log(error.response);
       Swal.fire({
         icon: "error",
-        title: "Registration Failed",
-        text: error.response.data || "An error occurred during registration.",
+        title: "Falló el registro",
+        text: error.response.data || "Un error ocurrio al registrarse",
         timer: 3000,
         showConfirmButton: false,
       });
@@ -56,8 +56,8 @@ export const AuthProvider = ({ children }) => {
 
       Swal.fire({
         icon: "success",
-        title: "Login Successful",
-        text: "You have successfully logged in.",
+        title: "Login Correcto",
+        text: "Iniciaste Sesion Correctamente.",
         timer: 3000,
         showConfirmButton: false,
       });
@@ -65,8 +65,8 @@ export const AuthProvider = ({ children }) => {
       console.log(error.response);
       Swal.fire({
         icon: "error",
-        title: "Login Failed",
-        text: error.response || "An error occurred during login.",
+        title: "Fallo al iniciar sesion",
+        text: error.response.data || "Ocurrio un error al iniciar sesion.",
         timer: 3000,
         showConfirmButton: false,
       });
