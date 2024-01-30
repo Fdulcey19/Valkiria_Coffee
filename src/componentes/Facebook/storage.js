@@ -18,7 +18,7 @@ const getItem = (key) => {
 
 export function setUser(user) {
     setItem('user', user);
-}
+  }
 
 export function getUser() {
     return getItem('user');

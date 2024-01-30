@@ -13,10 +13,10 @@ function LoginRegister() {
   // Facebook
   const [user, setUser] = useState(null);
   const onLogin = (user) => {
-    // almacenar en el localstorage
-    storage.setUser(user);
+    // Almacenar en el local storage
+    storage.setUser(user); // <-- Se refiere a la función definida en storage.js
     setUser(user);
-  }
+  };
   
   useEffect(() => {
     const checksession = ()=>{
