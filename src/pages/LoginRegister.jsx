@@ -23,6 +23,7 @@ function LoginRegister() {
   useEffect(() => {
     const checksession = () => {
       const user = storage.getUser(); //obtener el usuario del localstorage
+      console.log(user);
       if (user) {
         setUser(user);
       }
