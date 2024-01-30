@@ -10,7 +10,7 @@ import { Button } from "../componentes/Facebook/Button";
 // import * as storage from "../componentes/Facebook/storage";
 
 function LoginRegister() {
-  
+
   const onLogin = (user) => {
     // Almacenar en el localStorage
     console.log(user);
