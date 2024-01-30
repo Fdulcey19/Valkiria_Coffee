@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../componentes/Facebook/Button";
 
 function LoginRegister() {
   
@@ -153,6 +154,9 @@ function LoginRegister() {
                           className="btn btn-inicio-sesion text-white fs-6"
                         >
                           Iniciar Sesion
+                        </button>
+                        <button>
+                          <Button></Button>
                         </button>
                       </div>
                     </form>
