@@ -1,5 +1,6 @@
 const setItem = (key, value) => {
     try {
+        console.log(`Setting ${key} in localStorage:`, value);
         window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
         console.error(`Error storing ${key} in localStorage:`, error);
