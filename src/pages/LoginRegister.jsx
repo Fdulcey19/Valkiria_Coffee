@@ -10,31 +10,28 @@ import Button from "../componentes/Facebook/Button";
 import * as storage from "../componentes/Facebook/storage";
 
 function LoginRegister() {
-  // Facebook
   const [user, setUser] = useState(null);
+
   const onLogin = (user) => {
-    // almacenar en el localstorage
+    // Almacenar en el localStorage
     storage.setUser(user);
     setUser(user);
-  }
-  
+  };
+
   useEffect(() => {
-    const checksession = ()=>{
-        const user = storage.getUser();  //obtener el usuario del localstorage
-        if(user){
-            setUser(user);
-        }
+    const user = storage.getUser(); // Obtener el usuario del localStorage
+    if (user) {
+      setUser(user);
     }
-    checksession();
   }, []);
-  
+  //
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
-  const { signIn, isAuthenticated} = useAuth();
+
+  const { signIn, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
@@ -173,7 +170,7 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                        {!user && <Button onLogin={onLogin} /> }
+                        {!user && <Button className="button-descargar" onLogin={onLogin} />}
                       </div>
                     </form>
                     {/* ------------------------- */}
