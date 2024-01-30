@@ -14,27 +14,31 @@ function LoginRegister() {
   const [user, setUser] = useState(null);
   const onLogin = (user) => {
     // Almacenar en el local storage
-    storage.setUser(user); // <-- Se refiere a la función definida en storage.js
+    storage.setUser(user); // Esto guarda el usuario en localStorage
+  
+    // Guardar el token por separado si es necesario (en este caso, ya está en user.accessToken)
+    console.log("User desde LoginRegister",user);
+    storage.setItem("accessToken", user.accessToken);
     setUser(user);
   };
-  
+
   useEffect(() => {
-    const checksession = ()=>{
-        const user = storage.getUser();  //obtener el usuario del localstorage
-        if(user){
-            setUser(user);
-        }
-    }
+    const checksession = () => {
+      const user = storage.getUser(); //obtener el usuario del localstorage
+      if (user) {
+        setUser(user);
+      }
+    };
     checksession();
   }, []);
-  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
-  const { signIn, isAuthenticated} = useAuth();
+
+  const { signIn, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
@@ -173,7 +177,7 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                        {!user && <Button onLogin={onLogin} /> }
+                        {!user && <Button onLogin={onLogin} />}
                       </div>
                     </form>
                     {/* ------------------------- */}
