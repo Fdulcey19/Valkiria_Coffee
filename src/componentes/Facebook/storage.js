@@ -10,7 +10,7 @@ const setItem = (key, value) => {
 const getItem = (key) => {
     const storedValue = window.localStorage.getItem(key);
     try {
-        return storedValue ? JSON.parse(storedValue) : undefined;
+        return storedValue ? storedValue : undefined;
     } catch (error) {
         console.error(`Error parsing ${key} from localStorage:`, error);
         return undefined;
