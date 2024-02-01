@@ -4,33 +4,10 @@ import chapola from "../assets/images/chapola.png";
 
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../componentes/Facebook/Button";
-import * as storage from "../componentes/Facebook/storage";
 
 function LoginRegister() {
-  // Facebook
-  const [user, setUser] = useState(null);
-  const onLogin = (user) => {
-    // Almacenar en el local storage
-    console.log("User desde LoginRegister",user);
-    storage.setUser(user); // Esto guarda el usuario en localStorage
-    // Guardar el token por separado si es necesario (en este caso, ya está en user.accessToken)
-    setUser(user);
-  };
-
-  useEffect(() => {
-    const checksession = () => {
-      const user = storage.getUser(); //obtener el usuario del localstorage
-      console.log(user);
-      if (!user) {
-        setUser(user);
-      }
-    };
-    checksession();
-  }, []);
-
   const {
     register,
     handleSubmit,
@@ -176,7 +153,6 @@ function LoginRegister() {
                         >
                           Iniciar Sesion
                         </button>
-                        {!user ? <Button onLogin={onLogin} /> : null}
                       </div>
                     </form>
                     {/* ------------------------- */}
