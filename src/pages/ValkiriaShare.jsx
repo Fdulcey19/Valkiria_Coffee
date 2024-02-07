@@ -159,8 +159,8 @@ function ValkiriaShare() {
               {/* Terminos y condiciones */}
               <div className="precio-mercado valkiria-share ">
                 <p className="Terminos">
-                  SE RECOMIENDA TENER ENCUENTA LAS CARACTERISTICAS Y CONDICIONES
-                  DE CADA LOTE ANTES DE ENTREGARLO se recomienda comunicarce con
+                  SE RECOMIENDA TENER EN CUENTA LAS CARACTERISTICAS Y CONDICIONES
+                  DE CADA LOTE ANTES DE ENTREGARLO, se recomienda comunicarce con
                   los encargados de bodega antes de entregar su café-las ofertas
                   tienen un vencimiento de 4 dias habiles -los lotes mayores a
                   250 kilos pueden tener un retraso en la cancelacion de 12 a 36

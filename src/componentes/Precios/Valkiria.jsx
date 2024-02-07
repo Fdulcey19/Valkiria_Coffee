@@ -1,11 +1,21 @@
 import { useForm } from "react-hook-form";
 import { usePrecios } from "../../context/PreciosContex";
+import { useEffect } from "react";
 
 function Valkiria() {
   const { register, handleSubmit } = useForm();
 
-  const { createPrecios } = usePrecios();
+  const { createPrecios, getPrecios } = usePrecios();
   
+  useEffect(() => {
+    const fetchPrecios = async () => {
+      const precios = await getPrecios();
+      console.log(precios);
+    };
+    fetchPrecios();
+  }, []);
+  
+
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
     const res = await createPrecios(data);

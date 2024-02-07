@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { createPreciosRequest, getPreciosRequest } from "../api/precios";
 import { verifyTokenRequest } from "../api/auth";
+import Swal from "sweetalert2";
 
 const PreciosContext = createContext();
 
@@ -19,15 +20,27 @@ export function PreciosProvider({ children }) {
   const [precios, setPrecios] = useState([]);
 
   const getPrecios = async () => {
+    const tokenLocal = localStorage.getItem("token");
+    if (!tokenLocal) {
+      console.log("No hay token");
+      return;
+    }
     try {
+      const response = await verifyTokenRequest(tokenLocal);
+      if(!response){
+        console.log("No hay token");
+        return;
+      }
+      console.log("hola");
       const res = await getPreciosRequest();
-      setPrecios(res.data);
-      console.log(res.data);
+      console.log(res.data); // Asegúrate de que res.data tenga valores aquí
+      setPrecios(res.data); // Actualiza el estado con la nueva data
+      return res.data;
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching precios:", error);
     }
   };
-
+  
   const createPrecios = async (precios) => {
     const tokenLocal = localStorage.getItem("token");
     if (!tokenLocal) {
@@ -39,7 +52,6 @@ export function PreciosProvider({ children }) {
       if(!response){
         return;
       }
-      console.log("carlos noguera",precios);
       const data ={
         idUser: response.data.id,
         origen:precios.origen, 
@@ -48,9 +60,22 @@ export function PreciosProvider({ children }) {
         medianoLote: precios.medianoLote
       }
       const res = await createPreciosRequest(data);
-      console.log(res);
+      if (res.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Precios guardados",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      
+
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.response.data.message,
+      });
     }
   };
   return (

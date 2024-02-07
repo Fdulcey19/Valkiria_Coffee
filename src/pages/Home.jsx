@@ -77,13 +77,13 @@ function Home() {
       // Suma correctamente valorPuntoDiferencia y data.arroba
       const precioMercado = getPrecioMercado(response, valorPuntoDiferencia);
 
-      const precioOrigen = getPrecioOrigen(response, valorOrigen);
+      const precioOrigen = getPrecioOrigen(precioMercado, valorOrigen);
 
-      const precioTaza = getValorTaza(response, valorTaza);
+      const precioTaza = getValorTaza(precioMercado, valorTaza);
 
-      const precioMicLote = getPrecioMicLote(response, valorMicLote);
+      const precioMicLote = getPrecioMicLote(precioMercado, valorMicLote);
 
-      const precioMedLote = getPrecioMedLote(response, valorMedLote);
+      const precioMedLote = getPrecioMedLote(precioMercado, valorMedLote);
 
       setValorPrecioMercado(precioMercado);
       setValorOrigenSumado(precioOrigen);

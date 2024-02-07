@@ -83,31 +83,31 @@ function NuevoFuturo() {
         valorPuntoDiferencia
       );
 
-      const precioOrganico = getPrecioOrganico(response, valorFactorOrganico);
+      const precioOrganico = getPrecioOrganico(precioMercado, valorFactorOrganico);
 
       const precioOrganico88 =
-        getPrecioOrganico88(response, valorFactorOrganicoBonificacion) +
+        getPrecioOrganico88(precioMercado, valorFactorOrganicoBonificacion) +
         valorFactorOrganico;
 
       const precioCombencional = getPrecioCombencional(
-        response,
+        precioMercado,
         valorFactorCombencional
       );
 
       const precioCombencional88 =
-        getPrecioCombencional(response, valorFactorCombencionalBonificacion) +
+        getPrecioCombencional(precioMercado, valorFactorCombencionalBonificacion) +
         valorFactorCombencional;
 
-      const precioEstandar = getPrecioEstandar(response, valorFactorEstandar);
+      const precioEstandar = getPrecioEstandar(precioMercado, valorFactorEstandar);
 
       const precioEstandar88 =
-        getPrecioEstandar88(response, valorFactorEstandarBonificacion) +
+        getPrecioEstandar88(precioMercado, valorFactorEstandarBonificacion) +
         valorFactorEstandar;
 
-      const precioTaza92 = getPrecioTaza(response, valorFactorTazaN);
+      const precioTaza92 = getPrecioTaza(precioMercado, valorFactorTazaN);
 
       const precioTaza88 =
-        getPrecioTaza(response, valorFactorTazaNBonificacion) +
+        getPrecioTaza(precioMercado, valorFactorTazaNBonificacion) +
         valorFactorTazaN;
 
       setValorPrecioMercado(precioMercado);
