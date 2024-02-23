@@ -101,7 +101,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     async function checkLogin() {
-      console.log("Checking login...");
       const tokenLocal = localStorage.getItem('token')
       if (!tokenLocal) {
         setIsAuthenticated(false);
@@ -111,7 +110,6 @@ export const AuthProvider = ({ children }) => {
       }
       try {
         const res = await verifyTokenRequest(tokenLocal);
-        console.log(res);
         if (!res.data) {
           setIsAuthenticated(false);
           setUser(null);
@@ -127,9 +125,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
         setUser(null);
       }
-      console.log("After try-catch block. isAuthenticated:", isAuthenticated);
-      console.log("Loading:", loading);
-      console.log("User:", user);
     }
     checkLogin();
   }, []);

@@ -17,20 +17,23 @@ function Home() {
   const { getPrecios } = usePrecios();
 
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [valorPuntoDiferencia, setValorPuntoDiferencia] = useState(2000);
-  const [valorPrecioMercado, setValorPrecioMercado] = useState();
-  const [valorOrigen, setValorOrigen] = useState(10000);
-  const [valorOrigenSumado, setValorOrigenSumado] = useState(152000);
-  const [valorTaza, setValorTaza] = useState(10000);
-  const [valorTazaSumado, setValorTazaSumado] = useState(152000);
-  const [valorMicLote, setValorMicLote] = useState(8000);
-  const [valorMicLoteSumado, setValorMicLoteSumado] = useState(154000);
-  const [valorMedLote, setValorMedLote] = useState(6000);
-  const [valorMedLoteSumado, setValorMedLoteSumado] = useState(152000);
+  const [valorPuntoDiferencia, setValorPuntoDiferencia] = useState(-2000);
+  const [valorPrecioMercado, setValorPrecioMercado] = useState(0);
+  const [valorOrigenSumado, setValorOrigenSumado] = useState(0);
+  const [valorTazaSumado, setValorTazaSumado] = useState(0);
+  const [valorMicLoteSumado, setValorMicLoteSumado] = useState(0);
+  const [valorMedLoteSumado, setValorMedLoteSumado] = useState(0);
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [precios, setPrecios] = useState({
+    origen: 0,
+    taza: 0,
+    microLote: 0,
+    medianoLote: 0,
+  });
 
   const navigate = useNavigate();
 
@@ -44,9 +47,17 @@ function Home() {
   }
 
   useEffect(() => {
-    getPrecios();
-  }, [])
+    const fetchData = async () => {
+      try {
+        const data = await getPrecios();
+        setPrecios((prev) => (!data ? prev : data));
+      } catch (error) {
+        console.error("Error al obtener precios:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -64,26 +75,28 @@ function Home() {
     return () => clearInterval(intervalDataId);
   }, [
     valorPuntoDiferencia,
-    valorOrigen,
-    valorTaza,
-    valorMicLote,
-    valorMedLote,
+    precios.origen,
+    precios.taza,
+    precios.microLote,
+    precios.medianoLote,
   ]);
 
   const fetchData = async () => {
     try {
       const response = await getPosts();
       setData(response.data);
-      // Suma correctamente valorPuntoDiferencia y data.arroba
-      const precioMercado = getPrecioMercado(response, valorPuntoDiferencia);
+      const precioMercado = Math.floor(getPrecioMercado(response, valorPuntoDiferencia) / 100) * 100;
 
-      const precioOrigen = getPrecioOrigen(precioMercado, valorOrigen);
+      const precioOrigen = getPrecioOrigen(precioMercado, precios.origen);
 
-      const precioTaza = getValorTaza(precioMercado, valorTaza);
+      const precioTaza = getValorTaza(precioMercado, precios.taza);
 
-      const precioMicLote = getPrecioMicLote(precioMercado, valorMicLote);
+      const precioMicLote = getPrecioMicLote(precioMercado, precios.microLote);
 
-      const precioMedLote = getPrecioMedLote(precioMercado, valorMedLote);
+      const precioMedLote = getPrecioMedLote(
+        precioMercado,
+        precios.medianoLote
+      );
 
       setValorPrecioMercado(precioMercado);
       setValorOrigenSumado(precioOrigen);
@@ -98,7 +111,6 @@ function Home() {
   };
 
   const handleReload = () => {
-    // Recargar el componente
     fetchData();
     window.location.replace(window.location.pathname);
   };
@@ -118,18 +130,12 @@ function Home() {
 
   if (error) {
     return (
-      (
-        <div className="Reload d-flex flex-column align-content-center">
-          <p>Error: {error.message}</p>
-          <button
-            className="btn btn-dark button"
-            onClick={() => handleReload()}
-          >
-            <i className="bx bx-reset"></i> Reload Componente
-          </button>
-        </div>
-      ),
-      () => handleReload()
+      <div className="Reload d-flex flex-column align-content-center">
+        <p>Error: {error.message}</p>
+        <button className="btn btn-dark button" onClick={() => handleReload()}>
+          <i className="bx bx-reset"></i> Reload Componente
+        </button>
+      </div>
     );
   }
 
@@ -178,8 +184,10 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorOrigen}
-                  onChange={(e) => setValorOrigen(e.target.value)}
+                  defaultValue={precios.origen}
+                  onChange={(e) =>
+                    setPrecios({ ...precios, origen: e.target.value })
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -191,6 +199,7 @@ function Home() {
                   className="info"
                   value={Math.round(valorOrigenSumado).toLocaleString()}
                   onChange={(e) => setValorOrigenSumado(e.target.value)}
+                  disabled
                 />
               </div>
             </div>
@@ -203,8 +212,10 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorTaza}
-                  onChange={(e) => setValorTaza(e.target.value)}
+                  value={precios.taza}
+                  onChange={(e) =>
+                    setPrecios({ ...precios, taza: e.target.value })
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -215,6 +226,7 @@ function Home() {
                   className="info"
                   value={Math.round(valorTazaSumado).toLocaleString()}
                   onChange={(e) => setValorTazaSumado(e.target.value)}
+                  disabled
                 />
               </div>
             </div>
@@ -227,8 +239,10 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorMicLote}
-                  onChange={(e) => setValorMicLote(e.target.value)}
+                  value={precios.microLote}
+                  onChange={(e) =>
+                    setPrecios({ ...precios, microLote: e.target.value })
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -239,6 +253,7 @@ function Home() {
                   className="info"
                   value={Math.round(valorMicLoteSumado).toLocaleString()}
                   onChange={(e) => setValorMicLoteSumado(e.target.value)}
+                  disabled
                 />
               </div>
             </div>
@@ -251,8 +266,10 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorMedLote}
-                  onChange={(e) => setValorMedLote(e.target.value)}
+                  value={precios.medianoLote}
+                  onChange={(e) =>
+                    setPrecios({ ...precios, medianoLote: e.target.value })
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -263,6 +280,7 @@ function Home() {
                   className="info"
                   value={Math.round(valorMedLoteSumado).toLocaleString()}
                   onChange={(e) => setValorMedLoteSumado(e.target.value)}
+                  disabled
                 />
               </div>
             </div>
@@ -306,13 +324,17 @@ function Home() {
                   className="text precio_indicador precio_indicador_dolar"
                   style={{
                     color:
-                      data.indicadorDolar.resultStateDollar > 0
+                      data.indicadorDolar.resultStateDollar === "positivo"
                         ? "green"
-                        : "red",
+                        : data.indicadorDolar.resultStateDollar === "negativo"
+                        ? "red"
+                        : "inherit",
                   }}
                 >
-                  <span className="flecha">
-                    {data.indicadorDolar.resultStateDollar > 0 ? "↑" : "↓"}
+                  <span className="flecha" style={{ color: "inherit" }}>
+                    {data.indicadorDolar.resultStateDollar === "positivo"
+                      ? "↑"
+                      : "↓"}
                   </span>
                   {data.indicadorDolar.dollarPriceChange}{" "}
                   {data.indicadorDolar.dollarPricePorChange}
@@ -327,6 +349,7 @@ function Home() {
                   </a>
                 </span>
               </div>
+              {/*  */}
               <div className="indicador">
                 <span className="text subtitulo">
                   Café EE.UU.{" "}
@@ -336,11 +359,14 @@ function Home() {
                 <span
                   className="text precio_indicador"
                   style={{
-                    color: data.indicador.resultState > 0 ? "red" : "green",
+                    color:
+                      data.indicador.resultState === "positivo"
+                        ? "green"
+                        : "red",
                   }}
                 >
                   <span className="flecha">
-                    {data.indicador.resultState > 0 ? "↓" : "↑"}
+                    {data.indicador.resultState === "positivo" ? "↑" : "↓"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
                   {data.indicador.cambioValorPorcentaje}
@@ -366,6 +392,8 @@ function Home() {
                   </a>
                 </span>
               </div>
+
+              {/*  */}
             </div>
             {/* Fin Indicadores */}
           </div>

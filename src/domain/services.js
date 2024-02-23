@@ -16,6 +16,7 @@ export const getPrecioMercado = (res, valorPuntoDiferencia) => {
 }
 
 export const getPrecioOrigen = (valorPuntoDiferencia, valorOrigen) => {
+    console.log(valorOrigen,"valorOrigen Services");
     return parseFloat(valorPuntoDiferencia) + parseFloat(valorOrigen);
 }
 
@@ -38,34 +39,35 @@ export const getPrecioMercadoNuevo = (res, valorPuntoDiferencia) => {
 
 
 export const getPrecioOrganico = (res, valorOrganico) => {
+    console.log(valorOrganico, "valorOrganico Services");
     return parseFloat(res) + parseFloat(valorOrganico);
 }
 
-export const getPrecioOrganico88 = (res, valorFactorOrganicoBonificacion) => {
-    return parseFloat(res) + parseFloat(valorFactorOrganicoBonificacion);
+export const getPrecioOrganico88 = (res, mercado, bonificacion) => {
+    return parseFloat(res) + parseFloat(mercado) +  parseFloat(bonificacion);
 }
 
 
-export const getPrecioCombencional = (res, valorCombencional) => {
-    return parseFloat(res) + parseFloat(valorCombencional);
+export const getPrecioConvencional = (res, valorConvencional) => {
+    return parseFloat(res) + parseFloat(valorConvencional);
 }
 
-export const getPrecioCombencional88 = (res, valorCombencionalBonificacion) => {
-    return parseFloat(res) + parseFloat(valorCombencionalBonificacion);
+export const getPrecioConvencional88 = (res, mercado, bonificacion) => {
+    return parseFloat(res) + parseFloat(mercado) +  parseFloat(bonificacion);
 }
 
 export const getPrecioEstandar = (res, valorEstandar) => {
     return parseFloat(res) + parseFloat(valorEstandar);
 }
 
-export const getPrecioEstandar88 = (res, valorEstandar88,) => {
-    return parseFloat(res) + parseFloat(valorEstandar88);
+export const getPrecioEstandar88 = (res, mercado, bonificacion) => {
+    return parseFloat(res) + parseFloat(mercado) +  parseFloat(bonificacion);
 }
 
 export const getPrecioTaza = (res, ValorTazaN) => {
     return parseFloat(res) + parseFloat(ValorTazaN);
 }
 
-export const getPrecioTaza88 = (res, ValorTazaN88) => {
-    return parseFloat(res) + parseFloat(ValorTazaN88);
+export const getPrecioTaza88 = (res, mercado, bonificacion) => {
+    return parseFloat(res)  +  parseFloat(bonificacion) + parseFloat(mercado);
 }
