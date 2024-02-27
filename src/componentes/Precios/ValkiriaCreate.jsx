@@ -1,39 +1,13 @@
 import { useForm } from "react-hook-form";
 import { usePrecios } from "../../context/PreciosContex";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-function Valkiria() {
+function ValkiriaCreate() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { precios, createPrecios, getPrecios, updatePrecio } = usePrecios();
-  const [updating, setUpdating] = useState(false);
-  const [formData, setFormData] = useState({});
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-
-
-    const fetchData = async () => {
-      try {
-        const data = await getPrecios();
-        if(!data){
-          navigate("/dash/valkiria");
-          return;
-        }
-        console.log("¿ Hay data ?", data);
-        setFormData(data); // Inicializar formData con los precios
-      } catch (error) {
-        console.error("Error al obtener precios:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { createPrecios } = usePrecios();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -43,32 +17,12 @@ function Valkiria() {
     }
   });
 
-  const handleUpdate = async () => {
-    try {
-      setUpdating(true);
-      if (precios && precios._id) {
-        await updatePrecio(precios._id, formData); // Utiliza formData para enviar los datos actualizados
-      } else {
-        console.error("No se pudo obtener el ID de precios.");
-      }
-    } catch (error) {
-      console.error("Error al actualizar precios:", error);
-    } finally {
-      setUpdating(false);
-    }
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   return (
     <div className="container precios">
       <div className="container-valkiria">
         <form onSubmit={onSubmit}>
           <div className="text-center fs-3 fw-bold mb-5">
-            <span>Precios Valkiria</span>
+            <span>Crear Precios Valkiria</span><br />
           </div>
 
           <div className="container mt-1">
@@ -78,8 +32,6 @@ function Valkiria() {
               {...register("diferencia")}
               name="diferencia"
               autoFocus
-              value={formData.diferencia || ""}
-              onChange={handleInputChange}
             />
           </div>
           <div className="container">
@@ -88,9 +40,6 @@ function Valkiria() {
               type="text"
               {...register("origen")}
               name="origen"
-              autoFocus
-              value={formData.origen || ""}
-              onChange={handleInputChange}
             />
           </div>
           <div className="container">
@@ -99,8 +48,6 @@ function Valkiria() {
               type="text"
               {...register("taza", { required: true })}
               name="taza"
-              value={formData.taza || ""}
-              onChange={handleInputChange}
             />
             {errors.taza && <p className="text-danger">Taza es requerido</p>}
           </div>
@@ -110,8 +57,6 @@ function Valkiria() {
               type="text"
               {...register("microLote", { required: true })}
               name="microLote"
-              value={formData.microLote || ""}
-              onChange={handleInputChange}
             />
             {errors.microLote && (
               <p className="text-danger">MicroLote es requerido</p>
@@ -123,8 +68,6 @@ function Valkiria() {
               type="text"
               {...register("medianoLote", { required: true })}
               name="medianoLote"
-              value={formData.medianoLote || ""}
-              onChange={handleInputChange}
             />
             {errors.medianoLote && (
               <p className="text-danger">MedianoLote es requerido</p>
@@ -132,25 +75,17 @@ function Valkiria() {
           </div>
 
           <div className="d-flex justify-content-center">
-            {precios ? (
-              <button
-                type="button"
-                className="btn btn-primary btn-actualizar"
-                onClick={handleUpdate}
-                disabled={updating}
-              >
-                {updating ? "Actualizando..." : "Actualizar"}
-              </button>
-            ) : (
               <button type="submit" className="btn btn-success btn-guardar">
                 Guardar Cambios
               </button>
-            )}
           </div>
         </form>
+        <div className="d-flex justify-content-center mt-2">
+        <span className="text-span">Crea nuevos precios para llevar el control de valkiria</span>
+        </div>
       </div>
     </div>
   );
 }
 
-export default Valkiria;
+export default ValkiriaCreate;

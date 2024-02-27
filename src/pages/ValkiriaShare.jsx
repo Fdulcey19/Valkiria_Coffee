@@ -49,8 +49,6 @@ function ValkiriaShare() {
     }
   };
 
-  // Función para formatear números eliminando decimales
-  const formatNumber = (number) => Math.round(number);
   return (
     <div className="home home-share">
       <div>
@@ -77,11 +75,11 @@ function ValkiriaShare() {
               <div className="precio-mercado valkiria-share">
                 <div className="contenedores col-12 col-md-5">
                   <span className="text text-price">Origen</span>
-                  <span className="signo-2">$</span>
+            
                   <input
                     type="text"
                     className="info price"
-                    value={formatNumber(origenSumado)}
+                    value={`$ ${origenSumado.toLocaleString()}`}
                   />
                 </div>
                 <div className="contenedores contenedores_derecha  col-12 col-md-7">
@@ -97,11 +95,11 @@ function ValkiriaShare() {
               <div className="precio-mercado valkiria-share m-top">
                 <div className="contenedores col-12 col-md-5">
                   <span className="text text-price">Especial</span>
-                  <span className="signo-2">$</span>
+            
                   <input
                     type="text"
                     className="info price"
-                    value={formatNumber(tazaSumado)}
+                    value={`$ ${tazaSumado.toLocaleString()}`}
                   />
                 </div>
                 <div className="contenedores contenedores_derecha col-12 col-md-7">
@@ -117,11 +115,11 @@ function ValkiriaShare() {
               <div className="precio-mercado valkiria-share m-top">
                 <div className="contenedores col-12 col-md-5">
                   <span className="text text-price">Microlote</span>
-                  <span className="signo-2">$</span>
+            
                   <input
                     type="text"
                     className="info price"
-                    value={formatNumber(micLoteSumado)}
+                    value={`$ ${micLoteSumado.toLocaleString()}`}
                   />
                 </div>
                 <div className="contenedores contenedores_derecha col-12 col-md-7">
@@ -138,11 +136,11 @@ function ValkiriaShare() {
               <div className="precio-mercado valkiria-share m-top">
                 <div className="contenedores  col-12 col-md-5">
                   <span className="text text-price">Med.Lote</span>
-                  <span className="signo-2">$</span>
+            
                   <input
                     type="text"
                     className="info price"
-                    value={formatNumber(medLoteSumado)}
+                    value={`$ ${medLoteSumado.toLocaleString()}`}
                   />
                 </div>
                 <div className="contenedores contenedores_derecha col-12 col-md-7">

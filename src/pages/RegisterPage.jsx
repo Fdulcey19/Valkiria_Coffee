@@ -43,6 +43,7 @@ function RegisterPage() {
         />
         {errors.password && <p className="text-danger">Password is required</p>}
         <button type="submit">Register</button>
+
       </form>
     </div>
   );

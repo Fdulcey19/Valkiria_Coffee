@@ -74,12 +74,12 @@ function Sidebar() {
                   <span className="text nav-text">Configuración</span>
                 </Link>
               </li>
-              <li className="nav-links">
-                <Link to="/perfil">
+              {/* <li className="nav-links">
+                <Link to="/dash/register">
                   <i className="bx bxs-user-pin icon"></i>
                   <span className="text nav-text">Perfil</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="bottom-content">

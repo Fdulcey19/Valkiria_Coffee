@@ -10,6 +10,8 @@ import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
 import ProtectedRoute from "../helpers/ProtectedRoute";
 import NotFound from "../pages/NotFound";
+import ValkiriaCreate from "../componentes/Precios/ValkiriaCreate";
+import NuevoCreate from "../componentes/Precios/NuevoCreate";
 function AppRoutes() {
   return (
     <>
@@ -23,8 +25,10 @@ function AppRoutes() {
               <Route index element={<Home />} />
               <Route path="nuevo" element={<NuevoFuturo />} />
               <Route path="share" element={<ValkiriaShare />} />
-              <Route path="nuevo/share" element={<NuevoFuturoShare />} />
+              <Route path="nuevoshare" element={<NuevoFuturoShare />} />
               <Route path="configuracion" element={<Configuracion />} />
+              <Route path="valkiria" element={<ValkiriaCreate />} />
+              <Route path="nuevofuturo" element={<NuevoCreate />} />
               <Route path="register" element={<RegisterPage />} />
             </Route>
           </Route>

@@ -58,6 +58,7 @@ export function PreciosProvider({ children }) {
       }
       const data ={
         idUser: response.data.id,
+        diferencia:precios.diferencia,
         origen:precios.origen, 
         taza:precios.taza, 
         microLote: precios.microLote, 
@@ -70,6 +71,8 @@ export function PreciosProvider({ children }) {
           title: "Precios guardados",
           showConfirmButton: false,
           timer: 1500,
+        }).then(() => {
+          navigator.navigate("/dash/nuevofuturo");
         });
       }
       
@@ -121,6 +124,7 @@ export function PreciosProvider({ children }) {
       }
       const data ={
         idUser: response.data.id,
+        diferencia:precios.diferencia,
         organico:precios.organico, 
         organicoBonificacion:precios.organicoBonificacion, 
         convencional:precios.convencional, 
@@ -132,6 +136,7 @@ export function PreciosProvider({ children }) {
       }
       console.log(data);
       const res = await createPreciosRequestNuevo(data);
+      console.log(res);
       if (res.status === 200) {
         Swal.fire({
           icon: "success",

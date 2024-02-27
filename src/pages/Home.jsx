@@ -17,7 +17,6 @@ function Home() {
   const { getPrecios } = usePrecios();
 
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [valorPuntoDiferencia, setValorPuntoDiferencia] = useState(-2000);
   const [valorPrecioMercado, setValorPrecioMercado] = useState(0);
   const [valorOrigenSumado, setValorOrigenSumado] = useState(0);
   const [valorTazaSumado, setValorTazaSumado] = useState(0);
@@ -29,6 +28,7 @@ function Home() {
   const [error, setError] = useState(null);
 
   const [precios, setPrecios] = useState({
+    diferencia: 0,
     origen: 0,
     taza: 0,
     microLote: 0,
@@ -74,7 +74,7 @@ function Home() {
     const intervalDataId = setInterval(fetchData, 3000);
     return () => clearInterval(intervalDataId);
   }, [
-    valorPuntoDiferencia,
+    precios.diferencia,
     precios.origen,
     precios.taza,
     precios.microLote,
@@ -84,8 +84,9 @@ function Home() {
   const fetchData = async () => {
     try {
       const response = await getPosts();
+      console.log(response);
       setData(response.data);
-      const precioMercado = Math.floor(getPrecioMercado(response, valorPuntoDiferencia) / 100) * 100;
+      const precioMercado = Math.floor(getPrecioMercado(response, precios.diferencia) / 100) * 100;
 
       const precioOrigen = getPrecioOrigen(precioMercado, precios.origen);
 
@@ -160,8 +161,10 @@ function Home() {
                 <input
                   type="text"
                   className="info"
-                  value={valorPuntoDiferencia}
-                  onChange={(e) => setValorPuntoDiferencia(e.target.value)}
+                  defaultValue={precios.diferencia}
+                  onChange={(e) =>
+                    setPrecios({ ...precios, diferencia: e.target.value })
+                  }
                 />
               </div>
               <div className="contenedores col-12 col-md-6">
@@ -331,10 +334,10 @@ function Home() {
                         : "inherit",
                   }}
                 >
-                  <span className="flecha" style={{ color: "inherit" }}>
+                  <span className="flecha lecha me-1" style={{ color: "inherit" }}>
                     {data.indicadorDolar.resultStateDollar === "positivo"
-                      ? "↑"
-                      : "↓"}
+                      ? "⬆"
+                      : "⬇"}
                   </span>
                   {data.indicadorDolar.dollarPriceChange}{" "}
                   {data.indicadorDolar.dollarPricePorChange}
@@ -351,13 +354,13 @@ function Home() {
               </div>
               {/*  */}
               <div className="indicador">
-                <span className="text subtitulo">
+                <span className="text subtitulo ">
                   Café EE.UU.{" "}
                   {data.indicador.clock === "positivo" ? "🕑" : "⏰"}
                 </span>
                 <span className="text precio">$ {data.lastCoffe}</span>
                 <span
-                  className="text precio_indicador"
+                  className="text precio_indicador precio_indicador_cafe"
                   style={{
                     color:
                       data.indicador.resultState === "positivo"
@@ -365,8 +368,8 @@ function Home() {
                         : "red",
                   }}
                 >
-                  <span className="flecha">
-                    {data.indicador.resultState === "positivo" ? "↑" : "↓"}
+                  <span className="flecha me-1">
+                    {data.indicador.resultState === "positivo" ? "⬆" : "⬇"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
                   {data.indicador.cambioValorPorcentaje}

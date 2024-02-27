@@ -10,8 +10,8 @@ function Configuracion() {
     setMostrarComponente1((prevMostrarComponente1) => !prevMostrarComponente1);
   };
   return (
-    <body className="home ">
-      <div className="container valkiria">
+    <body className="home">
+      <div className="container container-configuracion">
         <div className="">
           <div className="d-flex justify-content-center w-100">
             <button onClick={toggleComponente} className="btn btn-success">

@@ -2,11 +2,25 @@ import { useRef } from "react";
 import html2canvas from "html2canvas";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
-import nuevo from '../assets/images/nuevo.png'
+import nuevo from "../assets/images/nuevo.png";
+import { useLocation } from "react-router-dom";
 
 function NuevoFuturoShare() {
   const containerRef = useRef(null);
 
+  const location = useLocation();
+  const {
+    organico92,
+    organico88,
+    convencional92,
+    convencional88,
+    estandar92,
+    estandar88,
+    taza92,
+    taza88,
+    dolar,
+    lastCoffe,
+  } = location.state;
   const getFormattedDateTime = () => {
     const now = new Date();
     const month = ("0" + (now.getMonth() + 1)).slice(-2); // Agrega un cero al principio si es necesario
@@ -55,20 +69,19 @@ function NuevoFuturoShare() {
 
         <div className="row">
           <div className=" row col-12 col-md-9 home-fondo">
-            
             <div className="container">
-            {/* Primera Fila */}
+              {/* Primera Fila */}
               {/* Estandar */}
               <div className="row col-12 mt-5">
                 <span className="estandar text-1">Estandar</span>
                 <span className="Convencional text-1">Convencional</span>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor 92</span>
-                  <input type="text" className="info price" value={150000} />
+                  <input type="text" className="info price" value={`$ ${estandar92.toLocaleString()}`} />
                 </div>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor +88</span>
-                  <input type="text" className="info price" value={150000} />
+                  <input type="text" className="info price"  value={`$ ${estandar88.toLocaleString()}`} />
                 </div>
                 {/* Convencional */}
                 <div className="col-3 contenedores">
@@ -76,7 +89,7 @@ function NuevoFuturoShare() {
                   <input
                     type="text"
                     className="info price input-estandar"
-                    value={150000}
+                    value={`$ ${convencional92.toLocaleString()}`}
                   />
                 </div>
                 <div className="col-3 contenedores">
@@ -84,39 +97,39 @@ function NuevoFuturoShare() {
                   <input
                     type="text"
                     className="info price input-estandar"
-                    value={150000}
+                    value={`$ ${convencional88.toLocaleString()}`}
                   />
                 </div>
               </div>
-            {/* Segunda Fila */}
+              {/* Segunda Fila */}
               {/* Organico */}
               <div className="row col-12 mt-3">
                 <span className="estandar text-1">Organico</span>
                 <span className="Convencional text-1">Taza</span>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor 92</span>
-                  <input type="text" className="info price input-organico" value={150000} />
+                  <input
+                    type="text"
+                    className="info price input-organico"
+                    value={`$ ${organico92.toLocaleString()}`}
+                  />
                 </div>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor +88</span>
-                  <input type="text" className="info price input-organico" value={150000} />
+                  <input
+                    type="text"
+                    className="info price input-organico"
+                   value={`$ ${organico88.toLocaleString()}`} 
+                  />
                 </div>
                 {/* Taza */}
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor 92</span>
-                  <input
-                    type="text"
-                    className="info price"
-                    value={150000}
-                  />
+                  <input type="text" className="info price"  value={`$ ${taza92.toLocaleString()}`}/>
                 </div>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor +88</span>
-                  <input
-                    type="text"
-                    className="info price"
-                    value={150000}
-                  />
+                  <input type="text" className="info price" value={`$ ${taza88.toLocaleString()}`}/>
                 </div>
               </div>
             </div>
@@ -145,7 +158,7 @@ function NuevoFuturoShare() {
               </div>
               <div className="indicador">
                 <span className="text subtitulo">Precio USD</span>
-                <span className="text precio">$ 142.193,200</span>
+                <span className="text precio">$ {dolar}</span>
                 <img className="img" src={eeuu} alt="" />
                 <span className="vermas">
                   <a href="">Ver Mas</a>
@@ -153,7 +166,7 @@ function NuevoFuturoShare() {
               </div>
               <div className="indicador">
                 <span className="text subtitulo">Café EE.UU.</span>
-                <span className="text precio">$ 142.193,200</span>
+                <span className="text precio">$ {lastCoffe}</span>
                 <img className="img" src={eeuu} alt="" />
                 <span className="vermas">
                   <a href="">Ver Mas</a>

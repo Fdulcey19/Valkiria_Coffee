@@ -16,39 +16,27 @@ import { usePrecios } from "../context/PreciosContex";
 import colombia from "../assets/images/Iconos/colombia.png";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 function NuevoFuturo() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-
   const [valorPuntoDiferencia, setValorPuntoDiferencia] = useState(-2000);
   const [valorPrecioMercado, setValorPrecioMercado] = useState(0);
-  const [valorFactorOrganico, setValorFactorOrganico] = useState(0);
   const [valorFactorOrganico92, setValorFactorOrganico92] = useState(0);
-  const [valorFactorOrganicoBonificacion, setValorFactorOrganicoBonificacion] =
     useState(0);
   const [valorFactorOrganico88, setValorFactorOrganico88] = useState(0);
-  const [valorFactorConvencional, setValorFactorConvencional] = useState(0);
   const [valorFactorConvencional92, setValorFactorConvencional92] = useState(0);
-  const [
-    valorFactorConvencionalBonificacion,
-    setValorFactorConvencionalBonificacion,
-  ] = useState(0);
   const [valorFactorConvencional88, setValorFactorConvencional88] = useState(0);
-  const [valorFactorEstandar, setValorFactorEstandar] = useState(0);
   const [valorFactorEstandar92, setValorFactorEstandar92] = useState(0);
-  const [valorFactorEstandarBonificacion, setValorFactorEstandarBonificacion] =
-    useState(0);
   const [valorFactorEstandar88, setValorFactorEstandar88] = useState(0);
-  const [valorFactorTazaN, setValorFactorTazaN] = useState(0);
   const [valorFactorTazaN92, setValorFactorTazaN92] = useState(0);
-  const [valorFactorTazaNBonificacion, setValorFactorTazaNBonificacion] =
-    useState(0);
   const [valorFactorTazaN88, setValorFactorTazaN88] = useState(0);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const [precios, setPrecios] = useState({
+    diferencia: 0,
     organico: 0,
     organicoBonificacion: 0,
     convencional: 0,
@@ -58,6 +46,9 @@ function NuevoFuturo() {
     taza: 0,
     tazaBonificacion: 0,
   });
+
+  const navigate = useNavigate();
+
 
   const { getPreciosNuevo } = usePrecios();
 
@@ -98,6 +89,7 @@ function NuevoFuturo() {
     return () => clearInterval(fetchDataInterval);
   }, [
     valorPuntoDiferencia,
+    precios.diferencia,
     precios.organico,
     precios.organicoBonificacion,
     precios.convencional,
@@ -113,7 +105,7 @@ function NuevoFuturo() {
       const response = await getPosts();
       setData(response.data);
 
-      const precioMercado = Math.floor(getPrecioMercadoNuevo(response, valorPuntoDiferencia) / 100) * 100;
+      const precioMercado = Math.floor(getPrecioMercadoNuevo(response, precios.diferencia) / 100) * 100;
 
 
       const precioOrganico = getPrecioOrganico(precioMercado, precios.organico);
@@ -218,8 +210,9 @@ function NuevoFuturo() {
                 <input
                   type="text"
                   className="info"
-                  value={valorPuntoDiferencia}
-                  onChange={(e) => setValorPuntoDiferencia(e.target.value)}
+                  defaultValue={precios.diferencia}
+                  onChange={(e) =>
+                    setPrecios((prevPrecios) => ({...prevPrecios,diferencia: e.target.value,}))}
                 />
               </div>
               <div className="contenedores punto-diferencia col-12 col-md-6">
@@ -456,7 +449,23 @@ function NuevoFuturo() {
             {/* Boton Compartir */}
             <div className="precio-mercado precio-venta col-12 col-6">
               <div className="btn contain-compartir col-12 col-md-6">
-                <button className="button-compartir">
+                <button className="button-compartir"
+                onClick={() => {
+                  navigate("/dash/nuevoshare", {
+                    state: {
+                      organico92: valorFactorOrganico92,
+                      organico88: valorFactorOrganico88,
+                      convencional92: valorFactorConvencional92,
+                      convencional88: valorFactorConvencional88,
+                      estandar92: valorFactorEstandar92,
+                      estandar88: valorFactorEstandar88,
+                      taza92: valorFactorTazaN92,
+                      taza88: valorFactorTazaN88,
+                      dolar: data.dolar,
+                      lastCoffe: data.lastCoffe,
+                    },
+                  });
+                }}>
                   Compartir <i className="bx bxs-share-alt"></i>
                 </button>
               </div>
@@ -490,8 +499,8 @@ function NuevoFuturo() {
                 >
                   <span className="flecha" style={{ color: "inherit" }}>
                     {data.indicadorDolar.resultStateDollar === "positivo"
-                      ? "↑"
-                      : "↓"}
+                     ? "⬆"
+                     : "⬇"}
                   </span>
                   {data.indicadorDolar.dollarPriceChange}{" "}
                   {data.indicadorDolar.dollarPricePorChange}
@@ -523,7 +532,8 @@ function NuevoFuturo() {
                   }}
                 >
                   <span className="flecha">
-                    {data.indicador.resultState === "positivo" ? "↑" : "↓"}
+                    {data.indicador.resultState === "positivo" ? "⬆"
+                      : "⬇"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
                   {data.indicador.cambioValorPorcentaje}
