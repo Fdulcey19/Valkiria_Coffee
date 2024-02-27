@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 
 function NuevoFuturo() {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
-  const [valorPuntoDiferencia, setValorPuntoDiferencia] = useState(-2000);
   const [valorPrecioMercado, setValorPrecioMercado] = useState(0);
   const [valorFactorOrganico92, setValorFactorOrganico92] = useState(0);
     useState(0);
@@ -88,7 +87,6 @@ function NuevoFuturo() {
     const fetchDataInterval = setInterval(fetchData, 3000);
     return () => clearInterval(fetchDataInterval);
   }, [
-    valorPuntoDiferencia,
     precios.diferencia,
     precios.organico,
     precios.organicoBonificacion,
