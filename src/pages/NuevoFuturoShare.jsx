@@ -72,11 +72,11 @@ function NuevoFuturoShare() {
           Compartir <i className="bx bxl-whatsapp compartir"></i>
         </button>
       </div>
-      <NavLink to="/dash/nuevo" className=" retroceder">
-        <li className="link">
+      <li className="link link-retroceder">
+        <NavLink to="/dash/nuevo" className="w-50 retroceder">
           <i className="bx bx-arrow-back fw-bold"></i> Atrás
-        </li>
-      </NavLink>
+        </NavLink>
+      </li>
       <div ref={containerRef}>
         {/* Contenido que quieres convertir en imagen */}
         <h2 className="Title">Precios Extras </h2>

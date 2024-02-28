@@ -1178,17 +1178,20 @@ header .image-text .header-text {
   padding: -10px;
 }
 
+
+
 .retroceder {
   position: relative;
+  width: 100px;
   top: 10px;
   left: 40px;
   font-weight: 700;
   text-decoration: none;
   color: var(--primary-color);
   border: none;
-  background-color: var(--primary-color-light);
-
 }
+
+
 
 .home .m-top {
   margin-top: -25px;
