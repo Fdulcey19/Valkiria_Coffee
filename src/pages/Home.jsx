@@ -86,7 +86,8 @@ function Home() {
       const response = await getPosts();
       console.log(response);
       setData(response.data);
-      const precioMercado = Math.floor(getPrecioMercado(response, precios.diferencia) / 100) * 100;
+      const precioMercado =
+        Math.floor(getPrecioMercado(response, precios.diferencia) / 100) * 100;
 
       const precioOrigen = getPrecioOrigen(precioMercado, precios.origen);
 
@@ -151,7 +152,7 @@ function Home() {
               <span className="text precio">{`$ ${data.arroba.toLocaleString()}`}</span>
               <span className="text hora">{formattedDateTime}</span>
               <button className="button-reload" onClick={() => handleReload()}>
-                Reload <i className="bx bx-reset"></i>
+                Recargar <i className="bx bx-reset"></i>
               </button>
             </div>
             <div className="precio-mercado mt-4 col-12 col-6">
@@ -199,9 +200,8 @@ function Home() {
                 <span className="signo">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorOrigenSumado).toLocaleString()}
-                  onChange={(e) => setValorOrigenSumado(e.target.value)}
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorOrigenSumado).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -226,9 +226,8 @@ function Home() {
                 <span className="signo">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorTazaSumado).toLocaleString()}
-                  onChange={(e) => setValorTazaSumado(e.target.value)}
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorTazaSumado).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -253,9 +252,8 @@ function Home() {
                 <span className="signo">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorMicLoteSumado).toLocaleString()}
-                  onChange={(e) => setValorMicLoteSumado(e.target.value)}
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorMicLoteSumado).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -280,9 +278,8 @@ function Home() {
                 <span className="signo">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorMedLoteSumado).toLocaleString()}
-                  onChange={(e) => setValorMedLoteSumado(e.target.value)}
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorMedLoteSumado).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -300,6 +297,13 @@ function Home() {
                         medLoteSumado: valorMedLoteSumado,
                         dolar: data.dolar,
                         lastCoffe: data.lastCoffe,
+                        dolarchange: data.indicadorDolar.dollarPriceChange,
+                        dolarPorChange:data.indicadorDolar.dollarPricePorChange,
+                        dolarstate: data.indicadorDolar.resultStateDollar,
+                        coffechange: data.indicador.cambioValorVar,
+                        coffePorChange: data.indicador.cambioValorPorcentaje,
+                        coffestate: data.indicador.resultState,
+                        coffeClock: data.indicador.clock,
                       },
                     });
                   }}
@@ -334,7 +338,10 @@ function Home() {
                         : "inherit",
                   }}
                 >
-                  <span className="flecha lecha me-1" style={{ color: "inherit" }}>
+                  <span
+                    className="flecha lecha me-1"
+                    style={{ color: "inherit" }}
+                  >
                     {data.indicadorDolar.resultStateDollar === "positivo"
                       ? "⬆"
                       : "⬇"}
@@ -343,6 +350,8 @@ function Home() {
                   {data.indicadorDolar.dollarPricePorChange}
                 </span>
                 <img className="img" src={eeuu} alt="" />
+                <span className="info_two">Info en tiempo real. Valores en <span className="fw-bold">COP</span> <br /> <a href="" className="text-dark">(Aviso Legal)</a> </span>
+
                 <span className="vermas">
                   <a
                     href="https://es.investing.com/currencies/usd-cop"
@@ -376,7 +385,7 @@ function Home() {
                 </span>
                 <img className="img" src={eeuu} alt="" />
                 <span
-                  className={`clock ${
+                  className={`mt-2 clock ${
                     data.indicador.clock === "positivo"
                       ? "texto-verde"
                       : "texto-rojo"
@@ -394,6 +403,7 @@ function Home() {
                     Ver Mas
                   </a>
                 </span>
+                <span className="info_two info-three">Datos derivados en tiempo real</span>
               </div>
 
               {/*  */}

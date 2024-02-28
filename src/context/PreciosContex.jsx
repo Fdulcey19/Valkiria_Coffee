@@ -71,8 +71,6 @@ export function PreciosProvider({ children }) {
           title: "Precios guardados",
           showConfirmButton: false,
           timer: 1500,
-        }).then(() => {
-          navigator.navigate("/dash/nuevofuturo");
         });
       }
       

@@ -21,8 +21,8 @@ function NuevoFuturo() {
     const fetchData = async () => {
       try {
         const data = await getPreciosNuevo();
-        if(!data){
-          navigate("/dash/nuevofuturo");
+        if (!data) {
+          navigate("/dash/configuracion/nuevofuturo");
           return;
         }
         setPrecios(data);
@@ -78,151 +78,159 @@ function NuevoFuturo() {
   };
 
   return (
-    <div className="container precios">
-      <div className="container-valkiria container-nuevo-futuro">
-        <div className="text-center fs-3 fw-bold mb-4">
-          <span>Precios Nuevo Futuro</span>
+    <div className="centrar">
+      <div className="precios">
+        <div className="container-valkiria container-nuevo-futuro">
+          <div className="text-center fs-3 fw-bold mb-4">
+            <span>Precios Nuevo Futuro</span>
+          </div>
+          <form onSubmit={onSubmit}>
+            <div className="container_pry">
+              <div className="container mt-4">
+                <span>Precio Diferencia</span>
+                <input
+                  type="text"
+                  {...register("diferencia")}
+                  name="diferencia"
+                  autoFocus
+                  value={formData.diferencia || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.diferencia && (
+                  <p className="text-danger">Organico es requerido</p>
+                )}
+              </div>
+            </div>
+            <div className="container_pry">
+              <div className="container mt-4">
+                <span>Organico 92</span>
+                <input
+                  type="text"
+                  {...register("organico")}
+                  name="organico"
+                  autoFocus
+                  value={formData.organico || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.organico && (
+                  <p className="text-danger">Organico es requerido</p>
+                )}
+              </div>
+              <div className="container mt-4">
+                <span>Organico +88</span>
+                <input
+                  type="text"
+                  {...register("organicoBonificacion")}
+                  name="organicoBonificacion"
+                  value={formData.organicoBonificacion || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.organicoBonificacion && (
+                  <p className="text-danger">
+                    OrganicoBonificacion es requerido
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="container_pry">
+              <div className="container">
+                <span>Convencional 92</span>
+                <input
+                  type="text"
+                  {...register("convencional")}
+                  name="convencional"
+                  value={formData.convencional || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.convencional && (
+                  <p className="text-danger">Convencional es requerido</p>
+                )}
+              </div>
+              <div className="container">
+                <span>Convencional +88</span>
+                <input
+                  type="text"
+                  {...register("convencionalBonificacion")}
+                  name="convencionalBonificacion"
+                  value={formData.convencionalBonificacion || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.convencionalBonificacion && (
+                  <p className="text-danger">
+                    ConvencionalBonificacion es requerido
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="container_pry">
+              <div className="container">
+                <span>Estandar 92</span>
+                <input
+                  type="text"
+                  {...register("estandar", { required: true })}
+                  name="estandar"
+                  value={formData.estandar || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.estandar && (
+                  <p className="text-danger">Estandar es requerido</p>
+                )}
+              </div>
+              <div className="container">
+                <span>Estandar +88</span>
+                <input
+                  type="text"
+                  {...register("estandarBonificacion", { required: true })}
+                  name="estandarBonificacion"
+                  value={formData.estandarBonificacion || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.estandarBonificacion && (
+                  <p className="text-danger">
+                    EstandarBonificacion es requerido
+                  </p>
+                )}
+              </div>
+            </div>
+            <div className="container_pry">
+              <div className="container">
+                <span>Taza 92</span>
+                <input
+                  type="text"
+                  {...register("taza", { required: true })}
+                  name="taza"
+                  value={formData.taza || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.taza && (
+                  <p className="text-danger">Taza es requerido</p>
+                )}
+              </div>
+              <div className="container">
+                <span>Taza +88</span>
+                <input
+                  type="text"
+                  {...register("tazaBonificacion", { required: true })}
+                  name="tazaBonificacion"
+                  value={formData.tazaBonificacion || ""}
+                  onChange={handleInputChange}
+                />
+                {errors.tazaBonificacion && (
+                  <p className="text-danger">TazaBonificacion es requerido</p>
+                )}
+              </div>
+            </div>
+            <div className="d-flex justify-content-center">
+              <button
+                type="button"
+                onClick={handleUpdate}
+                className="btn btn-success btn-actualizar"
+              >
+                {precios && precios._id ? "Actualizar" : "Guardar"}
+              </button>
+            </div>
+          </form>
         </div>
-        <form onSubmit={onSubmit}>
-        <div className="container_pry">
-            <div className="container mt-4">
-              <span>Precio Diferencia</span>
-              <input
-                type="text"
-                {...register("diferencia")}
-                name="diferencia"
-                autoFocus
-                value={formData.diferencia || ""}
-                onChange={handleInputChange}
-              />
-              {errors.diferencia && (
-                <p className="text-danger">Organico es requerido</p>
-              )}
-            </div>
-            </div>
-          <div className="container_pry">
-            <div className="container mt-4">
-              <span>Organico 92</span>
-              <input
-                type="text"
-                {...register("organico")}
-                name="organico"
-                autoFocus
-                value={formData.organico || ""}
-                onChange={handleInputChange}
-              />
-              {errors.organico && (
-                <p className="text-danger">Organico es requerido</p>
-              )}
-            </div>
-            <div className="container mt-4">
-              <span>Organico +88</span>
-              <input
-                type="text"
-                {...register("organicoBonificacion")}
-                name="organicoBonificacion"
-                value={formData.organicoBonificacion || ""}
-                onChange={handleInputChange}
-              />
-              {errors.organicoBonificacion && (
-                <p className="text-danger">OrganicoBonificacion es requerido</p>
-              )}
-            </div>
-          </div>
-          <div className="container_pry">
-            <div className="container">
-              <span>Convencional 92</span>
-              <input
-                type="text"
-                {...register("convencional")}
-                name="convencional"
-                value={formData.convencional || ""}
-                onChange={handleInputChange}
-              />
-              {errors.convencional && (
-                <p className="text-danger">Convencional es requerido</p>
-              )}
-            </div>
-            <div className="container">
-              <span>Convencional +88</span>
-              <input
-                type="text"
-                {...register("convencionalBonificacion")}
-                name="convencionalBonificacion"
-                value={formData.convencionalBonificacion || ""}
-                onChange={handleInputChange}
-              />
-              {errors.convencionalBonificacion && (
-                <p className="text-danger">
-                  ConvencionalBonificacion es requerido
-                </p>
-              )}
-            </div>
-          </div>
-          <div className="container_pry">
-            <div className="container">
-              <span>Estandar 92</span>
-              <input
-                type="text"
-                {...register("estandar", { required: true })}
-                name="estandar"
-                value={formData.estandar || ""}
-                onChange={handleInputChange}
-              />
-              {errors.estandar && (
-                <p className="text-danger">Estandar es requerido</p>
-              )}
-            </div>
-            <div className="container">
-              <span>Estandar +88</span>
-              <input
-                type="text"
-                {...register("estandarBonificacion", { required: true })}
-                name="estandarBonificacion"
-                value={formData.estandarBonificacion || ""}
-                onChange={handleInputChange}
-              />
-              {errors.estandarBonificacion && (
-                <p className="text-danger">EstandarBonificacion es requerido</p>
-              )}
-            </div>
-          </div>
-          <div className="container_pry">
-            <div className="container">
-              <span>Taza 92</span>
-              <input
-                type="text"
-                {...register("taza", { required: true })}
-                name="taza"
-                value={formData.taza || ""}
-                onChange={handleInputChange}
-              />
-              {errors.taza && <p className="text-danger">Taza es requerido</p>}
-            </div>
-            <div className="container">
-              <span>Taza +88</span>
-              <input
-                type="text"
-                {...register("tazaBonificacion", { required: true })}
-                name="tazaBonificacion"
-                value={formData.tazaBonificacion || ""}
-                onChange={handleInputChange}
-              />
-              {errors.tazaBonificacion && (
-                <p className="text-danger">TazaBonificacion es requerido</p>
-              )}
-            </div>
-          </div>
-          <div className="d-flex justify-content-center">
-            <button
-              type="button"
-              onClick={handleUpdate}
-              className="btn btn-success btn-guardar"
-            >
-              {precios && precios._id ? "Actualizar" : "Guardar"}
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );

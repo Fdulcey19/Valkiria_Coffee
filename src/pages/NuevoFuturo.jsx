@@ -198,7 +198,7 @@ function NuevoFuturo() {
               <span className="text precio">{`$ ${data.arroba.toLocaleString()}`}</span>
               <span className="text hora">{formattedDateTime}</span>
               <button className="button-reload">
-                Reload <i className="bx bx-reset"></i>
+                Recargar <i className="bx bx-reset"></i>
               </button>
             </div>
             <div className="precio-mercado punto-diferencia mt-3 col-12 col-6">
@@ -240,11 +240,10 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor 92</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorOrganico92).toLocaleString()}
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorOrganico92).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -268,13 +267,8 @@ function NuevoFuturo() {
                 <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorOrganico88).toLocaleString()}
-                  onChange={(e) =>
-                    setValorFactorOrganico88(
-                      Math.round(parseFloat(e.target.value))
-                    )
-                  }
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorOrganico88).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -298,13 +292,8 @@ function NuevoFuturo() {
                 <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorConvencional92).toLocaleString()}
-                  onChange={(e) =>
-                    setValorFactorConvencional92(
-                      Math.round(parseFloat(e.target.value))
-                    )
-                  }
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorConvencional92).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -324,8 +313,8 @@ function NuevoFuturo() {
                 <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorConvencional88).toLocaleString()}
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorConvencional88).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -349,13 +338,8 @@ function NuevoFuturo() {
                 <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorEstandar92).toLocaleString()}
-                  onChange={(e) =>
-                    setValorFactorEstandar92(
-                      Math.round(parseFloat(e.target.value))
-                    )
-                  }
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorEstandar92).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -375,13 +359,8 @@ function NuevoFuturo() {
                 <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorEstandar88).toLocaleString()}
-                  onChange={(e) =>
-                    setValorFactorEstandar88(
-                      Math.round(parseFloat(e.target.value))
-                    )
-                  }
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorEstandar88).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -405,13 +384,8 @@ function NuevoFuturo() {
                 <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorTazaN92).toLocaleString()}
-                  onChange={(e) =>
-                    setValorFactorTazaN92(
-                      Math.round(parseFloat(e.target.value))
-                    )
-                  }
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorTazaN92).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -432,13 +406,8 @@ function NuevoFuturo() {
                 <span className="signo-2">$</span>
                 <input
                   type="text"
-                  className="info"
-                  value={Math.round(valorFactorTazaN88).toLocaleString()}
-                  onChange={(e) =>
-                    setValorFactorTazaN88(
-                      Math.round(parseFloat(e.target.value))
-                    )
-                  }
+                  className="info info_sumado"
+                  value={`$  ${Math.round(valorFactorTazaN88).toLocaleString()}`}
                   disabled
                 />
               </div>
@@ -461,6 +430,14 @@ function NuevoFuturo() {
                       taza88: valorFactorTazaN88,
                       dolar: data.dolar,
                       lastCoffe: data.lastCoffe,
+                      dolarchange: data.indicadorDolar.dollarPriceChange,
+                      dolarPorChange: data.indicadorDolar.dollarPricePorChange,
+                      dolarstate: data.indicadorDolar.resultStateDollar,
+                      coffechange: data.indicador.cambioValorVar,
+                      coffePorChange: data.indicador.cambioValorPorcentaje,
+                      coffestate: data.indicador.resultState,
+                      coffeClock: data.indicador.clock,
+
                     },
                   });
                 }}>
@@ -504,6 +481,7 @@ function NuevoFuturo() {
                   {data.indicadorDolar.dollarPricePorChange}
                 </span>
                 <img className="img" src={eeuu} alt="" />
+                <span className="info_two">Info en tiempo real. Valores en <span className="fw-bold">COP</span> <br /> <a href="" className="text-dark">(Aviso Legal)</a> </span>
                 <span className="vermas">
                   <a
                     href="https://es.investing.com/currencies/usd-cop"
@@ -538,7 +516,7 @@ function NuevoFuturo() {
                 </span>
                 <img className="img" src={eeuu} alt="" />
                 <span
-                  className={`clock ${
+                  className={`mt-2 clock ${
                     data.indicador.clock === "positivo"
                       ? "texto-verde"
                       : "texto-rojo"
@@ -556,6 +534,8 @@ function NuevoFuturo() {
                     Ver Mas
                   </a>
                 </span>
+                <span className="info_two info-three">Datos derivados en tiempo real</span>
+
               </div>
 
               {/*  */}

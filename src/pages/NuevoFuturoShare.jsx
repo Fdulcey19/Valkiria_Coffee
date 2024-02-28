@@ -3,7 +3,7 @@ import html2canvas from "html2canvas";
 import eeuu from "../assets/images/Iconos/eeuu.png";
 import logo from "../assets/images/logo.png";
 import nuevo from "../assets/images/nuevo.png";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function NuevoFuturoShare() {
   const containerRef = useRef(null);
@@ -20,6 +20,13 @@ function NuevoFuturoShare() {
     taza88,
     dolar,
     lastCoffe,
+    dolarchange,
+    dolarPorChange,
+    dolarstate,
+    coffechange,
+    coffePorChange,
+    coffestate,
+    coffeClock,
   } = location.state;
   const getFormattedDateTime = () => {
     const now = new Date();
@@ -30,6 +37,8 @@ function NuevoFuturoShare() {
 
     return `${month}-${day}-${hours}-${minutes}`;
   };
+
+  console.log(dolarchange, dolarPorChange, dolarstate);
 
   const handleGenerateImage = () => {
     if (containerRef.current) {
@@ -63,6 +72,11 @@ function NuevoFuturoShare() {
           Compartir <i className="bx bxl-whatsapp compartir"></i>
         </button>
       </div>
+      <NavLink to="/dash/nuevo" className=" retroceder">
+        <li className="link">
+          <i className="bx bx-arrow-back fw-bold"></i> Atrás
+        </li>
+      </NavLink>
       <div ref={containerRef}>
         {/* Contenido que quieres convertir en imagen */}
         <h2 className="Title">Precios Extras </h2>
@@ -77,11 +91,19 @@ function NuevoFuturoShare() {
                 <span className="Convencional text-1">Convencional</span>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor 92</span>
-                  <input type="text" className="info price" value={`$ ${estandar92.toLocaleString()}`} />
+                  <input
+                    type="text"
+                    className="info price"
+                    value={`$ ${estandar92.toLocaleString()}`}
+                  />
                 </div>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor +88</span>
-                  <input type="text" className="info price"  value={`$ ${estandar88.toLocaleString()}`} />
+                  <input
+                    type="text"
+                    className="info price"
+                    value={`$ ${estandar88.toLocaleString()}`}
+                  />
                 </div>
                 {/* Convencional */}
                 <div className="col-3 contenedores">
@@ -119,17 +141,25 @@ function NuevoFuturoShare() {
                   <input
                     type="text"
                     className="info price input-organico"
-                   value={`$ ${organico88.toLocaleString()}`} 
+                    value={`$ ${organico88.toLocaleString()}`}
                   />
                 </div>
                 {/* Taza */}
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor 92</span>
-                  <input type="text" className="info price"  value={`$ ${taza92.toLocaleString()}`}/>
+                  <input
+                    type="text"
+                    className="info price"
+                    value={`$ ${taza92.toLocaleString()}`}
+                  />
                 </div>
                 <div className="col-3 contenedores">
                   <span className="text text-price">Factor +88</span>
-                  <input type="text" className="info price" value={`$ ${taza88.toLocaleString()}`}/>
+                  <input
+                    type="text"
+                    className="info price"
+                    value={`$ ${taza88.toLocaleString()}`}
+                  />
                 </div>
               </div>
             </div>
@@ -156,22 +186,67 @@ function NuevoFuturoShare() {
               <div className="indicador valkiria">
                 <img src={logo} alt="" />
               </div>
-              <div className="indicador">
+              {/*  */}
+              <div className="indicador indicador-fondo">
                 <span className="text subtitulo">Precio USD</span>
                 <span className="text precio">$ {dolar}</span>
-                <img className="img" src={eeuu} alt="" />
-                <span className="vermas">
-                  <a href="">Ver Mas</a>
+                <span
+                  className="text precio_indicador precio_indicador_dolar"
+                  style={{
+                    color:
+                      dolarstate === "positivo"
+                        ? "green"
+                        : dolarstate === "negativo"
+                        ? "red"
+                        : "inherit",
+                  }}
+                >
+                  <span className="flecha" style={{ color: "inherit" }}>
+                    {dolarstate === "positivo" ? "⬆" : "⬇"}
+                  </span>
+                  {dolarchange} {dolarPorChange}
                 </span>
+                <span className="info_two">
+                  Info en tiempo real. Valores en{" "}
+                  <span className="fw-bold">COP</span> <br />{" "}
+                  <a href="" className="text-dark">
+                    (Aviso Legal)
+                  </a>{" "}
+                </span>
+                <img className="img" src={eeuu} alt="" />
               </div>
-              <div className="indicador">
-                <span className="text subtitulo">Café EE.UU.</span>
+              {/*  */}
+              <div className="indicador indicador-fondo">
+                <span className="text subtitulo">
+                  Café EE.UU. {coffestate === "positivo" ? "🕑" : "⏰"}
+                </span>
                 <span className="text precio">$ {lastCoffe}</span>
+                <span
+                  className="text precio_indicador"
+                  style={{
+                    color: coffestate === "positivo" ? "green" : "red",
+                  }}
+                >
+                  <span className="flecha">
+                    {coffestate === "positivo" ? "⬆" : "⬇"}
+                  </span>
+                  {coffechange} {coffePorChange}
+                </span>
                 <img className="img" src={eeuu} alt="" />
-                <span className="vermas">
-                  <a href="">Ver Mas</a>
+                <span
+                  className={`mt-2 clock ${
+                    coffeClock === "positivo" ? "texto-verde" : "texto-rojo"
+                  }`}
+                >
+                  {coffeClock === "positivo"
+                    ? "🕑 Mercado Abierto"
+                    : "⏰ Mercado Cerrado"}
+                </span>
+                <span className="info_two info-three">
+                  Datos derivados en tiempo real
                 </span>
               </div>
+              {/*  */}
             </div>
           </div>
         </div>

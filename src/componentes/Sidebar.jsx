@@ -49,38 +49,32 @@ function Sidebar() {
         </header>
         <div className={isToggle ? "menu-bar toogle" : "menu-bar"}>
           <div className="menu">
-            <ul className="menu-links">
-              <li className="nav-links search-box">
-                <Link to="/dash">
-                  <i className="bx bxs-home icon"></i>
-                  <span className="text nav-text">Inicio</span>
-                </Link>
-              </li>
-              <li className="nav-links">
-                <Link to="/dash">
-                  <i className="bx bxs-coffee-bean icon"></i>
-                  <span className="text nav-text">Valkiria</span>
-                </Link>
-              </li>
-              <li className="nav-links">
-                <Link to="nuevo">
-                  <i className="bx bxs-tree icon"></i>
-                  <span className="text nav-text">Nuevo Futuro</span>
-                </Link>
-              </li>
-              <li className="nav-links">
-                <Link to="/dash/Configuracion">
-                  <i className="bx bxs-cog icon"></i>
-                  <span className="text nav-text">Configuración</span>
-                </Link>
-              </li>
-              {/* <li className="nav-links">
-                <Link to="/dash/register">
-                  <i className="bx bxs-user-pin icon"></i>
-                  <span className="text nav-text">Perfil</span>
-                </Link>
-              </li> */}
-            </ul>
+          <ul className="menu-links">
+          <li className={`nav-links ${location.pathname === "/dash" || location.pathname === "/dash/share" ? "active" : ""}`}>
+            <Link to="/dash">
+              <i className="bx bxs-home icon"></i>
+              <span className="text nav-text">Inicio</span>
+            </Link>
+          </li>
+          {/* <li className={`nav-links ${location.pathname === "/dash" ? "active" : ""}`}>
+            <Link to="/dash">
+              <i className="bx bxs-coffee-bean icon"></i>
+              <span className="text nav-text">Valkiria</span>
+            </Link>
+          </li> */}
+          <li className={`nav-links ${location.pathname === "/dash/nuevo" || location.pathname === "/dash/nuevoshare" ? "active" : ""}`}>
+            <Link to="/dash/nuevo">
+              <i className="bx bxs-tree icon"></i>
+              <span className="text nav-text">Nuevo Futuro</span>
+            </Link>
+          </li>
+          <li className={`nav-links ${location.pathname === "/dash/configuracion" || location.pathname === "/dash/configuracion/nuevofuturo" || location.pathname === "/dash/configuracion/nuevo" || location.pathname === "/dash/configuracion/valkiria" ? "active" : ""}`}>
+            <Link to="/dash/configuracion">
+              <i className="bx bxs-cog icon"></i>
+              <span className="text nav-text">Configuración</span>
+            </Link>
+          </li>
+        </ul>
           </div>
           <div className="bottom-content">
             <li className="">

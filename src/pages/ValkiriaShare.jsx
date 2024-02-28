@@ -14,6 +14,14 @@ function ValkiriaShare() {
     medLoteSumado,
     dolar,
     lastCoffe,
+    
+    dolarchange,
+    dolarPorChange,
+    dolarstate,
+    coffechange,
+    coffePorChange,
+    coffestate,
+    coffeClock,
   } = location.state;
 
   const getFormattedDateTime = () => {
@@ -60,11 +68,11 @@ function ValkiriaShare() {
             Compartir <i className="bx bxl-whatsapp compartir"></i>
           </button>
         </div>
-        <div ref={containerRef}>
-          {/* Contenido para convertir en imagen */}
-          <NavLink to="/dash" className="btn retroceder">
+          <NavLink to="/dash" className=" retroceder">
             <li className="link"><i className='bx bx-arrow-back fw-bold'></i> Atrás</li>
           </NavLink>
+        <div ref={containerRef}>
+          {/* Contenido para convertir en imagen */}
 
           <h2 className="Title">Precios Extras </h2>
 
@@ -172,25 +180,69 @@ function ValkiriaShare() {
                 <div className="indicador valkiria">
                   <img src={logo} alt="" />
                 </div>
-                <div className="indicador primer_indicador">
-                  <span className="text subtitulo">Precio USD</span>
-                  <span className="text precio share">
-                    $ <span className="text_2">{dolar}</span> COP
+                {/*  */}
+              <div className="indicador indicador-fondo">
+                <span className="text subtitulo">Precio USD</span>
+                <span className="text precio">$ {dolar}</span>
+                <span
+                  className="text precio_indicador precio_indicador_dolar"
+                  style={{
+                    color:
+                      dolarstate === "positivo"
+                        ? "green"
+                        : dolarstate === "negativo"
+                        ? "red"
+                        : "inherit",
+                  }}
+                >
+                  <span className="flecha" style={{ color: "inherit" }}>
+                    {dolarstate === "positivo" ? "⬆" : "⬇"}
                   </span>
-                  <img className="img" src={eeuu} alt="" />
-                  <span className="vermas">
+                  {dolarchange} {dolarPorChange}
+                </span>
+                <span className="info_two mt-2">Info en tiempo real. Valores en <span className="fw-bold">COP</span> <br /> <a href="" className="text-dark">(Aviso Legal)</a> </span>
+                <img className="img" src={eeuu} alt="" />
+
+              </div>
+              {/*  */}
+              <div className="indicador indicador-fondo">
+                <span className="text subtitulo">
+                  Café EE.UU.{" "}
+                  {coffestate === "positivo" ? "🕑" : "⏰"}
+                </span>
+                <span className="text precio">$ {lastCoffe}</span>
+                <span
+                  className="text precio_indicador"
+                  style={{
+                    color:
+                      coffestate === "positivo"
+                        ? "green"
+                        : "red",
+                  }}
+                >
+                  <span className="flecha">
+                    {coffestate === "positivo" ? "⬆"
+                      : "⬇"}
                   </span>
-                </div>
-                <div className="indicador">
-                  <span className="text subtitulo">Café EE.UU.</span>
-                  <span className="text precio share">
-                    $ <span className="text_2">{lastCoffe}</span> USD
-                  </span>
-                  <img className="img" src={eeuu} alt="" />
-                  <span className="vermas">
-                  </span>
-            
-                </div>
+                  {coffechange}{" "}
+                  {coffePorChange}
+                </span>
+                <img className="img" src={eeuu} alt="" />
+                <span
+                  className={`mt-2 clock ${
+                    coffeClock === "positivo"
+                      ? "texto-verde"
+                      : "texto-rojo"
+                  }`}
+                >
+                  {coffeClock === "positivo"
+                    ? `🕑 Mercado Abierto` 
+                    : "⏰ Mercado Cerrado"}
+                </span>
+                <span className="info_two mt-2">Datos derivados en tiempo real</span>
+                
+              </div>
+              {/*  */}
               </div>
             </div>
           </div>

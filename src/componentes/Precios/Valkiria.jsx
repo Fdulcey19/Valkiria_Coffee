@@ -16,13 +16,11 @@ function Valkiria() {
   const navigate = useNavigate();
 
   useEffect(() => {
-
-
     const fetchData = async () => {
       try {
         const data = await getPrecios();
-        if(!data){
-          navigate("/dash/valkiria");
+        if (!data) {
+          navigate("/dash/configuracion/valkiria");
           return;
         }
         console.log("¿ Hay data ?", data);
@@ -64,90 +62,92 @@ function Valkiria() {
   };
 
   return (
-    <div className="container precios">
-      <div className="container-valkiria">
-        <form onSubmit={onSubmit}>
-          <div className="text-center fs-3 fw-bold mb-5">
-            <span>Precios Valkiria</span>
-          </div>
+    <div className="centrar">
+      <div className="precios">
+        <div className="container-valkiria">
+          <form onSubmit={onSubmit}>
+            <div className="text-center fs-3 fw-bold mb-5">
+              <span>Precios Valkiria</span>
+            </div>
 
-          <div className="container mt-1">
-            <span>Precio Diferencia</span>
-            <input
-              type="text"
-              {...register("diferencia")}
-              name="diferencia"
-              autoFocus
-              value={formData.diferencia || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="container">
-            <span>Precio Origen</span>
-            <input
-              type="text"
-              {...register("origen")}
-              name="origen"
-              autoFocus
-              value={formData.origen || ""}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="container">
-            <span>Precio Taza</span>
-            <input
-              type="text"
-              {...register("taza", { required: true })}
-              name="taza"
-              value={formData.taza || ""}
-              onChange={handleInputChange}
-            />
-            {errors.taza && <p className="text-danger">Taza es requerido</p>}
-          </div>
-          <div className="container">
-            <span>Precio Mic-Lote</span>
-            <input
-              type="text"
-              {...register("microLote", { required: true })}
-              name="microLote"
-              value={formData.microLote || ""}
-              onChange={handleInputChange}
-            />
-            {errors.microLote && (
-              <p className="text-danger">MicroLote es requerido</p>
-            )}
-          </div>
-          <div className="container">
-            <span>Precio Med-Lote</span>
-            <input
-              type="text"
-              {...register("medianoLote", { required: true })}
-              name="medianoLote"
-              value={formData.medianoLote || ""}
-              onChange={handleInputChange}
-            />
-            {errors.medianoLote && (
-              <p className="text-danger">MedianoLote es requerido</p>
-            )}
-          </div>
+            <div className="container mt-2 mb-5">
+              <span>Precio Diferencia</span>
+              <input
+                type="text"
+                {...register("diferencia")}
+                name="diferencia"
+                autoFocus
+                value={formData.diferencia || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="container">
+              <span>Precio Origen</span>
+              <input
+                type="text"
+                {...register("origen")}
+                name="origen"
+                autoFocus
+                value={formData.origen || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="container">
+              <span>Precio Taza</span>
+              <input
+                type="text"
+                {...register("taza", { required: true })}
+                name="taza"
+                value={formData.taza || ""}
+                onChange={handleInputChange}
+              />
+              {errors.taza && <p className="text-danger">Taza es requerido</p>}
+            </div>
+            <div className="container">
+              <span>Precio Mic-Lote</span>
+              <input
+                type="text"
+                {...register("microLote", { required: true })}
+                name="microLote"
+                value={formData.microLote || ""}
+                onChange={handleInputChange}
+              />
+              {errors.microLote && (
+                <p className="text-danger">MicroLote es requerido</p>
+              )}
+            </div>
+            <div className="container">
+              <span>Precio Med-Lote</span>
+              <input
+                type="text"
+                {...register("medianoLote", { required: true })}
+                name="medianoLote"
+                value={formData.medianoLote || ""}
+                onChange={handleInputChange}
+              />
+              {errors.medianoLote && (
+                <p className="text-danger">MedianoLote es requerido</p>
+              )}
+            </div>
 
-          <div className="d-flex justify-content-center">
-            {precios ? (
-              <button
-                type="button"
-                className="btn btn-primary btn-actualizar"
-                onClick={handleUpdate}
-                disabled={updating}
-              >
-                {updating ? "Actualizando..." : "Actualizar"}
-              </button>
-            ) : (
-              <button type="submit" className="btn btn-success btn-guardar">
-                Guardar Cambios
-              </button>
-            )}
-          </div>
-        </form>
+            <div className="d-flex justify-content-center">
+              {precios ? (
+                <button
+                  type="button"
+                  className="btn btn-primary btn-actualizar"
+                  onClick={handleUpdate}
+                  disabled={updating}
+                >
+                  {updating ? "Actualizando..." : "Actualizar"}
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-success btn-guardar">
+                  Guardar Cambios
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
