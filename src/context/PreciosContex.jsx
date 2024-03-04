@@ -71,6 +71,8 @@ export function PreciosProvider({ children }) {
           title: "Precios guardados",
           showConfirmButton: false,
           timer: 1500,
+        }).then(() => {
+          window.location.href = "/dash";
         });
       }
       
@@ -141,6 +143,8 @@ export function PreciosProvider({ children }) {
           title: "Precios guardados",
           showConfirmButton: false,
           timer: 1500,
+        }).then(() => {
+          window.location.href = "/dash/nuevo";
         });
       }
       

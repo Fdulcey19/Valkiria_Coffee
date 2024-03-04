@@ -158,11 +158,6 @@ function NuevoFuturo() {
     }
   };
 
-  const handleReload = () => {
-    fetchData();
-    window.location.replace(window.location.pathname);
-  };
-
   const formattedDateTime = currentDateTime.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
@@ -177,14 +172,7 @@ function NuevoFuturo() {
   }
 
   if (error) {
-    return (
-      <div className="Reload d-flex flex-column align-content-center">
-        <p>Error: {error.message}</p>
-        <button className="btn btn-dark button" onClick={handleReload}>
-          <i className="bx bx-reset"></i> Reload Componente
-        </button>
-      </div>
-    );
+    return window.location.reload();
   }
 
   return (
@@ -414,7 +402,7 @@ function NuevoFuturo() {
             </div>
 
             {/* Boton Compartir */}
-            <div className="precio-mercado precio-venta col-12 col-6">
+            <div className="precio-mercado col-12 col-6">
               <div className="btn contain-compartir col-12 col-md-6">
                 <button className="button-compartir"
                 onClick={() => {

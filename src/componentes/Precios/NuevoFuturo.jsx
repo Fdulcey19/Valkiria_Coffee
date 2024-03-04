@@ -226,7 +226,7 @@ function NuevoFuturo() {
                 onClick={handleUpdate}
                 className="btn btn-success btn-actualizar"
               >
-                {precios && precios._id ? "Actualizar" : "Guardar"}
+                 Actualizar
               </button>
             </div>
           </form>

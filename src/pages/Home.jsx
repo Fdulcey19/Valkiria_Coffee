@@ -131,14 +131,7 @@ function Home() {
   }
 
   if (error) {
-    return (
-      <div className="Reload d-flex flex-column align-content-center">
-        <p>Error: {error.message}</p>
-        <button className="btn btn-dark button" onClick={() => handleReload()}>
-          <i className="bx bx-reset"></i> Reload Componente
-        </button>
-      </div>
-    );
+    return window.location.reload();
   }
 
   return (

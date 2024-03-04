@@ -4,10 +4,16 @@ import chapola from "../assets/images/chapola.png";
 
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function LoginRegister() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const {
     register,
     handleSubmit,
@@ -36,7 +42,7 @@ function LoginRegister() {
             <div className="col-lg-6 d-none d-lg-block pb-5 ">
               <div className="position-relative h-100">
                 <div className="text-white w-50">
-                  <p className="fw-bold name">VALKIRIA</p>
+                  <a className="text-decoration-none text-light" href="/"><p className="fw-bold name">VALKIRIA</p></a>
                   <p className="subtitle">
                     SOLUCIONES INFORMATICAS QUE FUNCIONAN PARA SU EMPRESA
                     CAFETERA{" "}
@@ -118,19 +124,25 @@ function LoginRegister() {
                         )}
                       </div>
                       <div className="mb-2">
-                        <label
-                          htmlFor="password"
-                          className="text-1 text-login form-label fw-bold"
-                        >
+                        <label htmlFor="password" className="text-1 text-login form-label fw-bold">
                           Contraseña
                         </label>
-                        <input
-                          type="password"
-                          {...register("password", { required: true })}
-                          className="form-control form-control-lg fs-6 small-placeholder"
-                          placeholder="Contraseña"
-                          style={{ height: "50px" }}
-                        />
+                        <div className="password-input-container">
+                          <input
+                            type={showPassword ? 'text' : 'password'}
+                            {...register('password', { required: true })}
+                            className="form-control form-control-lg fs-6 small-placeholder"
+                            placeholder="Contraseña"
+                            style={{ height: '50px' }}
+                          />
+                          <button
+                            type="button"
+                            className="toggle-password-button"
+                            onClick={togglePasswordVisibility}
+                          >
+                            {showPassword ? <i className='bx bx-show'></i> : <i className='bx bx-low-vision'></i>}
+                          </button>
+                        </div>
                         {errors.password && (
                           <p className="text-danger">Password is required</p>
                         )}
@@ -138,7 +150,7 @@ function LoginRegister() {
                       <div className="mb-4 w-100">
                         <span className="w-100 d-flex justify-content-end ">
                           <a
-                            className="text-decoration-none mt-3 text-1 text-3 text-login"
+                            className="text-decoration-none mt-3 text-1 text-3 text-login olvidado"
                             href="#"
                           >
                             Has olvidado tu contraseña?

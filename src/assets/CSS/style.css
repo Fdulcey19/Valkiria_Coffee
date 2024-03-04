@@ -144,6 +144,32 @@
   top: 90%;
 }
 
+.password-input-container {
+  position: relative;
+}
+
+.password-input-container input {
+  width: calc(100% - 40px); /* Resta el ancho del botón de alternar visibilidad */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.toggle-password-button {
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.olvidado{
+  font-size: 13px;
+}
+
 /* Register */
 
 .container-register {
@@ -776,6 +802,9 @@ header .image-text .header-text {
   position: absolute;
   top: calc(100% - 30px);
   left: 38%;
+  font-weight: 600;
+  color: #9f9b9b;
+  font-size: 10px; /* Tamaño de fuente de 10px */
 }
 
 .container-indicadores .indicador .info_two {
