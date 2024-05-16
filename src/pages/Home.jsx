@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import colombia from "../assets/images/Iconos/colombia.png";
 import eeuu from "../assets/images/Iconos/eeuu.png";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo4.png";
 import { useNavigate } from "react-router-dom";
 import {
   getPosts,
@@ -190,7 +190,6 @@ function Home() {
               <div className="contenedores col-12 col-md-6">
                 <span className="text-2">Precios Extras</span>
                 <span className="text">Origen</span>
-                <span className="signo">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -216,7 +215,6 @@ function Home() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Taza</span>
-                <span className="signo">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -242,7 +240,6 @@ function Home() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Mic-Lote</span>
-                <span className="signo">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -268,7 +265,6 @@ function Home() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Med-Lote</span>
-                <span className="signo">$</span>
                 <input
                   type="text"
                   className="info info_sumado"

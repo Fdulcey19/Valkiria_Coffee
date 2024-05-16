@@ -1,6 +1,6 @@
-import logo from "../assets/images/logo.png";
-import viper from "../assets/images/viper.png";
-import chapola from "../assets/images/chapola.png";
+import logo from "../assets/images/logo4.png";
+import logob from "../assets/images/logo2.png";
+import logos from "../assets/images/valkiria4.png";
 
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/AuthContext";
@@ -41,12 +41,16 @@ function LoginRegister() {
           <div className="row align-items-stretch h-100">
             <div className="col-lg-6 d-none d-lg-block pb-5 ">
               <div className="position-relative h-100">
-                <div className="text-white w-50">
-                  <a className="text-decoration-none text-light" href="/"><p className="fw-bold name">VALKIRIA</p></a>
+                <div className="container-subtitle text-white w-50">
+                  <div>
+                  <a className="text-decoration-none text-light" href="/"><p className="fw-bold name"><img src={logob} alt="" /></p></a>
+                  </div>
+                  <div className="container-text">
                   <p className="subtitle">
-                    SOLUCIONES INFORMATICAS QUE FUNCIONAN PARA SU EMPRESA
-                    CAFETERA{" "}
+                  Soluciones informaticas que funcionan <br /> para su empresa cafetera{" "}
                   </p>
+                  <div className="linea"></div>
+                  </div>
                 </div>
                 <div className="terminos text-center">
                   <span>
@@ -68,7 +72,7 @@ function LoginRegister() {
                   <span>
                     <a
                       className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
-                      href="#"
+                      href="https://www.instagram.com/viper_venomcoffe/" target="blank"
                     >
                       Contactanos
                     </a>
@@ -84,10 +88,7 @@ function LoginRegister() {
                 </div>
                 <div className="logos">
                   <div className="images logo-1">
-                    <img src={viper} alt="" />
-                  </div>
-                  <div className="images logo-2">
-                    <img src={chapola} alt="" />
+                    <img src={logos} alt="" />
                   </div>
                 </div>
               </div>

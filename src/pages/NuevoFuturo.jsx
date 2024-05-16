@@ -203,7 +203,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores punto-diferencia col-12 col-md-6">
                 <span className="text">Precio Mercado</span>
-                <span className="signo-2-mercado">$</span>
                 <input
                   type="text"
                   className="info"
@@ -252,7 +251,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor +88</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -277,7 +275,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor 92</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -298,7 +295,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor +88</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -323,7 +319,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor 92</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -344,7 +339,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor +88</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -369,7 +363,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor 92</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
                   className="info info_sumado"
@@ -391,7 +384,6 @@ function NuevoFuturo() {
               </div>
               <div className="contenedores col-12 col-md-6">
                 <span className="text">Factor +88</span>
-                <span className="signo-2">$</span>
                 <input
                   type="text"
                   className="info info_sumado"

@@ -1,5 +1,5 @@
 import Nav from "./Nav";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/valkiria3.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -36,9 +36,6 @@ function Sidebar() {
             <div className="image">
               <img src={logo} alt="logo" />
             </div>
-            <div className="text header-text">
-              <span className="name">VALKIRIA </span>
-            </div>
           </div>
           <i
             className={`bx ${
@@ -49,7 +46,7 @@ function Sidebar() {
         </header>
         <div className={isToggle ? "menu-bar toogle" : "menu-bar"}>
           <div className="menu">
-          <ul className="menu-links">
+          <ul className="menu-links inicio">
           <li className={`nav-links ${location.pathname === "/dash" || location.pathname === "/dash/share" ? "active" : ""}`}>
             <Link to="/dash">
               <i className="bx bxs-home icon"></i>

@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/valkiria5.png";
+import horizontal from "../assets/images/valkiria2.png";
 
 const HomePage = () => {
   return (
     <>
       <div className="container-fluid homepage">
         <nav className="nav_bar w-50">
-          <div className="logo">
-            <img src={logo} alt="" />
+          <div className="logo mt-3">
+            <img src={horizontal} alt="" />
           </div>
           <ul className="d-flex">
             <li className="nav-item">
@@ -36,6 +37,7 @@ const HomePage = () => {
             <img className="w-50 text-center" src={logo} alt="" />
           </div>
           <p>Soluciones informaticas que funcionan <br /> para su empresa cafetera</p>
+          
         </div>
         <footer className="footer">
           <p className="text-center derechos ">
