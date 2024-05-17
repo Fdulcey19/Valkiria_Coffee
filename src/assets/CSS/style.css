@@ -472,6 +472,19 @@ header .image-text .header-text {
 /* ======================================================================================== */
 /* ==============       SIDEBAR TABLE            ================ */
 /* ======================================================================================== */
+@media (max-width: 1400px) {
+  .login .subtitle {
+    left: -110px;
+    font-weight: 600;
+  }
+
+  .login .linea {
+    left: 260px;
+    top: 88px;
+  }
+}
+
+
 @media (max-width: 1200px) {
 
   /* Estilos para .home cuando la barra lateral está cerrada en pantallas más pequeñas */

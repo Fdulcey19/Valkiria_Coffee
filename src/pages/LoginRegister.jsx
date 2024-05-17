@@ -53,39 +53,40 @@ function LoginRegister() {
                   </div>
                 </div>
                 <div className="terminos text-center">
-                  <span>
-                    <a
-                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
-                      href="#"
-                    >
-                      Terminos y condiciones
-                    </a>
-                  </span>
-                  <span>
-                    <a
-                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
-                      href="#"
-                    >
-                      Politica de Privacidad
-                    </a>
-                  </span>
-                  <span>
-                    <a
-                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
-                      href="https://www.instagram.com/viper_venomcoffe/" target="blank"
-                    >
-                      Contactanos
-                    </a>
-                  </span>
-                  <span>
-                    <a
-                      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block mt-lg-3"
-                      href="#"
-                    >
-                      Version
-                    </a>
-                  </span>
-                </div>
+  <span>
+    <a
+      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
+      href="#"
+    >
+      Terminos y condiciones
+    </a>
+  </span>
+  <span>
+    <a
+      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
+      href="#"
+    >
+      Politica de Privacidad
+    </a>
+  </span>
+  <span>
+    <a className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
+      href="https://www.instagram.com/viper_venomcoffe/" target="_blank" rel="noreferrer"
+    >
+      Contactanos
+    </a>
+  </span>
+  <span>
+    <a
+      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block mt-lg-3"
+      href="#"
+      data-bs-toggle="tooltip" 
+      title="V1.0"
+    >
+      Version
+    </a>
+  </span>
+</div>
                 <div className="logos">
                   <div className="images logo-1">
                     <img src={logos} alt="" />
