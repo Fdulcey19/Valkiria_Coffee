@@ -566,14 +566,14 @@ header .image-text .header-text {
 
   .login .subtitle {
     width: 250px;
-    left: -140px;
+    left: -160px;
     font-weight: 600;
     font-size: 12px;
   }
 
 
   .login .linea {
-    left: 120px;
+    left: 100px;
     top: 80px;
   }
 
