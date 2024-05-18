@@ -227,7 +227,7 @@ function NuevoFuturoShare() {
                     color: coffestate === "positivo" ? "green" : "red",
                   }}
                 >
-                  <span className="flecha">
+                  <span className="flecha indicador_cafe">
                     {coffestate === "positivo" ? "⬆" : "⬇"}
                   </span>
                   {coffechange} {coffePorChange}

@@ -765,8 +765,8 @@ header .image-text .header-text {
 }
 .fondo {
   position: absolute;
-  top: 25%;
-  left: 5%;
+  top: 21%;
+  left: 13%;
   width: 50%;
   opacity: 60%;
 }
@@ -1186,7 +1186,6 @@ header .image-text .header-text {
 }
 
 .precio-factor .contenedores {
-  background: var(--White-color);
   height: 40px;
   width: 24%;
   margin-top: -70px;
@@ -1271,7 +1270,7 @@ header .image-text .header-text {
 .home .valkiria-share .price {
   left: 150px;
   max-width: 90px;
-  top: 17px;
+  top: 14px;
   font-size: 18px;
   user-select: none;
   pointer-events: none;
@@ -1385,7 +1384,7 @@ header .image-text .header-text {
 }
 
 .indicadores_share .indicador .clock{
-  top: 90px;
+  top: 80px;
 }
 
 .container_indicadores_share{
@@ -1870,4 +1869,13 @@ header .image-text .header-text {
   .homepage .logo_1 img {
     width: 100%;
   }
+}
+
+
+/* ======================================================================================== */
+/* ==============            Indicador       ================ */
+/* ======================================================================================== */
+
+.indicador_cafe{
+  margin-left: 4px;
 }

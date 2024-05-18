@@ -115,7 +115,7 @@ function ValkiriaShare() {
                   <span className="text text-2">
                     <span className="Subtitle">Kilos:</span> &ge; 125 ,{" "}
                     <span className="Subtitle">Factor:</span> 91,{" "}
-                    <span className="Subtitle">Taza:</span> 81 - 84,75{" "}
+                    <span className="Subtitle">Taza:</span> 81 - 84,75{" "} <br />
                     <span className="Subtitle">Humedad:</span>: 10 - 12
                   </span>
                 </div>
@@ -209,7 +209,7 @@ function ValkiriaShare() {
                             : "red",
                       }}
                     >
-                      <span className="flecha">
+                      <span className="flecha indicador_cafe">
                         {coffestate === "positivo" ? "⬆"
                           : "⬇"}
                       </span>

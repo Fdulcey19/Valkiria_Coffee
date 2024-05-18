@@ -15,7 +15,7 @@ import { usePrecios } from "../context/PreciosContex";
 
 import colombia from "../assets/images/Iconos/colombia.png";
 import eeuu from "../assets/images/Iconos/eeuu.png";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo4.png";
 import { useNavigate } from "react-router-dom";
 
 function NuevoFuturo() {
@@ -487,7 +487,7 @@ function NuevoFuturo() {
                         : "red",
                   }}
                 >
-                  <span className="flecha">
+                  <span className="flecha indicador_cafe">
                     {data.indicador.resultState === "positivo" ? "⬆"
                       : "⬇"}
                   </span>

@@ -366,7 +366,7 @@ function Home() {
                         : "red",
                   }}
                 >
-                  <span className="flecha me-1">
+                  <span className="flecha indicador_cafe me-1">
                     {data.indicador.resultState === "positivo" ? "⬆" : "⬇"}
                   </span>
                   {data.indicador.cambioValorVar}{" "}
