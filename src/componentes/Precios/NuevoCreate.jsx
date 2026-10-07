@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
-import { usePrecios } from "../../context/PreciosContex";
+import ConfigField from "../ui/ConfigField";
+import { usePrecios } from "../../context/usePrecios";
 import { useState } from "react";
 
 function NuevoCreate() {
@@ -24,151 +25,87 @@ function NuevoCreate() {
   });
 
   return (
-    <div className="centrar">
-      <div className="precios">
-        <div className="container-valkiria container-nuevo-futuro container-nuevo-futuro-create">
-          <div className="text-center fs-3 fw-bold mb-4">
-            <span>Crear Precios Nuevo Futuro</span>
+    <div className="form-card">
+      <h2>Crear precios Nuevo Futuro</h2>
+      <p className="form-card__sub">Crea los precios base para llevar el control de Valkiria y Nuevo Futuro.</p>
+
+      <form className="form-grid" onSubmit={onSubmit} noValidate>
+        <ConfigField label="Precio diferencia" placeholder="0" autoFocus {...register("diferencia")} />
+        <fieldset className="form-group" style={{ border: 0, margin: 0, minInlineSize: 0 }}>
+          <legend className="form-group__title">Orgánico</legend>
+          <div className="form-group__fields">
+            <ConfigField
+              label="Orgánico 92"
+              placeholder="0"
+              {...register("organico")}
+              error={errors.organico?.message}
+            />
+            <ConfigField
+              label="Orgánico +88"
+              placeholder="0"
+              {...register("organicoBonificacion")}
+              error={errors.organicoBonificacion?.message}
+            />
           </div>
-          <form onSubmit={onSubmit}>
-            <div className="container mt-5">
-              <span>Precios diferencia</span>
-              <input
-                type="text"
-                {...register("diferencia")}
-                name="diferencia"
-                placeholder="$ 0"
-                autoFocus
-              />
-              {errors.diferencia && (
-                <p className="text-danger">Organico es requerido</p>
-              )}
-            </div>
-            <div className="container_pry">
-              <div className="container mt-4">
-                <span>Organico 92</span>
-                <input
-                  type="text"
-                  {...register("organico")}
-                  name="organico"
-                  placeholder="$ 0"
-                />
-                {errors.organico && (
-                  <p className="text-danger">Organico es requerido</p>
-                )}
-              </div>
-              <div className="container mt-4">
-                <span>Organico +88</span>
-                <input
-                  type="text"
-                  {...register("organicoBonificacion")}
-                  name="organicoBonificacion"
-                  placeholder="$ 0"
-                />
-                {errors.organicoBonificacion && (
-                  <p className="text-danger">
-                    OrganicoBonificacion es requerido
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="container_pry">
-              <div className="container">
-                <span>Convencional 92</span>
-                <input
-                  type="text"
-                  {...register("convencional")}
-                  name="convencional"
-                  placeholder="$ 0"
-                />
-                {errors.convencional && (
-                  <p className="text-danger">Convencional es requerido</p>
-                )}
-              </div>
-              <div className="container">
-                <span>Convencional +88</span>
-                <input
-                  type="text"
-                  {...register("convencionalBonificacion")}
-                  name="convencionalBonificacion"
-                  placeholder="$ 0"
-                />
-                {errors.convencionalBonificacion && (
-                  <p className="text-danger">
-                    ConvencionalBonificacion es requerido
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="container_pry">
-              <div className="container">
-                <span>Estandar 92</span>
-                <input
-                  type="text"
-                  {...register("estandar", { required: true })}
-                  name="estandar"
-                  placeholder="$ 0"
-                />
-                {errors.estandar && (
-                  <p className="text-danger">Estandar es requerido</p>
-                )}
-              </div>
-              <div className="container">
-                <span>Estandar +88</span>
-                <input
-                  type="text"
-                  {...register("estandarBonificacion", { required: true })}
-                  name="estandarBonificacion"
-                  placeholder="$ 0"
-                />
-                {errors.estandarBonificacion && (
-                  <p className="text-danger">
-                    EstandarBonificacion es requerido
-                  </p>
-                )}
-              </div>
-            </div>
-            <div className="container_pry">
-              <div className="container">
-                <span>Taza 92</span>
-                <input
-                  type="text"
-                  {...register("taza", { required: true })}
-                  name="taza"
-                  placeholder="$ 0"
-                />
-                {errors.taza && (
-                  <p className="text-danger">Taza es requerido</p>
-                )}
-              </div>
-              <div className="container">
-                <span>Taza +88</span>
-                <input
-                  type="text"
-                  {...register("tazaBonificacion", { required: true })}
-                  name="tazaBonificacion"
-                  placeholder="$ 0"
-                />
-                {errors.tazaBonificacion && (
-                  <p className="text-danger">TazaBonificacion es requerido</p>
-                )}
-              </div>
-            </div>
-            <div className="d-flex justify-content-center">
-              <button type="submit" className="btn btn-success btn-guardar"disabled={guardando}
-              >
-              {guardando ? "Guardando..." : "Guardar"}
-              </button>
-            </div>
-          </form>
-          <div className="d-flex justify-content-center mt-2">
-            <span className="text-span mt-3">
-              Crea nuevos precios para llevar el control de valkiria & Nuevo
-              futuro
-            </span>
+        </fieldset>
+        <fieldset className="form-group" style={{ border: 0, margin: 0, minInlineSize: 0 }}>
+          <legend className="form-group__title">Convencional</legend>
+          <div className="form-group__fields">
+            <ConfigField
+              label="Convencional 92"
+              placeholder="0"
+              {...register("convencional")}
+              error={errors.convencional?.message}
+            />
+            <ConfigField
+              label="Convencional +88"
+              placeholder="0"
+              {...register("convencionalBonificacion")}
+              error={errors.convencionalBonificacion?.message}
+            />
           </div>
+        </fieldset>
+        <fieldset className="form-group" style={{ border: 0, margin: 0, minInlineSize: 0 }}>
+          <legend className="form-group__title">Estándar</legend>
+          <div className="form-group__fields">
+            <ConfigField
+              label="Estándar 92"
+              placeholder="0"
+              {...register("estandar", { required: "Estándar 92 es requerido" })}
+              error={errors.estandar?.message}
+            />
+            <ConfigField
+              label="Estándar +88"
+              placeholder="0"
+              {...register("estandarBonificacion", { required: "Estándar +88 es requerido" })}
+              error={errors.estandarBonificacion?.message}
+            />
+          </div>
+        </fieldset>
+        <fieldset className="form-group" style={{ border: 0, margin: 0, minInlineSize: 0 }}>
+          <legend className="form-group__title">Taza</legend>
+          <div className="form-group__fields">
+            <ConfigField
+              label="Taza 92"
+              placeholder="0"
+              {...register("taza", { required: "Taza 92 es requerido" })}
+              error={errors.taza?.message}
+            />
+            <ConfigField
+              label="Taza +88"
+              placeholder="0"
+              {...register("tazaBonificacion", { required: "Taza +88 es requerido" })}
+              error={errors.tazaBonificacion?.message}
+            />
+          </div>
+        </fieldset>
+
+        <div className="form-actions" style={{ marginTop: 0 }}>
+          <button type="submit" className="btn btn--primary text-[14px]" disabled={guardando}>
+            {guardando ? "Guardando…" : "Guardar"}
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

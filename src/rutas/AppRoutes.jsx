@@ -1,18 +1,22 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "../pages/LoginRegister";
 import Sidebar from "../componentes/Sidebar";
 import Home from "../pages/Home";
 import NuevoFuturo from "../pages/NuevoFuturo";
 import ValkiriaShare from "../pages/ValkiriaShare";
 import NuevoFuturoShare from "../pages/NuevoFuturoShare";
-import RegisterPage from "../pages/RegisterPage";
+import UsersPage from "../pages/UsersPage";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
+import LegalPage from "../pages/LegalPage";
+import { termsDocument } from "../content/terms";
+import { privacyDocument } from "../content/privacy";
+import PublicRoute from "../helpers/PublicRoute";
+import RoleRoute from "../helpers/RoleRoute";
+import { ROLES } from "../config/roles";
 import HomePage from "../pages/HomePage";
 import ProtectedRoute from "../helpers/ProtectedRoute";
 import NotFound from "../pages/NotFound";
-import ValkiriaCreate from "../componentes/Precios/ValkiriaCreate";
-import NuevoCreate from "../componentes/Precios/NuevoCreate";
-import Nuevou from "../componentes/Precios/NuevoFuturo";
-import Valkiriau from "../componentes/Precios/Valkiria";
 import NavConfiguracion from "../componentes/NavConfiguracion";
 function AppRoutes() {
   return (
@@ -20,23 +24,36 @@ function AppRoutes() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
+          {/* Documentos legales: públicos (se leen con o sin sesión) */}
+          <Route path="/terminos" element={<LegalPage build={termsDocument} />} />
+          <Route path="/privacidad" element={<LegalPage build={privacyDocument} />} />
+          {/* Enlace del correo de recuperación: abre con o sin sesión (el token es de un solo uso) */}
+          <Route path="/reset-password" element={<ResetPassword />} />
+          {/* Solo visitantes: con sesión activa redirige al panel */}
+          <Route element={<PublicRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+          </Route>
 
+          {/* Requiere sesión */}
           <Route element={<ProtectedRoute />}>
             <Route path="/dash" element={<Sidebar />}>
               <Route index element={<Home />} />
               <Route path="nuevo" element={<NuevoFuturo />} />
               <Route path="share" element={<ValkiriaShare />} />
               <Route path="nuevoshare" element={<NuevoFuturoShare />} />
-              <Route path="valkiriau" element={<Valkiriau />} />
-              <Route path="nuevou" element={<Nuevou />} />
-              <Route path="register" element={<RegisterPage />} />
-              <Route path="configuracion" element={<NavConfiguracion />}>
-                <Route index element={<Valkiriau />} />
-                <Route path="nuevo" element={<Nuevou />} />
-                <Route path="valkiria" element={<ValkiriaCreate />} />
-                <Route path="nuevofuturo" element={<NuevoCreate />} />
+              {/* Solo administradores */}
+              <Route element={<RoleRoute roles={[ROLES.ADMIN]} />}>
+                <Route path="usuarios" element={<UsersPage />} />
               </Route>
+              {/* Configuración: una sola ruta; la pestaña va en ?tab= (ver NavConfiguracion) */}
+              <Route path="configuracion" element={<NavConfiguracion />} />
+              {/* Direcciones antiguas: se conservan como redirecciones para no romper enlaces guardados */}
+              <Route path="configuracion/valkiria" element={<Navigate to="/dash/configuracion" replace />} />
+              <Route path="configuracion/nuevo" element={<Navigate to="/dash/configuracion?tab=nuevo" replace />} />
+              <Route path="configuracion/nuevofuturo" element={<Navigate to="/dash/configuracion?tab=nuevo" replace />} />
+              <Route path="valkiriau" element={<Navigate to="/dash/configuracion" replace />} />
+              <Route path="nuevou" element={<Navigate to="/dash/configuracion?tab=nuevo" replace />} />
             </Route>
           </Route>
 

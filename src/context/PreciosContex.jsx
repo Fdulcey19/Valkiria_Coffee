@@ -1,227 +1,130 @@
-import { createContext, useContext, useState } from "react";
+/**
+ * Contexto de precios guardados por el usuario (Valkiria y Nuevo Futuro).
+ *
+ * El backend ya devuelve solo los precios del usuario con sesión, así que aquí no se
+ * filtra ni se envía el id del usuario: cada acción es una llamada directa a la API.
+ */
+import { useCallback, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import { createPreciosRequest, createPreciosRequestNuevo, getPreciosRequest, getPreciosRequestNuevo, updatePrecioRequest, updatePrecioRequestNuevo } from "../api/precios";
-import { verifyTokenRequest } from "../api/auth";
-import Swal from "sweetalert2";
+import { notify } from "../lib/notify";
+import {
+  createPreciosRequest,
+  createPreciosRequestNuevo,
+  getPreciosRequest,
+  getPreciosRequestNuevo,
+  updatePrecioRequest,
+  updatePrecioRequestNuevo,
+} from "../api/precios";
+import { errorText } from "../api/errors";
+import { PreciosContext } from "./usePrecios";
 
-const PreciosContext = createContext();
+/** Campos que se envían al guardar cada tipo de precios. */
+const CAMPOS_VALKIRIA = ["diferencia", "origen", "taza", "microLote", "medianoLote"];
+const CAMPOS_NUEVO = [
+  "diferencia",
+  "organico",
+  "organicoBonificacion",
+  "convencional",
+  "convencionalBonificacion",
+  "estandar",
+  "estandarBonificacion",
+  "taza",
+  "tazaBonificacion",
+];
 
-export const usePrecios = () => {
-  const context = useContext(PreciosContext);
-  if (!context) {
-    throw new Error(
-      "usePrecios debe estar dentro del proveedor PreciosContext"
-    );
-  }
-  return context;
-};
+const pick = (source, fields) => Object.fromEntries(fields.map((f) => [f, source[f]]));
+
+const showError = (error) => notify.error("No se pudo guardar", errorText(error));
+
+const showSaved = (title) => notify.success(title);
+
+/** Deja ver el aviso de éxito un instante antes de recargar la sección. */
+const goTo = (path) => setTimeout(() => { window.location.href = path; }, 900);
 
 export function PreciosProvider({ children }) {
   const [precios, setPrecios] = useState([]);
 
-  const getPrecios = async () => {
-    const tokenLocal = localStorage.getItem("token");
-    if (!tokenLocal) {
-      console.log("No hay token");
-      return;
-    }
+  /** Trae los precios del usuario y devuelve el primer registro (o undefined si no hay). */
+  const fetchPrecios = useCallback(async (request) => {
     try {
-      const response = await verifyTokenRequest(tokenLocal);
-      const id = response.data.id;
-      const res = await getPreciosRequest();
-      if (!res.data || res.data.length === 0) {
-        console.log("No hay precios");
-        return;
-      }
-      for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].user === id) {
-          setPrecios(res.data[i]);
-          return res.data[i]; // Devuelve los precios encontrados
-        }
-      }
-      console.log("No se encontraron precios para este usuario");
+      const res = await request();
+      const guardado = res.data?.[0];
+      if (guardado) setPrecios(guardado);
+      return guardado;
     } catch (error) {
-      console.error("Error fetching precios:", error);
+      console.error("Error al obtener precios:", error);
     }
-  };
-    
-  const createPrecios = async (precios) => {
-    const tokenLocal = localStorage.getItem("token");
-    if (!tokenLocal) {
-      console.log("No hay token");
-      return;
-    }
+  }, []);
+
+  // ---- Valkiria ------------------------------------------------------------
+
+  const getPrecios = useCallback(() => fetchPrecios(getPreciosRequest), [fetchPrecios]);
+
+  /** Guarda por primera vez los precios de Valkiria y vuelve al panel. */
+  const createPrecios = async (data) => {
     try {
-      const response = await verifyTokenRequest(tokenLocal);
-      if(!response){
-        return;
-      }
-      const data ={
-        idUser: response.data.id,
-        diferencia:precios.diferencia,
-        origen:precios.origen, 
-        taza:precios.taza, 
-        microLote: precios.microLote, 
-        medianoLote: precios.medianoLote
-      }
-      const res = await createPreciosRequest(data);
+      const res = await createPreciosRequest(pick(data, CAMPOS_VALKIRIA));
       if (res.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Precios guardados",
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => {
-          window.location.href = "/dash";
-        });
-      }
-      
-
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.response.data.message,
-      });
-    }
-  };
-  
-  const updatePrecio = async (precioId, inputData) => {
-    try {
-      const precio = { ...inputData, _id: precioId }; // Agregar el ID al objeto precio
-      const response = await updatePrecioRequest(precio);
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Precio actualizado",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        showSaved("Precios guardados");
+        goTo("/dash");
       }
     } catch (error) {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.response.data.message,
-      });
+      showError(error);
     }
   };
-  
-  // Contex Nuevo Futuro
 
-  const createPreciosNuevo = async (precios) => {
-    console.log("Hola");
-    const tokenLocal = localStorage.getItem("token");
-    if (!tokenLocal) {
-      console.log("No hay token");
-      return;
-    }
+  /** Actualiza los precios de Valkiria existentes. */
+  const updatePrecio = async (precioId, data) => {
     try {
-      const response = await verifyTokenRequest(tokenLocal);
-      if(!response){
-        return;
-      }
-      const data ={
-        idUser: response.data.id,
-        diferencia:precios.diferencia,
-        organico:precios.organico, 
-        organicoBonificacion:precios.organicoBonificacion, 
-        convencional:precios.convencional, 
-        convencionalBonificacion:precios.convencionalBonificacion,
-        taza:precios.taza, 
-        tazaBonificacion:precios.tazaBonificacion,  
-        estandar:precios.estandar, 
-        estandarBonificacion:precios.estandarBonificacion,  
-      }
-      console.log(data);
-      const res = await createPreciosRequestNuevo(data);
-      console.log(res);
+      const res = await updatePrecioRequest({ ...pick(data, CAMPOS_VALKIRIA), _id: precioId });
+      if (res.status === 200) showSaved("Precio actualizado");
+    } catch (error) {
+      showError(error);
+    }
+  };
+
+  // ---- Nuevo Futuro --------------------------------------------------------
+
+  const getPreciosNuevo = useCallback(() => fetchPrecios(getPreciosRequestNuevo), [fetchPrecios]);
+
+  /** Guarda por primera vez los precios de Nuevo Futuro y vuelve a su panel. */
+  const createPreciosNuevo = async (data) => {
+    try {
+      const res = await createPreciosRequestNuevo(pick(data, CAMPOS_NUEVO));
       if (res.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Precios guardados",
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => {
-          window.location.href = "/dash/nuevo";
-        });
+        showSaved("Precios guardados");
+        goTo("/dash/nuevo");
       }
-      
-
     } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.response.data.message,
-      });
+      showError(error);
     }
   };
-  
-const getPreciosNuevo = async () => {
-  const tokenLocal = localStorage.getItem("token");
-    if (!tokenLocal) {
-      console.log("No hay token");
-      return;
-    }
-    try {
-      const response = await verifyTokenRequest(tokenLocal);
-      const id = response.data.id;
-      const res = await getPreciosRequestNuevo();
-      if (!res.data || res.data.length === 0) {
-        console.log("No hay precios");
-        return;
-      }
-      for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].user === id) {
-          setPrecios(res.data[i]);
-          return res.data[i]; // Devuelve los precios encontrados
-        }
-      }
-      console.log("No se encontraron precios para este usuario");
-    } catch (error) {
-      console.error("Error fetching precios:", error);
-    }
-}
 
-  const updatePreciosNuevo = async (precioId, inputData) => {
+  /** Actualiza los precios de Nuevo Futuro existentes. */
+  const updatePreciosNuevo = async (precioId, data) => {
     try {
-      console.log("Hola", precioId, inputData);
-      const precio = { ...inputData, _id: precioId }; // Agregar el ID al objeto precio
-      const response = await updatePrecioRequestNuevo(precio);
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Precio actualizado",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      }
+      const res = await updatePrecioRequestNuevo({ ...pick(data, CAMPOS_NUEVO), _id: precioId });
+      if (res.status === 200) showSaved("Precio actualizado");
     } catch (error) {
-      console.error(error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: error.response.data.message,
-      });
+      showError(error);
     }
-  }
+  };
 
-  return (
-    <PreciosContext.Provider
-      value={{
-        precios,
-        createPrecios,
-        getPrecios,
-        updatePrecio,
-        createPreciosNuevo,
-        getPreciosNuevo,
-        updatePreciosNuevo
-      }}
-    >
-      {children}
-    </PreciosContext.Provider>
+  const value = useMemo(
+    () => ({
+      precios,
+      getPrecios,
+      createPrecios,
+      updatePrecio,
+      getPreciosNuevo,
+      createPreciosNuevo,
+      updatePreciosNuevo,
+    }),
+    // Las acciones de escritura no capturan estado; solo cambia `precios`.
+    [precios, getPrecios, getPreciosNuevo]
   );
+
+  return <PreciosContext.Provider value={value}>{children}</PreciosContext.Provider>;
 }
 
 PreciosProvider.propTypes = {

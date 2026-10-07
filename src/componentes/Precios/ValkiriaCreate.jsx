@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
-import { usePrecios } from "../../context/PreciosContex";
+import ConfigField from "../ui/ConfigField";
+import { usePrecios } from "../../context/usePrecios";
 import { useState } from "react";
 
 function ValkiriaCreate() {
@@ -23,84 +24,38 @@ function ValkiriaCreate() {
   });
 
   return (
-    <div className="centrar">
-      <div className="precios">
-        <div className="container-valkiria container-valkiria-create">
-          <form onSubmit={onSubmit}>
-            <div className="text-center fs-3 fw-bold mb-5">
-              <span>Crear Precios Valkiria</span>
-              <br />
-            </div>
+    <div className="form-card">
+      <h2>Crear precios Valkiria</h2>
+      <p className="form-card__sub">Crea los precios base para llevar el control de Valkiria.</p>
 
-            <div className="container my-5">
-              <span>Precio Diferencia $</span>
-              <input
-                type="text"
-                {...register("diferencia")}
-                name="diferencia"
-                autoFocus
-                placeholder="$ 0"
-              />
-            </div>
-            <div className="container">
-              <span>Precio Origen</span>
-              <input
-                type="text"
-                {...register("origen")}
-                name="origen"
-                placeholder="$ 0"
-              />
-            </div>
-            <div className="container">
-              <span>Precio Taza</span>
-              <input
-                type="text"
-                {...register("taza", { required: true })}
-                name="taza"
-                placeholder="$ 0"
-              />
-              {errors.taza && <p className="text-danger">Taza es requerido</p>}
-            </div>
-            <div className="container">
-              <span>Precio Mic-Lote</span>
-              <input
-                type="text"
-                {...register("microLote", { required: true })}
-                name="microLote"
-                placeholder="$ 0"
-              />
-              {errors.microLote && (
-                <p className="text-danger">MicroLote es requerido</p>
-              )}
-            </div>
-            <div className="container">
-              <span>Precio Med-Lote</span>
-              <input
-                type="text"
-                {...register("medianoLote", { required: true })}
-                name="medianoLote"
-                placeholder="$ 0"
-              />
-              {errors.medianoLote && (
-                <p className="text-danger">MedianoLote es requerido</p>
-              )}
-            </div>
+      <form className="form-grid" onSubmit={onSubmit} noValidate>
+        <ConfigField label="Precio diferencia" placeholder="0" autoFocus {...register("diferencia")} />
+        <ConfigField label="Precio origen" placeholder="0" {...register("origen")} />
+        <ConfigField
+          label="Precio taza"
+          placeholder="0"
+          {...register("taza", { required: "La taza es requerida" })}
+          error={errors.taza?.message}
+        />
+        <ConfigField
+          label="Precio micro lote"
+          placeholder="0"
+          {...register("microLote", { required: "El micro lote es requerido" })}
+          error={errors.microLote?.message}
+        />
+        <ConfigField
+          label="Precio mediano lote"
+          placeholder="0"
+          {...register("medianoLote", { required: "El mediano lote es requerido" })}
+          error={errors.medianoLote?.message}
+        />
 
-            <div className="d-flex justify-content-center">
-              <button type="submit" className="btn btn-success btn-guardar"
-              disabled={guardando}
-              >
-              {guardando ? "Guardando..." : "Guardar"}
-              </button>
-            </div>
-          </form>
-          <div className="d-flex justify-content-center mt-2">
-            <span className="text-span mt-2">
-              Crea nuevos precios para llevar el control de valkiria
-            </span>
-          </div>
+        <div className="form-actions" style={{ marginTop: 0 }}>
+          <button type="submit" className="btn btn--primary text-[14px]" disabled={guardando}>
+            {guardando ? "Guardando…" : "Guardar"}
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

@@ -1,18 +1,17 @@
-import logo from "../assets/images/logo4.png";
-import logob from "../assets/images/logo2.png";
-import logos from "../assets/images/valkiria4.png";
-
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuth } from "../context/AuthContext";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import stacked from "../assets/images/logo4.png";
+import AuthShell from "../componentes/auth/AuthShell";
+import { useAuth } from "../context/useAuth";
+import { safeReturnPath } from "../helpers/returnPath";
 
 function LoginRegister() {
   const [showPassword, setShowPassword] = useState(false);
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const [submitting, setSubmitting] = useState(false);
+  const { signIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     register,
@@ -20,164 +19,101 @@ function LoginRegister() {
     formState: { errors },
   } = useForm();
 
-  const { signIn, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-
-  const onSubmit = handleSubmit((data) => {
-    signIn(data);
-    console.log(data);
+  const onSubmit = handleSubmit(async (values) => {
+    setSubmitting(true);
+    try {
+      const ok = await signIn(values);
+      if (ok) {
+        // Vuelve a la ruta que se pidió antes del login (solo rutas internas de /dash, con sus parámetros).
+        navigate(safeReturnPath(location.state?.from), { replace: true });
+      }
+    } finally {
+      setSubmitting(false);
+    }
   });
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/dash");
-    }
-  }, [isAuthenticated]);
-
   return (
-    <>
-      <body className="login" style={{ height: "100vh" }}>
-        <div className="container pt-lg-5 pt-4 rounded-5 h-100">
-          <div className="row align-items-stretch h-100">
-            <div className="col-lg-6 d-none d-lg-block pb-5 ">
-              <div className="position-relative h-100">
-                <div className="container-subtitle text-white w-50">
-                  <div>
-                  <a className="text-decoration-none text-light" href="/"><p className="fw-bold name"><img src={logob} alt="" /></p></a>
-                  </div>
-                  <div className="container-text">
-                  <p className="subtitle">
-                  Soluciones informaticas que funcionan <br /> para su empresa cafetera{" "}
-                  </p>
-                  <div className="linea"></div>
-                  </div>
-                </div>
-                <div className="terminos text-center">
-  <span>
-    <a
-      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
-      href="#"
+    <AuthShell
+      title={<>Soluciones informáticas que <em>funcionan</em> para su empresa cafetera</>}
+      text="Precios del mercado, cálculo por lote y ofertas listas para compartir, en un solo lugar."
     >
-      Terminos y condiciones
-    </a>
-  </span>
-  <span>
-    <a
-      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
-      href="#"
-    >
-      Politica de Privacidad
-    </a>
-  </span>
-  <span>
-    <a className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block"
-      href="https://www.instagram.com/viper_venomcoffe/" target="_blank" rel="noreferrer"
-    >
-      Contactanos
-    </a>
-  </span>
-  <span>
-    <a
-      className="links text-decoration-none text-black-50 mx-2 fw-bold d-inline-block mt-lg-3"
-      href="#"
-      data-bs-toggle="tooltip" 
-      title="V1.0"
-    >
-      Version
-    </a>
-  </span>
-</div>
-                <div className="logos">
-                  <div className="images logo-1">
-                    <img src={logos} alt="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-6 col-12">
-              <div className="d-flex justify-content-lg-end justify-content-center login-form">
-                <div className="login-contain p-5 bg-white rounded-5 shadow ">
-                  <div className="text-center">
-                    {/* Inicio de Sesion */}
-                    {/* Logo */}
-                    <div className="logo">
-                      <img src={logo} alt="" />
-                    </div>
-                  </div>
-                  <div>
-                    {/* ------------------------------------------- */}
-                    <form onSubmit={onSubmit}>
-                      <div className="mb-4">
-                        <label
-                          htmlFor="email"
-                          className="text-1 text-login form-label fw-bold"
-                        >
-                          Usuario
-                        </label>
-                        <input
-                          type="text"
-                          {...register("username", { required: true })}
-                          className="form-control form-control-lg fs-6 small-placeholder"
-                          placeholder="Usuario"
-                          style={{ height: "50px" }}
-                        />
-                        {errors.username && (
-                          <p className="text-danger">Username is required</p>
-                        )}
-                      </div>
-                      <div className="mb-2">
-                        <label htmlFor="password" className="text-1 text-login form-label fw-bold">
-                          Contraseña
-                        </label>
-                        <div className="password-input-container">
-                          <input
-                            type={showPassword ? 'text' : 'password'}
-                            {...register('password', { required: true })}
-                            className="form-control form-control-lg fs-6 small-placeholder"
-                            placeholder="Contraseña"
-                            style={{ height: '50px' }}
-                          />
-                          <button
-                            type="button"
-                            className="toggle-password-button"
-                            onClick={togglePasswordVisibility}
-                          >
-                            {showPassword ? <i className='bx bx-show'></i> : <i className='bx bx-low-vision'></i>}
-                          </button>
-                        </div>
-                        {errors.password && (
-                          <p className="text-danger">Password is required</p>
-                        )}
-                      </div>
-                      <div className="mb-4 w-100">
-                        <span className="w-100 d-flex justify-content-end ">
-                          <a
-                            className="text-decoration-none mt-3 text-1 text-3 text-login olvidado"
-                            href="#"
-                          >
-                            Has olvidado tu contraseña?
-                          </a>
-                        </span>
-                      </div>
+      <div className="w-full max-w-[440px] animate-[rise_0.45s_var(--ease)_both] rounded-[var(--radius-lg)] border border-line bg-card p-[clamp(20px,4vw,28px)] min-[992px]:p-10 [box-shadow:var(--shadow)] md:max-w-[440px]">
+        <img className="mx-auto mb-3 w-16 min-[992px]:mb-[18px] min-[992px]:w-[84px]" src={stacked} alt="Valkiria" width="84" height="55" />
+        <h1 className="text-center font-display text-2xl font-semibold min-[992px]:text-[1.55rem] tracking-[-0.01em]">Bienvenido</h1>
+        <p className="mt-1.5 text-center text-ink-soft text-[13px]">Ingresa con tu usuario para continuar.</p>
 
-                      <div className="d-grid">
-                        <button
-                          type="submit"
-                          className="btn btn-inicio-sesion text-white fs-6"
-                        >
-                          Iniciar Sesion
-                        </button>
-                      </div>
-                    </form>
-                    {/* ------------------------- */}
-                  </div>
-                </div>
-              </div>
-            </div>
+        <form className="mt-5 grid gap-3.5 min-[992px]:mt-7 min-[992px]:gap-[18px]" onSubmit={onSubmit} noValidate>
+          <div className="field">
+            <label className="field__label" htmlFor="username">
+              Usuario o correo
+            </label>
+            <input
+              id="username"
+              type="text"
+              autoComplete="username"
+              autoCapitalize="none"
+              spellCheck="false"
+              placeholder="Tu usuario o correo"
+              className="field__input"
+              aria-invalid={errors.username ? "true" : "false"}
+              aria-describedby={errors.username ? "username-error" : undefined}
+              {...register("username", { required: "Ingresa tu usuario o correo", setValueAs: (v) => v.trim() })}
+            />
+            {errors.username && (
+              <p className="field__error" id="username-error" role="alert">
+                {errors.username.message}
+              </p>
+            )}
           </div>
-        </div>
-      </body>
-    </>
+
+          <div className="field">
+            <label className="field__label" htmlFor="password">
+              Contraseña
+            </label>
+            <div className="field__control">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                placeholder="Tu contraseña"
+                className="field__input"
+                style={{ paddingRight: 52 }}
+                aria-invalid={errors.password ? "true" : "false"}
+                aria-describedby={errors.password ? "password-error" : undefined}
+                {...register("password", {
+                  required: "Ingresa tu contraseña",
+                  minLength: { value: 6, message: "Debe tener al menos 6 caracteres" },
+                })}
+              />
+              <button
+                type="button"
+                className="field__toggle"
+                onClick={() => setShowPassword((v) => !v)}
+                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                aria-pressed={showPassword}
+              >
+                <i className={`bx ${showPassword ? "bx-hide" : "bx-show"}`} aria-hidden="true"></i>
+              </button>
+            </div>
+            {errors.password && (
+              <p className="field__error" id="password-error" role="alert">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          <Link to="/forgot-password" className="ml-auto w-fit text-sm font-semibold text-accent hover:underline">¿Olvidaste tu contraseña?</Link>
+
+          <button type="submit" className="btn btn--primary btn--lg btn--block text-[14px]" disabled={submitting}>
+            {submitting ? "Ingresando…" : "Iniciar sesión"}
+          </button>
+        </form>
+
+        <p className="mt-4 text-center text-sm text-ink-soft min-[992px]:mt-5 [&_a:hover]:underline [&_a]:font-semibold [&_a]:text-accent">
+          <Link to="/">← Volver al inicio</Link>
+        </p>
+      </div>
+    </AuthShell>
   );
 }
 

@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
-import colombia from "../assets/images/Iconos/colombia.png";
-import eeuu from "../assets/images/Iconos/eeuu.png";
-import logo from "../assets/images/logo4.png";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import mark from "../assets/images/valkiria5.png";
+import watermark from "../assets/images/logo4.png";
 import {
   getPosts,
   getPrecioMedLote,
@@ -11,12 +10,22 @@ import {
   getPrecioOrigen,
   getValorTaza,
 } from "../domain/services";
-import { usePrecios } from "../context/PreciosContex";
+import { usePrecios } from "../context/usePrecios";
+import Clock from "../componentes/ui/Clock";
+import IndicatorPanel from "../componentes/ui/IndicatorPanel";
+import MoneyField from "../componentes/ui/MoneyField";
+import ResultField from "../componentes/ui/ResultField";
+import { ErrorScreen } from "../componentes/ui/StatusScreen";
+import { HomeSkeleton, PageHold } from "../componentes/ui/Skeletons";
+import { useSkeletonGate } from "../hooks/useSkeletonGate";
+
+const POLL_MS = 3000;
+const money = (n) => `$ ${Math.round(n).toLocaleString()}`;
 
 function Home() {
   const { getPrecios } = usePrecios();
+  const navigate = useNavigate();
 
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [valorPrecioMercado, setValorPrecioMercado] = useState(0);
   const [valorOrigenSumado, setValorOrigenSumado] = useState(0);
   const [valorTazaSumado, setValorTazaSumado] = useState(0);
@@ -25,6 +34,8 @@ function Home() {
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const gate = useSkeletonGate(loading);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
 
   const [precios, setPrecios] = useState({
@@ -35,373 +46,174 @@ function Home() {
     medianoLote: 0,
   });
 
-  const navigate = useNavigate();
-
-  function LoadingSpinner() {
-    return (
-      <div>
-        <div className="loader"></div>
-        <p className="loader_text">Loading...</p>
-      </div>
-    );
-  }
+  const setPrecio = (campo) => (e) =>
+    setPrecios((prev) => ({ ...prev, [campo]: e.target.value }));
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadSavedPrices = async () => {
       try {
-        const data = await getPrecios();
-        setPrecios((prev) => (!data ? prev : data));
-      } catch (error) {
-        console.error("Error al obtener precios:", error);
+        const saved = await getPrecios();
+        setPrecios((prev) => (!saved ? prev : saved));
+      } catch (err) {
+        console.error("Error al obtener precios:", err);
       }
     };
+    loadSavedPrices();
+  }, [getPrecios]);
 
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const updateDateTime = () => {
-      setCurrentDateTime(new Date());
-    };
-
-    const intervalId = setInterval(updateDateTime, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-    const intervalDataId = setInterval(fetchData, 3000);
-    return () => clearInterval(intervalDataId);
-  }, [
-    precios.diferencia,
-    precios.origen,
-    precios.taza,
-    precios.microLote,
-    precios.medianoLote,
-  ]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const response = await getPosts();
-      console.log(response);
       setData(response.data);
+      setError(null);
+
       const precioMercado =
         Math.floor(getPrecioMercado(response, precios.diferencia) / 100) * 100;
 
-      const precioOrigen = getPrecioOrigen(precioMercado, precios.origen);
-
-      const precioTaza = getValorTaza(precioMercado, precios.taza);
-
-      const precioMicLote = getPrecioMicLote(precioMercado, precios.microLote);
-
-      const precioMedLote = getPrecioMedLote(
-        precioMercado,
-        precios.medianoLote
-      );
-
       setValorPrecioMercado(precioMercado);
-      setValorOrigenSumado(precioOrigen);
-      setValorTazaSumado(precioTaza);
-      setValorMicLoteSumado(precioMicLote);
-      setValorMedLoteSumado(precioMedLote);
-    } catch (error) {
-      setError(error);
+      setValorOrigenSumado(getPrecioOrigen(precioMercado, precios.origen));
+      setValorTazaSumado(getValorTaza(precioMercado, precios.taza));
+      setValorMicLoteSumado(getPrecioMicLote(precioMercado, precios.microLote));
+      setValorMedLoteSumado(getPrecioMedLote(precioMercado, precios.medianoLote));
+    } catch (err) {
+      setError(err);
     } finally {
       setLoading(false);
     }
-  };
+  }, [precios.diferencia, precios.origen, precios.taza, precios.microLote, precios.medianoLote]);
 
-  const handleReload = () => {
+  useEffect(() => {
     fetchData();
-    window.location.replace(window.location.pathname);
+    const id = setInterval(fetchData, POLL_MS);
+    return () => clearInterval(id);
+  }, [fetchData]);
+
+  const handleReload = async () => {
+    setRefreshing(true);
+    await fetchData();
+    setRefreshing(false);
   };
 
-  const formattedDateTime = currentDateTime.toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  if (gate.waiting) return <PageHold />;
+  if (gate.skeleton) return <HomeSkeleton />;
+  if (!data) return <ErrorScreen onRetry={handleReload} />;
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  const goShare = () =>
+    navigate("/dash/share", {
+      state: {
+        origenSumado: valorOrigenSumado,
+        tazaSumado: valorTazaSumado,
+        micLoteSumado: valorMicLoteSumado,
+        medLoteSumado: valorMedLoteSumado,
+        dolar: data.dolar,
+        lastCoffe: data.lastCoffe,
+        dolarchange: data.indicadorDolar.dollarPriceChange,
+        dolarPorChange: data.indicadorDolar.dollarPricePorChange,
+        dolarstate: data.indicadorDolar.resultStateDollar,
+        coffechange: data.indicador.cambioValorVar,
+        coffePorChange: data.indicador.cambioValorPorcentaje,
+        coffestate: data.indicador.resultState,
+        coffeClock: data.indicador.clock,
+      },
+    });
 
-  if (error) {
-    return window.location.reload();
-  }
+  const extras = [
+    { key: "origen", name: "Origen", total: valorOrigenSumado },
+    { key: "taza", name: "Taza", total: valorTazaSumado },
+    { key: "microLote", name: "Mic-Lote", total: valorMicLoteSumado },
+    { key: "medianoLote", name: "Med-Lote", total: valorMedLoteSumado },
+  ];
 
   return (
-    <body className="home">
-      <div className="container valkiria">
-        <div className="row">
-          <div className="col-12 col-md-9">
-            <img className="fondo" src={logo} alt="" />
-            <div className="precio-pergamino">
-              <span className="text subtitulo">Precio Pergamino</span>
-              <span className="text precio">{`$ ${data.arroba.toLocaleString()}`}</span>
-              <span className="text hora">{formattedDateTime}</span>
-              <button className="button-reload" onClick={() => handleReload()}>
-                Recargar <i className="bx bx-reset"></i>
-              </button>
-            </div>
-            <div className="precio-mercado mt-4 col-12 col-6">
-              <div className="contenedores">
-                <span className="text">Punto Diferencia</span>
-                <span className="signo-2">$</span>
-                <input
-                  type="text"
-                  className="info"
-                  defaultValue={precios.diferencia}
-                  onChange={(e) =>
-                    setPrecios({ ...precios, diferencia: e.target.value })
-                  }
-                />
-              </div>
-              <div className="contenedores col-12 col-md-6">
-                <span className="text">Precio Mercado</span>
-                <span className="signo-2">$</span>
-                <input
-                  type="text"
-                  className="info"
-                  value={valorPrecioMercado.toLocaleString()}
-                  onChange={(e) => setValorPrecioMercado(e.target.value)}
-                />
-              </div>
-            </div>
-            {/* Origen */}
-            <div className="precio-mercado precio-extra precio-inicio col-12 col-6">
-              <div className="contenedores">
-                <span className="text-2">Precios Extras</span>
-                <span className="text">Origen</span>
-                <span className="signo">$</span>
-                <input
-                  type="text"
-                  className="info"
-                  defaultValue={precios.origen}
-                  onChange={(e) =>
-                    setPrecios({ ...precios, origen: e.target.value })
-                  }
-                />
-              </div>
-              <div className="contenedores col-12 col-md-6">
-                <span className="text-2">Precios Extras</span>
-                <span className="text">Origen</span>
-                <input
-                  type="text"
-                  className="info info_sumado"
-                  value={`$  ${Math.round(valorOrigenSumado).toLocaleString()}`}
-                  disabled
-                />
-              </div>
-            </div>
-
-            {/* Taza */}
-            <div className="precio-mercado precio-extra col-12 col-6">
-              <div className="contenedores">
-                <span className="text">Taza</span>
-                <span className="signo">$</span>
-                <input
-                  type="text"
-                  className="info"
-                  value={precios.taza}
-                  onChange={(e) =>
-                    setPrecios({ ...precios, taza: e.target.value })
-                  }
-                />
-              </div>
-              <div className="contenedores col-12 col-md-6">
-                <span className="text">Taza</span>
-                <input
-                  type="text"
-                  className="info info_sumado"
-                  value={`$  ${Math.round(valorTazaSumado).toLocaleString()}`}
-                  disabled
-                />
-              </div>
-            </div>
-
-            {/* Micro Lote */}
-            <div className="precio-mercado precio-extra col-12 col-6">
-              <div className="contenedores">
-                <span className="text">Mic-Lote</span>
-                <span className="signo">$</span>
-                <input
-                  type="text"
-                  className="info"
-                  value={precios.microLote}
-                  onChange={(e) =>
-                    setPrecios({ ...precios, microLote: e.target.value })
-                  }
-                />
-              </div>
-              <div className="contenedores col-12 col-md-6">
-                <span className="text">Mic-Lote</span>
-                <input
-                  type="text"
-                  className="info info_sumado"
-                  value={`$  ${Math.round(valorMicLoteSumado).toLocaleString()}`}
-                  disabled
-                />
-              </div>
-            </div>
-
-            {/* Mediano Lote */}
-            <div className="precio-mercado precio-extra col-12 col-6">
-              <div className="contenedores">
-                <span className="text">Med-Lote</span>
-                <span className="signo">$</span>
-                <input
-                  type="text"
-                  className="info"
-                  value={precios.medianoLote}
-                  onChange={(e) =>
-                    setPrecios({ ...precios, medianoLote: e.target.value })
-                  }
-                />
-              </div>
-              <div className="contenedores col-12 col-md-6">
-                <span className="text">Med-Lote</span>
-                <input
-                  type="text"
-                  className="info info_sumado"
-                  value={`$  ${Math.round(valorMedLoteSumado).toLocaleString()}`}
-                  disabled
-                />
-              </div>
-            </div>
-            <div className="precio-mercado precio-venta col-12 col-6">
-              <div className="btn contain-compartir col-12 col-md-6">
-                <button
-                  className="button-compartir"
-                  onClick={() => {
-                    navigate("/dash/share", {
-                      state: {
-                        origenSumado: valorOrigenSumado,
-                        tazaSumado: valorTazaSumado,
-                        micLoteSumado: valorMicLoteSumado,
-                        medLoteSumado: valorMedLoteSumado,
-                        dolar: data.dolar,
-                        lastCoffe: data.lastCoffe,
-                        dolarchange: data.indicadorDolar.dollarPriceChange,
-                        dolarPorChange:data.indicadorDolar.dollarPricePorChange,
-                        dolarstate: data.indicadorDolar.resultStateDollar,
-                        coffechange: data.indicador.cambioValorVar,
-                        coffePorChange: data.indicador.cambioValorPorcentaje,
-                        coffestate: data.indicador.resultState,
-                        coffeClock: data.indicador.clock,
-                      },
-                    });
-                  }}
-                >
-                  Compartir <i className="bx bxs-share-alt"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-3">
-            {/* Inicio Indicadores */}
-            <div className="container-indicadores">
-              <div className="indicador libra">
-                <span className="text subtitulo">Precio Libra</span>
-                <span className="text precio precio-libra">
-                  $ {data.libra.toLocaleString()}
-                </span>
-
-                <img className="img" src={colombia} alt="" />
-              </div>
-              <div className="indicador">
-                <span className="text subtitulo">Precio USD</span>
-                <span className="text precio">$ {data.dolar}</span>
-                <span
-                  className="text precio_indicador precio_indicador_dolar"
-                  style={{
-                    color:
-                      data.indicadorDolar.resultStateDollar === "positivo"
-                        ? "green"
-                        : data.indicadorDolar.resultStateDollar === "negativo"
-                        ? "red"
-                        : "inherit",
-                  }}
-                >
-                  <span
-                    className="flecha lecha me-1"
-                    style={{ color: "inherit" }}
-                  >
-                    {data.indicadorDolar.resultStateDollar === "positivo"
-                      ? "⬆"
-                      : "⬇"}
-                  </span>
-                  {data.indicadorDolar.dollarPriceChange}{" "}
-                  {data.indicadorDolar.dollarPricePorChange}
-                </span>
-                <img className="img" src={eeuu} alt="" />
-                <span className="info_two">Info en tiempo real. Valores en <span className="fw-bold">COP</span> <br /> <a href="" className="text-dark">(Aviso Legal)</a> </span>
-
-                <span className="vermas">
-                  <a
-                    href="https://es.investing.com/currencies/usd-cop"
-                    target="blank"
-                  >
-                    Ver Mas
-                  </a>
-                </span>
-              </div>
-              {/*  */}
-              <div className="indicador">
-                <span className="text subtitulo ">
-                  Café EE.UU.{" "}
-                  {data.indicador.clock === "positivo" ? "🕑" : "⏰"}
-                </span>
-                <span className="text precio">$ {data.lastCoffe}</span>
-                <span
-                  className="text precio_indicador precio_indicador_cafe"
-                  style={{
-                    color:
-                      data.indicador.resultState === "positivo"
-                        ? "green"
-                        : "red",
-                  }}
-                >
-                  <span className="flecha indicador_cafe me-1">
-                    {data.indicador.resultState === "positivo" ? "⬆" : "⬇"}
-                  </span>
-                  {data.indicador.cambioValorVar}{" "}
-                  {data.indicador.cambioValorPorcentaje}
-                </span>
-                <img className="img" src={eeuu} alt="" />
-                <span
-                  className={`mt-2 clock ${
-                    data.indicador.clock === "positivo"
-                      ? "texto-verde"
-                      : "texto-rojo"
-                  }`}
-                >
-                  {data.indicador.clock === "positivo"
-                    ? "🕑 Mercado Abierto"
-                    : "⏰ Mercado Cerrado"}
-                </span>
-                <span className="vermas">
-                  <a
-                    href="https://es.investing.com/commodities/us-coffee-c"
-                    target="blank"
-                  >
-                    Ver Mas
-                  </a>
-                </span>
-                <span className="info_two info-three">Datos derivados en tiempo real</span>
-              </div>
-
-              {/*  */}
-            </div>
-            {/* Fin Indicadores */}
-          </div>
+    <div className={`page ${gate.settled ? "page--settled" : ""}`}>
+      <header className="page-header">
+        <div>
+          <h1>Valkiria</h1>
+          <p>Precios del pergamino calculados con el mercado en vivo.</p>
         </div>
+        <div className="page-header__actions">
+          <button type="button" className="btn btn--ghost text-[14px]" onClick={handleReload} disabled={refreshing}>
+            <i className={`bx bx-refresh ${refreshing ? "bx-spin" : ""}`} aria-hidden="true"></i>
+            {refreshing ? "Actualizando…" : "Recargar"}
+          </button>
+          <button type="button" className="btn btn--primary text-[14px]" onClick={goShare}>
+            <i className="bx bx-share-alt" aria-hidden="true"></i> Compartir oferta
+          </button>
+        </div>
+      </header>
+
+      {error && (
+        <p className="field__error" role="status" style={{ marginBottom: 16 }}>
+          No se pudo actualizar el mercado; mostrando los últimos datos.
+        </p>
+      )}
+
+      <div className="dash-grid">
+        <div className="dash-main">
+          <img className="dash-watermark" src={watermark} alt="" aria-hidden="true" />
+          <section className="hero-price" aria-label="Precio pergamino">
+            <img className="hero-price__mark" src={mark} alt="" aria-hidden="true" />
+            <span className="hero-price__label">Precio pergamino · arroba</span>
+            <span key={data.arroba} className="hero-price__value">{`$ ${data.arroba.toLocaleString()}`}</span>
+            <div className="hero-price__meta">
+              <span className="hero-price__time">
+                <i className="bx bx-time-five" aria-hidden="true"></i>
+                <Clock withDate />
+              </span>
+            </div>
+          </section>
+
+          <section className="panel panel--compact" aria-labelledby="t-mercado">
+            <h2 className="panel__title" id="t-mercado">
+              <i className="bx bx-line-chart" aria-hidden="true"></i> Precio de mercado
+            </h2>
+            <div className="price-grid">
+              <MoneyField
+                label="Punto diferencia"
+                value={precios.diferencia}
+                onChange={setPrecio("diferencia")}
+              />
+              <MoneyField
+                label="Precio mercado"
+                value={valorPrecioMercado.toLocaleString()}
+                onChange={(e) => setValorPrecioMercado(e.target.value)}
+              />
+            </div>
+          </section>
+
+          <section className="panel panel--compact" aria-labelledby="t-extras">
+            <div className="extras">
+              <div className="extras__col">
+                <h2 className="panel__title" id="t-extras">
+                  <i className="bx bx-coffee" aria-hidden="true"></i> Precios extras
+                </h2>
+                {extras.map(({ key, name }) => (
+                  <div className="extras__row" key={key}>
+                    <span className="extras__name">{name}</span>
+                    <MoneyField label={`${name}: adicional`} value={precios[key]} onChange={setPrecio(key)} />
+                  </div>
+                ))}
+              </div>
+              <div className="extras__col">
+                <h2 className="panel__title">
+                  <i className="bx bx-coffee" aria-hidden="true"></i> Precios extras
+                </h2>
+                {extras.map(({ key, name, total }) => (
+                  <div className="extras__row" key={key}>
+                    <span className="extras__name">{name}</span>
+                    <ResultField label={`${name}: precio`} value={money(total)} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <aside className="dash-aside">
+          <IndicatorPanel data={data} />
+        </aside>
       </div>
-    </body>
+    </div>
   );
 }
 

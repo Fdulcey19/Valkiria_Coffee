@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axios from '../api/axios'
 
 export const getPosts = async () => {
     try {
         //await axios.get("https://valkiria-backend-felipe-dulceys-projects.vercel.app/api");
-         const responseAllData = await axios.get("https://valkiria.onrender.com/api/post");
+        const responseAllData = await axios.get('/post');
         return responseAllData
     } catch {
         console.log("Error al obtener los datos".error);

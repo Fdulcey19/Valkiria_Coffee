@@ -1,7 +1,10 @@
 import { useForm } from "react-hook-form";
-import { usePrecios } from "../../context/PreciosContex";
+import ConfigField from "../ui/ConfigField";
+import { usePrecios } from "../../context/usePrecios";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import ValkiriaCreate from "./ValkiriaCreate";
+import { ConfigFormSkeleton, PageHold } from "../ui/Skeletons";
+import { useSkeletonGate } from "../../hooks/useSkeletonGate";
 
 function Valkiria() {
   const {
@@ -9,29 +12,37 @@ function Valkiria() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { precios, createPrecios, getPrecios, updatePrecio } = usePrecios();
+  const { createPrecios, getPrecios, updatePrecio } = usePrecios();
+  // Registro propio de esta pestaña. No se lee el `precios` compartido del contexto: Nuevo Futuro
+  // también lo escribe, y ambas pestañas están cargadas a la vez (ver NavConfiguracion).
+  const [saved, setSaved] = useState(null);
   const [updating, setUpdating] = useState(false);
   const [formData, setFormData] = useState({});
 
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const gate = useSkeletonGate(loading);
+  const [missing, setMissing] = useState(false); // aún no hay precios guardados: se muestra el formulario de creación
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getPrecios();
         if (!data) {
-          navigate("/dash/configuracion/valkiria");
+          setMissing(true);
           return;
         }
         console.log("¿ Hay data ?", data);
+        setSaved(data);
         setFormData(data); // Inicializar formData con los precios
       } catch (error) {
         console.error("Error al obtener precios:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [getPrecios]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -44,8 +55,8 @@ function Valkiria() {
   const handleUpdate = async () => {
     try {
       setUpdating(true);
-      if (precios && precios._id) {
-        await updatePrecio(precios._id, formData); // Utiliza formData para enviar los datos actualizados
+      if (saved?._id) {
+        await updatePrecio(saved._id, formData); // Utiliza formData para enviar los datos actualizados
       } else {
         console.error("No se pudo obtener el ID de precios.");
       }
@@ -61,94 +72,62 @@ function Valkiria() {
     setFormData({ ...formData, [name]: value });
   };
 
+  if (gate.waiting) return <PageHold />;
+  if (gate.skeleton) return <ConfigFormSkeleton />;
+  if (missing) return <ValkiriaCreate />;
+
   return (
-    <div className="centrar">
-      <div className="precios">
-        <div className="container-valkiria">
-          <form onSubmit={onSubmit}>
-            <div className="text-center fs-3 fw-bold mb-5">
-              <span>Precios Valkiria</span>
-            </div>
+    <div className="form-card">
+      <h2>Precios Valkiria</h2>
+      <p className="form-card__sub">Valores base para el cálculo de Origen, Taza y Lotes.</p>
 
-            <div className="container mt-2 mb-5">
-              <span>Precio Diferencia</span>
-              <input
-                type="text"
-                {...register("diferencia")}
-                name="diferencia"
-                autoFocus
-                value={formData.diferencia || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="container">
-              <span>Precio Origen</span>
-              <input
-                type="text"
-                {...register("origen")}
-                name="origen"
-                autoFocus
-                value={formData.origen || ""}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="container">
-              <span>Precio Taza</span>
-              <input
-                type="text"
-                {...register("taza", { required: true })}
-                name="taza"
-                value={formData.taza || ""}
-                onChange={handleInputChange}
-              />
-              {errors.taza && <p className="text-danger">Taza es requerido</p>}
-            </div>
-            <div className="container">
-              <span>Precio Mic-Lote</span>
-              <input
-                type="text"
-                {...register("microLote", { required: true })}
-                name="microLote"
-                value={formData.microLote || ""}
-                onChange={handleInputChange}
-              />
-              {errors.microLote && (
-                <p className="text-danger">MicroLote es requerido</p>
-              )}
-            </div>
-            <div className="container">
-              <span>Precio Med-Lote</span>
-              <input
-                type="text"
-                {...register("medianoLote", { required: true })}
-                name="medianoLote"
-                value={formData.medianoLote || ""}
-                onChange={handleInputChange}
-              />
-              {errors.medianoLote && (
-                <p className="text-danger">MedianoLote es requerido</p>
-              )}
-            </div>
+      <form className="form-grid" onSubmit={onSubmit} noValidate>
+        <ConfigField
+          label="Precio diferencia"
+          {...register("diferencia")}
+          value={formData.diferencia || ""}
+          onChange={handleInputChange}
+        />
+        <ConfigField
+          label="Precio origen"
+          {...register("origen")}
+          value={formData.origen || ""}
+          onChange={handleInputChange}
+        />
+        <ConfigField
+          label="Precio taza"
+          {...register("taza", { required: "La taza es requerida" })}
+          value={formData.taza || ""}
+          onChange={handleInputChange}
+          error={errors.taza?.message}
+        />
+        <ConfigField
+          label="Precio micro lote"
+          {...register("microLote", { required: "El micro lote es requerido" })}
+          value={formData.microLote || ""}
+          onChange={handleInputChange}
+          error={errors.microLote?.message}
+        />
+        <ConfigField
+          label="Precio mediano lote"
+          {...register("medianoLote", { required: "El mediano lote es requerido" })}
+          value={formData.medianoLote || ""}
+          onChange={handleInputChange}
+          error={errors.medianoLote?.message}
+        />
 
-            <div className="d-flex justify-content-center">
-              {precios ? (
-                <button
-                  type="button"
-                  className="btn btn-primary btn-actualizar"
-                  onClick={handleUpdate}
-                  disabled={updating}
-                >
-                  {updating ? "Actualizando..." : "Actualizar"}
-                </button>
-              ) : (
-                <button type="submit" className="btn btn-success btn-guardar">
-                  Guardar Cambios
-                </button>
-              )}
-            </div>
-          </form>
+        <div className="form-actions" style={{ marginTop: 0 }}>
+          {saved ? (
+            <button type="button" className="btn btn--primary" onClick={handleUpdate} disabled={updating}>
+              {updating ? "Actualizando…" : "Actualizar"}
+            </button>
+          ) : (
+            <button type="submit" className="btn btn--primary text-[14px]">
+              Guardar cambios
+            </button>
+          )}
         </div>
-      </div>
+      </form>
     </div>
   );
 }

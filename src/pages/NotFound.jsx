@@ -2,25 +2,18 @@ import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-12">
-          <div className="not-found">
-            <div className="not-found-contain">
-              <div className="not-found-text">
-                <h1>404</h1>
-                <h3>Page not found</h3>
-                <p>
-                  The page you are looking for might have been removed had its
-                  name changed or is temporarily unavailable.
-                </p>
-                <Link to="/">Home Page</Link>
-              </div>
-            </div>
-          </div>
-        </div>
+    <main className="notfound">
+      <div className="notfound__inner">
+        <p className="notfound__code" aria-hidden="true">
+          4<span>0</span>4
+        </p>
+        <h1>Página no encontrada</h1>
+        <p>La página que buscas no existe, cambió de dirección o no está disponible por ahora.</p>
+        <Link to="/" className="btn btn--primary">
+          <i className="bx bx-home-alt-2" aria-hidden="true"></i> Ir al inicio
+        </Link>
       </div>
-    </div>
+    </main>
   );
 }
 

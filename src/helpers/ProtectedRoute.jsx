@@ -1,22 +1,24 @@
-// ProtectedRoute.jsx
-
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+/**
+ * Guarda de sesión: solo deja pasar a usuarios autenticados.
+ * Sin sesión redirige a /login recordando la ruta pedida para volver tras el login
+ * (salvo tras un cierre de sesión voluntario).
+ */
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
+import { LoadingScreen } from "../componentes/ui/StatusScreen";
 
 function ProtectedRoute() {
-  const { loading, isAuthenticated } = useAuth();
+  const { loading, isAuthenticated, signedOut } = useAuth();
+  const location = useLocation();
 
-  if (loading) {
-    // Muestra el mensaje de carga mientras la autenticación se está verificando
-    return <div className="loading"><h1>Loading...</h1></div>;
+  // Mientras se consulta la sesión inicial no se decide nada (evita parpadeos y falsos redirects).
+  if (loading) return <LoadingScreen text="Verificando sesión…" />;
+
+  if (!isAuthenticated) {
+    // Tras un cierre de sesión voluntario no se recuerda la página (la siguiente persona puede ser otro usuario).
+    return <Navigate to="/login" replace state={signedOut ? undefined : { from: location }} />;
   }
 
-  // Si no está cargando y el usuario no está autenticado, redirige a la página de inicio de sesión
-  if (!loading && !isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // Si no está cargando y el usuario está autenticado, renderiza el contenido protegido
   return <Outlet />;
 }
 
