@@ -5,9 +5,10 @@
  * (`withCredentials`); el JavaScript nunca ve ni guarda el token.
  */
 import axios from "axios";
+import { API_URL } from "../config/environment";
 
 const instance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || '/api',
+    baseURL: API_URL, // ver src/config/environment.js
     timeout: 15000,
     withCredentials: true,
     // Cabecera exigida por el backend en POST/PUT/DELETE como defensa contra CSRF.

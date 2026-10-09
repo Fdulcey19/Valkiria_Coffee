@@ -71,6 +71,8 @@ function Home() {
     let fetched = null;
     try {
       const response = refresh ? await refreshPosts() : await getPosts();
+      // Si /api no llega al backend, el servidor puede devolver HTML (index.html): eso no es un precio.
+      if (typeof response.data?.libra !== "number") throw new Error("Respuesta de precios no válida");
       setData(response.data);
       setError(null);
       fetched = response.data;
