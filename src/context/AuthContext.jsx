@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       notify.success("Sesión iniciada", `Hola, ${res.data.username}`);
       return true;
     } catch (error) {
-      notify.error("No se pudo iniciar sesión", errorText(error, "No pudimos conectar con el servidor. Inténtalo de nuevo."));
+      notify.error("No se pudo iniciar sesión", errorText(error, "No pudimos validara tus credenciales. Inténtalo de nuevo."));
       return false;
     }
   };
