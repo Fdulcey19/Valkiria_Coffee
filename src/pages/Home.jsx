@@ -203,29 +203,28 @@ function Home() {
           </section>
 
           <section className="panel panel--compact" aria-labelledby="t-extras">
+            <h2 className="panel__title" id="t-extras">
+              <i className="bx bx-coffee" aria-hidden="true"></i> Precios extras
+            </h2>
             <div className="extras">
-              <div className="extras__col">
-                <h2 className="panel__title" id="t-extras">
-                  <i className="bx bx-coffee" aria-hidden="true"></i> Precios extras
-                </h2>
-                {extras.map(({ key, name }) => (
-                  <div className="extras__row" key={key}>
-                    <span className="extras__name">{name}</span>
+              <div className="extras__head" aria-hidden="true">
+                <span></span>
+                <span>Adicional</span>
+                <span>Precio</span>
+              </div>
+              {extras.map(({ key, name, total }) => (
+                <div className="extras__row" key={key}>
+                  <span className="extras__name">{name}</span>
+                  <div className="extras__cell">
+                    <span className="extras__cap" aria-hidden="true">Adicional</span>
                     <MoneyField label={`${name}: adicional`} value={precios[key]} onChange={setPrecio(key)} />
                   </div>
-                ))}
-              </div>
-              <div className="extras__col">
-                <h2 className="panel__title">
-                  <i className="bx bx-coffee" aria-hidden="true"></i> Precios extras
-                </h2>
-                {extras.map(({ key, name, total }) => (
-                  <div className="extras__row" key={key}>
-                    <span className="extras__name">{name}</span>
+                  <div className="extras__cell">
+                    <span className="extras__cap" aria-hidden="true">Precio</span>
                     <ResultField label={`${name}: precio`} value={money(total)} />
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </section>
         </div>

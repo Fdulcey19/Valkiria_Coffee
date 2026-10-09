@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/images/valkiria3.png";
 import mark from "../assets/images/valkiria5.png";
@@ -14,6 +14,9 @@ const NAV_ITEM_IDLE = "bg-transparent text-ink hover:translate-x-[3px] hover:bg-
 const NAV_ITEM_ACTIVE = "bg-espresso-950 font-semibold text-white";
 const COLLAPSIBLE = "group-data-[collapsed=true]/shell:hidden";
 
+// Rutas que contraen el menú lateral al entrar.
+const AUTO_COLLAPSE_ON = ["/dash", "/dash/nuevo"];
+
 // Elemento de la barra inferior (móvil y tablet).
 const TAB = "flex min-h-[52px] flex-col items-center justify-center gap-1 rounded-xl border-0 p-1 text-[0.6875rem] font-semibold transition duration-150 active:scale-[0.94]";
 
@@ -23,6 +26,12 @@ function Sidebar() {
   const { signOut, user } = useAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  // Al entrar a Inicio o Nuevo Futuro (las pantallas con más contenido) el menú se contrae solo para dar espacio.
+  // Solo reacciona al cambio de ruta: si la persona lo vuelve a abrir, se respeta hasta que cambie de pantalla.
+  useEffect(() => {
+    if (AUTO_COLLAPSE_ON.includes(pathname)) setCollapsed(true);
+  }, [pathname]);
   // Menú dinámico: solo las opciones permitidas para el rol del usuario.
   const items = navItemsFor(user?.role);
 
