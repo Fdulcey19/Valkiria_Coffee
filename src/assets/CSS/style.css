@@ -182,7 +182,7 @@ button { cursor: pointer; }
 .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 
 .field__label {
-  font-size: 0.8125rem;
+  font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: var(--ink-soft);
@@ -197,10 +197,10 @@ button { cursor: pointer; }
   border: 1.5px solid var(--line);
   border-radius: var(--radius-sm);
   background: var(--card);
-  font-size: 15px;
+  font-size: 16px;
   transition: border-color var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
 }
-.field__input::placeholder { color: #82848E; font-size: 0.875rem; }
+.field__input::placeholder { color: #82848E; font-size: 14px; }
 .field__input:hover { border-color: var(--crema); }
 .field__input:focus {
   outline: none;
@@ -210,7 +210,7 @@ button { cursor: pointer; }
 }
 .field__input[aria-invalid="true"] { border-color: var(--down); }
 
-.field__input--money { padding-left: 34px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.field__input--money { padding-left: 34px; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .field__prefix {
   position: absolute;
   left: 14px;

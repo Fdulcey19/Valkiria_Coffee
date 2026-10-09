@@ -16,7 +16,7 @@ function MoneyField({ label, className = "", ...inputProps }) {
           type="text"
           inputMode="numeric"
           autoComplete="off"
-          className="field__input field__input--money"
+          className="field__input field__input--money text-[17px]"
           {...inputProps}
         />
       </div>

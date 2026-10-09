@@ -20,7 +20,7 @@ const ConfigField = forwardRef(function ConfigField({ label, error, ...inputProp
           type="text"
           inputMode="numeric"
           autoComplete="off"
-          className="field__input field__input--money"
+          className="field__input field__input--money text-[17px]"
           aria-invalid={error ? "true" : "false"}
           aria-describedby={error ? errorId : undefined}
           {...inputProps}
