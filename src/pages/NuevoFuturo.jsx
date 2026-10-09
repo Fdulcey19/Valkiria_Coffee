@@ -15,6 +15,7 @@ import {
   getPrecioConvencional88,
   getPrecioTaza88,
 } from "../domain/services";
+import { refreshNotice } from "../lib/refreshNotice";
 import { notifyRefresh } from "../lib/notifyRefresh";
 import { formatRemaining } from "../lib/formatRemaining";
 import { useCooldown } from "../hooks/useCooldown";
@@ -121,8 +122,11 @@ function NuevoFuturo() {
 
   useEffect(() => {
     fetchData();
-    const id = setInterval(() => fetchData(), POLL_MS);
-    return () => clearInterval(id);
+    // Solo se sondea con la pestaña a la vista: una pestaña olvidada en segundo plano no mantiene viva la consulta.
+    const id = setInterval(() => { if (!document.hidden) fetchData(); }, POLL_MS);
+    const onVisible = () => { if (!document.hidden) fetchData(); };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => { clearInterval(id); document.removeEventListener("visibilitychange", onVisible); };
   }, [fetchData]);
 
   // Si el servidor aún está actualizando el dato, se vuelve a leer en unos segundos (sin esperar al sondeo).
@@ -177,6 +181,10 @@ function NuevoFuturo() {
           </button>
         </div>
       </header>
+
+      {refreshNotice(data) && (
+        <p className="market-source__note" role="status" style={{ marginBottom: 16 }}>{refreshNotice(data)}</p>
+      )}
 
       {error && (
         <p className="field__error" role="status" style={{ marginBottom: 16 }}>
