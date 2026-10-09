@@ -4,14 +4,14 @@
  */
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-import { LoadingScreen } from "../componentes/ui/StatusScreen";
+import SessionCheck from "./SessionCheck";
 import { safeReturnPath } from "./returnPath";
 
 function PublicRoute() {
   const { loading, isAuthenticated } = useAuth();
   const location = useLocation();
 
-  if (loading) return <LoadingScreen text="Verificando sesión…" />;
+  if (loading) return <SessionCheck />;
 
   if (isAuthenticated) {
     return <Navigate to={safeReturnPath(location.state?.from)} replace />;

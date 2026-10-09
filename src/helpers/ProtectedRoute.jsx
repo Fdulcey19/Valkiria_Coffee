@@ -5,14 +5,14 @@
  */
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
-import { LoadingScreen } from "../componentes/ui/StatusScreen";
+import SessionCheck from "./SessionCheck";
 
 function ProtectedRoute() {
   const { loading, isAuthenticated, signedOut } = useAuth();
   const location = useLocation();
 
   // Mientras se consulta la sesión inicial no se decide nada (evita parpadeos y falsos redirects).
-  if (loading) return <LoadingScreen text="Verificando sesión…" />;
+  if (loading) return <SessionCheck />;
 
   if (!isAuthenticated) {
     // Tras un cierre de sesión voluntario no se recuerda la página (la siguiente persona puede ser otro usuario).

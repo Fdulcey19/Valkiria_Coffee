@@ -14,6 +14,7 @@ import { onUnauthorized } from "../api/axios";
 import { errorText } from "../api/errors";
 import { ROLES } from "../config/roles";
 import { AuthContext } from "./useAuth";
+import { setSessionHint, clearSessionHint } from "../helpers/sessionHint";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   /** Deja la app en estado "sin sesión". */
   const clearSession = useCallback(() => {
+    clearSessionHint();
     setUser(null);
     setIsAuthenticated(false);
   }, []);
@@ -35,6 +37,7 @@ export const AuthProvider = ({ children }) => {
       const res = await loginRequest(credentials);
       setUser(res.data);
       setIsAuthenticated(true);
+      setSessionHint();
       setSignedOut(false);
 
       notify.success("Sesión iniciada", `Hola, ${res.data.username}`);
@@ -71,6 +74,7 @@ export const AuthProvider = ({ children }) => {
         if (!active) return;
         setUser(res.data);
         setIsAuthenticated(true);
+        setSessionHint();
       })
       .catch(() => {
         // 401 aquí es lo normal cuando nadie ha iniciado sesión.
