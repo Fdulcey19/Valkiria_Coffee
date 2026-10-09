@@ -3,11 +3,12 @@ import colombia from "../../assets/images/Iconos/colombia.png";
 import eeuu from "../../assets/images/Iconos/eeuu.png";
 import MarketCard from "./MarketCard";
 import MarketStatus from "./MarketStatus";
+import MarketSource from "./MarketSource";
 import { coffeeTrend, dollarTrend } from "./marketData";
 
 /** Columna de indicadores en vivo, compartida por Valkiria y Nuevo Futuro. */
 function IndicatorPanel({ data }) {
-  const { libra, dolar, lastCoffe, indicador, indicadorDolar } = data;
+  const { libra, dolar, lastCoffe, indicador, indicadorDolar, meta } = data;
   return (
     <section className="indicators" aria-label="Indicadores de mercado">
       <MarketCard
@@ -16,7 +17,11 @@ function IndicatorPanel({ data }) {
         value={`$ ${libra.toLocaleString()}`}
         flag={colombia}
         flagAlt="Colombia"
-        note="Pesos colombianos por libra"
+        note={
+          meta?.consultadoEn
+            ? `Pesos colombianos por libra · consultado ${new Date(meta.consultadoEn).toLocaleString("es-CO", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })}`
+            : "Pesos colombianos por libra"
+        }
       />
 
       <MarketCard
@@ -28,8 +33,9 @@ function IndicatorPanel({ data }) {
           state: dollarTrend(indicadorDolar.resultStateDollar),
           text: `${indicadorDolar.dollarPriceChange} ${indicadorDolar.dollarPricePorChange}`,
         }}
-        note="Información en tiempo real. Valores en COP."
+        note="Valores en COP."
         href="https://es.investing.com/currencies/usd-cop"
+        aside={<MarketSource info={meta?.dolar} />}
       />
 
       <MarketCard
@@ -41,8 +47,9 @@ function IndicatorPanel({ data }) {
           state: coffeeTrend(indicador.resultState),
           text: `${indicador.cambioValorVar} ${indicador.cambioValorPorcentaje}`,
         }}
-        note="Datos derivados en tiempo real."
+        note="Centavos de USD por libra."
         href="https://es.investing.com/commodities/us-coffee-c"
+        aside={<MarketSource info={meta?.cafe} />}
       >
         <MarketStatus open={indicador.clock === "positivo"} />
       </MarketCard>
@@ -57,6 +64,7 @@ IndicatorPanel.propTypes = {
     lastCoffe: PropTypes.number.isRequired,
     indicador: PropTypes.object.isRequired,
     indicadorDolar: PropTypes.object.isRequired,
+    meta: PropTypes.object,
   }).isRequired,
 };
 

@@ -3,7 +3,7 @@ import Trend from "./Trend";
 import watermark from "../../assets/images/valkiria8.png";
 
 /** Tarjeta de un indicador de mercado (USD, café, libra…). */
-function MarketCard({ title, value, flag, flagAlt, trend, accent, note, href, mark, children }) {
+function MarketCard({ title, value, flag, flagAlt, trend, accent, note, href, aside, mark, children }) {
   return (
     <article className={`market-card ${accent ? "market-card--accent" : ""}`}>
       {mark && <img className="market-card__mark" src={watermark} alt="" aria-hidden="true" />}
@@ -15,10 +15,15 @@ function MarketCard({ title, value, flag, flagAlt, trend, accent, note, href, ma
       {trend && <Trend state={trend.state}>{trend.text}</Trend>}
       {children}
       {note && <p className="market-card__note">{note}</p>}
-      {href && (
-        <a className="market-card__link" href={href} target="_blank" rel="noreferrer">
-          Ver más <i className="bx bx-link-external" aria-hidden="true"></i>
-        </a>
+      {(href || aside) && (
+        <div className="market-card__foot">
+          {href && (
+            <a className="market-card__link" href={href} target="_blank" rel="noreferrer">
+              Ver más <i className="bx bx-link-external" aria-hidden="true"></i>
+            </a>
+          )}
+          {aside}
+        </div>
       )}
     </article>
   );
@@ -33,6 +38,7 @@ MarketCard.propTypes = {
   accent: PropTypes.bool,
   note: PropTypes.node,
   href: PropTypes.string,
+  aside: PropTypes.node,
   mark: PropTypes.bool,
   children: PropTypes.node,
 };

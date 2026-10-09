@@ -10,7 +10,8 @@ export const getPosts = async () => {
     }
 }
 
-// 
+/** Pide al backend consultar las fuentes (CNBC / APIs de respaldo), guardar y devolver el resultado. */
+export const refreshPosts = () => axios.post('/post/refresh');
 
 export const getPrecioMercado = (res, valorPuntoDiferencia) => {
     return parseFloat(res.data.arroba) + parseFloat(valorPuntoDiferencia);

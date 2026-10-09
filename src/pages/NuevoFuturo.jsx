@@ -4,6 +4,7 @@ import mark from "../assets/images/valkiria5.png";
 import watermark from "../assets/images/logo4.png";
 import {
   getPosts,
+  refreshPosts,
   getPrecioMercadoNuevo,
   getPrecioOrganico,
   getPrecioTaza,
@@ -14,6 +15,9 @@ import {
   getPrecioConvencional88,
   getPrecioTaza88,
 } from "../domain/services";
+import { notifyRefresh } from "../lib/notifyRefresh";
+import { formatRemaining } from "../lib/formatRemaining";
+import { useCooldown } from "../hooks/useCooldown";
 import { usePrecios } from "../context/usePrecios";
 import Clock from "../componentes/ui/Clock";
 import IndicatorPanel from "../componentes/ui/IndicatorPanel";
@@ -23,7 +27,8 @@ import { ErrorScreen } from "../componentes/ui/StatusScreen";
 import { NuevoFuturoSkeleton, PageHold } from "../componentes/ui/Skeletons";
 import { useSkeletonGate } from "../hooks/useSkeletonGate";
 
-const POLL_MS = 3000;
+// Solo lee lo guardado en la BD (no consulta fuentes externas): sirve para ver lo que otro usuario recargó.
+const POLL_MS = 30000;
 const money = (n) => `$ ${Math.round(n).toLocaleString()}`;
 
 // Cada grupo: campo base, campo de bonificación y clave del resultado (92 y +88).
@@ -51,6 +56,7 @@ function NuevoFuturo() {
   const [loading, setLoading] = useState(true);
   const gate = useSkeletonGate(loading);
   const [refreshing, setRefreshing] = useState(false);
+  const cooldown = useCooldown(data);
   const [error, setError] = useState(null);
 
   const [precios, setPrecios] = useState({
@@ -80,11 +86,13 @@ function NuevoFuturo() {
     loadSavedPrices();
   }, [getPreciosNuevo]);
 
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (refresh = false) => {
+    let fetched = null;
     try {
-      const response = await getPosts();
+      const response = refresh ? await refreshPosts() : await getPosts();
       setData(response.data);
       setError(null);
+      fetched = response.data;
 
       const pm = Math.floor(getPrecioMercadoNuevo(response, precios.diferencia) / 100) * 100;
 
@@ -102,21 +110,31 @@ function NuevoFuturo() {
     } catch (err) {
       console.error("Error al obtener datos:", err);
       setError(err);
+      fetched = { error: err };
     } finally {
       setLoading(false);
     }
+    return fetched;
   }, [precios]);
 
   useEffect(() => {
     fetchData();
-    const id = setInterval(fetchData, POLL_MS);
+    const id = setInterval(() => fetchData(), POLL_MS);
     return () => clearInterval(id);
   }, [fetchData]);
 
+  // Si el servidor aún está actualizando el dato, se vuelve a leer en unos segundos (sin esperar al sondeo).
+  useEffect(() => {
+    if (data?.meta?.refresco?.estado !== "actualizando") return undefined;
+    const id = setTimeout(() => fetchData(), 4000);
+    return () => clearTimeout(id);
+  }, [data, fetchData]);
+
   const handleReload = async () => {
     setRefreshing(true);
-    await fetchData();
+    const refresh = await fetchData(true);
     setRefreshing(false);
+    notifyRefresh(refresh);
   };
 
   if (gate.waiting) return <PageHold />;
@@ -147,9 +165,10 @@ function NuevoFuturo() {
           <p>Factores 92 y +88 por tipo de café, con bonificación.</p>
         </div>
         <div className="page-header__actions">
-          <button type="button" className="btn btn--ghost text-[14px]" onClick={handleReload} disabled={refreshing}>
+          <button type="button" className="btn btn--ghost text-[14px]" onClick={handleReload} disabled={refreshing || cooldown > 0}
+            title={cooldown > 0 ? `Podrás actualizar de nuevo en ${formatRemaining(cooldown)}` : undefined}>
             <i className={`bx bx-refresh ${refreshing ? "bx-spin" : ""}`} aria-hidden="true"></i>
-            {refreshing ? "Actualizando…" : "Recargar"}
+            {refreshing ? "Actualizando…" : cooldown > 0 ? `Recargar · ${formatRemaining(cooldown)}` : "Recargar"}
           </button>
           <button type="button" className="btn btn--primary text-[14px]" onClick={goShare}>
             <i className="bx bx-share-alt" aria-hidden="true"></i> Compartir oferta
@@ -168,9 +187,9 @@ function NuevoFuturo() {
           <img className="dash-watermark" src={watermark} alt="" aria-hidden="true" />
           <section className="hero-price" aria-label="Precio pergamino">
             <img className="hero-price__mark" src={mark} alt="" aria-hidden="true" />
-            <span className="hero-price__label">Precio pergamino · arroba</span>
+            <span className="hero-price__label">Precio pergamino </span>
             <span key={data.arroba} className="hero-price__value">{`$ ${data.arroba.toLocaleString()}`}</span>
-            <div className="hero-price__meta">
+            <div className="hero-price__meta hidden">
               <span className="hero-price__time">
                 <i className="bx bx-time-five" aria-hidden="true"></i>
                 <Clock withDate />
