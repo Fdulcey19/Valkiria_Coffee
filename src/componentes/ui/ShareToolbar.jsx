@@ -79,7 +79,7 @@ function ShareToolbar({ backTo, poster }) {
           doneLabel="Descargada"
           action="download"
           state={state}
-          className={supports.share ? "btn--ghost text-[15px]" : "btn--primary text-[15px"}
+          className={supports.share ? "btn--ghost text-[15px]" : "btn--primary text-[15px]"}
           onClick={download}
           disabled={disabled}
         />

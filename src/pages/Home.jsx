@@ -122,6 +122,8 @@ function Home() {
   if (gate.skeleton) return <HomeSkeleton />;
   if (!data) return <ErrorScreen onRetry={handleReload} />;
 
+  const marketClosed = data.meta?.refresco?.mercadoCerrado === true;
+
   const goShare = () =>
     navigate("/dash/share", {
       state: {
@@ -134,6 +136,7 @@ function Home() {
         dolarchange: data.indicadorDolar.dollarPriceChange,
         dolarPorChange: data.indicadorDolar.dollarPricePorChange,
         dolarstate: data.indicadorDolar.resultStateDollar,
+        dolarClock: data.indicadorDolar.clock,
         coffechange: data.indicador.cambioValorVar,
         coffePorChange: data.indicador.cambioValorPorcentaje,
         coffestate: data.indicador.resultState,
@@ -156,10 +159,10 @@ function Home() {
           <p>Precios del pergamino calculados con el mercado en vivo.</p>
         </div>
         <div className="page-header__actions">
-          <button type="button" className="btn btn--ghost text-[14px]" onClick={handleReload} disabled={refreshing || cooldown > 0}
-            title={cooldown > 0 ? `Podrás actualizar de nuevo en ${formatRemaining(cooldown)}` : undefined}>
+          <button type="button" className="btn btn--ghost text-[14px]" onClick={handleReload} disabled={refreshing || cooldown > 0 || marketClosed}
+            title={marketClosed ? "Mercado cerrado: no hay datos nuevos para consultar" : cooldown > 0 ? `Podrás actualizar de nuevo en ${formatRemaining(cooldown)}` : undefined}>
             <i className={`bx bx-refresh ${refreshing ? "bx-spin" : ""}`} aria-hidden="true"></i>
-            {refreshing ? "Actualizando…" : cooldown > 0 ? `Recargar · ${formatRemaining(cooldown)}` : "Recargar"}
+            {refreshing ? "Actualizando…" : cooldown > 0 && !marketClosed ?`Recargar · ${formatRemaining(cooldown)}` : "Recargar"}
           </button>
           <button type="button" className="btn btn--primary text-[14px]" onClick={goShare}>
             <i className="bx bx-share-alt" aria-hidden="true"></i> Compartir oferta

@@ -5,6 +5,7 @@
  */
 import { Navigate, useLocation } from "react-router-dom";
 import logo from "../assets/images/logo4.png";
+import mark from "../assets/images/valkiria8.png";
 import badge from "../assets/images/nuevo.png";
 import usePosterImage from "../hooks/usePosterImage";
 import PosterMarket from "../componentes/ui/PosterMarket";
@@ -44,9 +45,12 @@ function NuevoFuturoShare() {
         </header>
 
         <div className="poster-groups">
-          <div className="poster__watermark" style={{ backgroundImage: `url(${logo})` }} aria-hidden="true" />
+          <div className="poster__watermark" aria-hidden="true">
+            <img src={logo} alt="" />
+          </div>
           {GRUPOS.map(({ nombre, key, tone }) => (
             <section className="poster-group" key={key} aria-label={nombre}>
+              <img className="poster-group__mark" src={mark} alt="" aria-hidden="true" />
               <h2 className="poster-group__name">{nombre}</h2>
               <div className="poster-group__tiles">
                 {[["Factor 92", `${key}92`], ["Factor +88", `${key}88`]].map(([label, field]) => (

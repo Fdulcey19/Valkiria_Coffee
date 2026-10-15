@@ -5,6 +5,7 @@
  */
 import { Navigate, useLocation } from "react-router-dom";
 import logo from "../assets/images/logo4.png";
+import mark from "../assets/images/valkiria8.png";
 import usePosterImage from "../hooks/usePosterImage";
 import PosterMarket from "../componentes/ui/PosterMarket";
 import ShareToolbar from "../componentes/ui/ShareToolbar";
@@ -59,9 +60,12 @@ function ValkiriaShare() {
         </header>
 
         <div className="lotes">
-          <div className="poster__watermark" style={{ backgroundImage: `url(${logo})` }} aria-hidden="true" />
+          <div className="poster__watermark" aria-hidden="true">
+            <img src={logo} alt="" />
+          </div>
           {LOTES.map(({ nombre, precio, specs, strict }) => (
             <section className="lote" key={nombre} aria-label={nombre}>
+              <img className="lote__mark" src={mark} alt="" aria-hidden="true" />
               <div className="lote__price">
                 <span className="lote__name">
                   {nombre}

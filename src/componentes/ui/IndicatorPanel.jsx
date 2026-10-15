@@ -36,7 +36,9 @@ function IndicatorPanel({ data }) {
         note="Valores en COP."
         href="https://es.investing.com/currencies/usd-cop"
         aside={<MarketSource info={meta?.dolar} />}
-      />
+      >
+        <MarketStatus open={indicadorDolar.clock === "positivo"} />
+      </MarketCard>
 
       <MarketCard
         title="Café EE.UU."

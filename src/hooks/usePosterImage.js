@@ -43,13 +43,19 @@ export default function usePosterImage(prefix = "Oferta-Valkiria") {
         const { toBlob } = await import("html-to-image");
         await document.fonts?.ready; // tipografías web ya cargadas
         const node = ref.current;
-        const blob = await toBlob(node, {
+        // En móvil la captura puede ir antes que la decodificación de las imágenes (p. ej. la marca de agua).
+        await Promise.all([...node.querySelectorAll("img")].map((img) => img.decode?.().catch(() => {})));
+        const options = {
           pixelRatio: 2,
           backgroundColor: "#f4f3f3",
           cacheBust: true,
           // El afiche está centrado con margin:auto; sin esto la imagen sale corrida.
           style: { margin: "0" },
-        });
+        };
+        // En móvil (Safari/iOS y algunos Android) la primera captura sale sin las <img> (marca de agua incluida):
+        // se descarta una pasada de calentamiento para que html-to-image ya tenga las imágenes incrustadas.
+        if (window.matchMedia?.("(pointer: coarse)").matches) await toBlob(node, options).catch(() => {});
+        const blob = await toBlob(node, options);
         if (!blob) throw new Error("No se pudo generar la imagen");
         setInfo({ width: node.offsetWidth * 2, height: node.offsetHeight * 2, size: formatSize(blob.size) });
         return blob;

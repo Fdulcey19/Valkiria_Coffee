@@ -18,7 +18,7 @@ const COLLAPSIBLE = "group-data-[collapsed=true]/shell:hidden";
 const AUTO_COLLAPSE_ON = ["/dash", "/dash/nuevo"];
 
 // Elemento de la barra inferior (móvil y tablet).
-const TAB = "flex min-h-[52px] flex-col items-center justify-center gap-1 rounded-xl border-0 p-1 text-[0.6875rem] font-semibold transition duration-150 active:scale-[0.94]";
+const TAB = "flex min-h-[46px] min-w-0 flex-col items-center justify-center gap-0.5 rounded-xl border-0 p-1 text-center text-[0.625rem] font-semibold leading-[1.1] transition duration-150 active:scale-[0.94] min-[640px]:min-h-[52px] min-[640px]:gap-1 min-[640px]:text-[0.6875rem]";
 
 /** Layout de la zona privada: sidebar (escritorio) · barra inferior (móvil y tablet). */
 function Sidebar() {
@@ -101,7 +101,7 @@ function Sidebar() {
         </div>
       </aside>
 
-      <div className="min-w-0 pb-[84px] min-[992px]:pb-0">
+      <div className="min-w-0 pb-[76px] min-[640px]:pb-[84px] min-[992px]:pb-0">
         <Nav />
         <main id="contenido" tabIndex={-1}>
           <Outlet />
@@ -109,7 +109,7 @@ function Sidebar() {
       </div>
 
       <nav
-        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-[repeat(var(--cols,4),1fr)] border-t border-line bg-white px-2 pt-2 pb-[calc(8px+env(safe-area-inset-bottom))] min-[992px]:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-[repeat(var(--cols,4),1fr)] border-t border-line bg-white px-1.5 pt-1.5 pb-[calc(6px+env(safe-area-inset-bottom))] min-[640px]:px-2 min-[640px]:pt-2 min-[640px]:pb-[calc(8px+env(safe-area-inset-bottom))] min-[992px]:hidden"
         aria-label="Navegación principal"
         style={{ "--cols": items.length + 1 }}
       >
@@ -123,13 +123,13 @@ function Sidebar() {
               className={`${TAB} ${active ? "bg-espresso-950 text-white" : "bg-transparent text-ink-soft"}`}
               aria-current={active ? "page" : undefined}
             >
-              <i className={`bx ${icon} text-[1.45rem]`} aria-hidden="true"></i>
+              <i className={`bx ${icon} text-[1.3rem] min-[640px]:text-[1.45rem]`} aria-hidden="true"></i>
               {label}
             </Link>
           );
         })}
         <button type="button" className={`${TAB} bg-transparent text-ink-soft`} onClick={signOut}>
-          <i className="bx bx-log-out text-[1.45rem]" aria-hidden="true"></i>
+          <i className="bx bx-log-out text-[1.3rem] min-[640px]:text-[1.45rem]" aria-hidden="true"></i>
           Salir
         </button>
       </nav>

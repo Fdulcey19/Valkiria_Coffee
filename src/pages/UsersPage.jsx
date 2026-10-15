@@ -150,16 +150,17 @@ function UsersPage() {
               value={filters.search}
               onChange={setFilter("search")}
               maxLength={50}
+              style={{fontSize:"14.5px"}}
             />
           </div>
-          <select className="field__input toolbar__select" aria-label="Filtrar por rol" value={filters.role} onChange={setFilter("role")}>
-            <option value="">Todos los roles</option>
+          <select style={{fontSize:"14.5px"}} className="field__input toolbar__select" aria-label="Filtrar por rol" value={filters.role} onChange={setFilter("role")}>
+            <option value="" >Todos los roles</option>
             {Object.values(ROLES).map((r) => (
               <option key={r} value={r}>{ROLE_LABELS[r]}</option>
             ))}
           </select>
-          <select className="field__input toolbar__select" aria-label="Filtrar por estado" value={filters.active} onChange={setFilter("active")}>
-            <option value="">Cualquier estado</option>
+          <select style={{fontSize:"14.5px"}} className="field__input toolbar__select" aria-label="Filtrar por estado" value={filters.active} onChange={setFilter("active")}>
+            <option value="" style={{fontSize:"14px !important"}}>Cualquier estado</option>
             <option value="true">Activos</option>
             <option value="false">Inactivos</option>
           </select>

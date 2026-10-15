@@ -588,7 +588,9 @@ button { cursor: pointer; }
 .poster > *:not(.poster__watermark) { position: relative; z-index: 1; }
 
 /* Logo de fondo (marca de agua) */
-.poster__watermark { position: absolute; z-index: 3; inset: 6% 0; overflow: hidden; background-repeat: no-repeat; background-position: center top; background-size: auto 140%; opacity: 0.16; pointer-events: none; user-select: none; }
+/* Es un <img> (no background-image): html-to-image lo incrusta de forma fiable en la captura móvil. */
+.poster__watermark { position: absolute; z-index: 3; inset: 6% 0; overflow: hidden; opacity: 0.16; pointer-events: none; user-select: none; }
+.poster__watermark img { display: block; height: 140%; width: auto; max-width: none; margin: 0 auto; }
 
 .poster__head { padding-bottom: 14px; border-bottom: 2px solid var(--espresso-900); }
 .poster__head--center { text-align: center; }
@@ -602,6 +604,7 @@ button { cursor: pointer; }
 /* --- Valkiria: una tarjeta por lote (precio + condiciones) --- */
 .lotes { position: relative; display: grid; gap: 8px; margin-top: 14px; }
 .lote { display: grid; gap: 6px; padding: 10px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.72); }
+.lote__mark { display: none; }
 .lote__price { display: grid; gap: 4px; align-content: center; padding: 4px 0; }
 .lote__name { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--caramel-700); }
 .lote__strict { padding: 2px 8px; border-radius: 4px; background: var(--down-bg); color: var(--down); font-size: 0.65rem; font-style: normal; letter-spacing: 0.06em; }
@@ -632,6 +635,7 @@ button { cursor: pointer; }
 /* --- Nuevo Futuro: cuadrícula 2×2 de grupos con cajas claras --- */
 .poster-groups { position: relative; display: grid; gap: 14px; margin-top: 18px; }
 .poster-group { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+.poster-group__mark { display: none; }
 .poster-group__name { margin-bottom: 10px; font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; }
 .poster-group__tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
@@ -915,8 +919,28 @@ html[data-vt] .page, html[data-vt] .status-screen, html[data-vt] .notfound__inne
   .share-bar { top: 64px; }
   .share-bar__back span { display: none; }
   .share-bar__back { padding: 0 14px; }
-  .share-bar__actions { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }
-  .share-bar__actions .btn { padding: 0 8px; gap: 6px; font-size: 0.85rem; min-width: 0; }
+  /* Marca de agua del afiche: centrada y dimensionada por ancho, para que se vea completa (el contenedor de lotes es muy alto en móvil). */
+  .poster__watermark { inset: 0; display: flex; align-items: center; justify-content: center; }
+  .poster__watermark img { height: auto; width: 80%; margin: 0; }
+  /* Valkiria en móvil: cada lote lleva su propia marca de agua (como las tarjetas USD y café) en lugar de una sola grande. */
+  .poster--valkiria .poster__watermark { display: none; }
+  .poster--valkiria .lote { position: relative; overflow: hidden; }
+  .poster--valkiria .lote__mark { display: block; position: absolute; z-index: 0; left: 50%; top: 50%; width: 64%; height: auto; transform: translate(-50%, -50%); pointer-events: none; }
+  .poster--valkiria .lote > *:not(.lote__mark) { position: relative; z-index: 1; }
+  /* Nuevo Futuro en móvil: lo mismo, una marca de agua por grupo (Estándar, Convencional, Orgánico, Taza). */
+  .poster--nuevo .poster__watermark { display: none; }
+  .poster--nuevo .poster-group { position: relative; overflow: hidden; }
+  .poster--nuevo .poster-group__mark { display: block; position: absolute; z-index: 0; left: 50%; top: 50%; height: 100%; width: auto; max-width: none; transform: translate(-50%, -50%); pointer-events: none; }
+  .poster--nuevo .poster-group > *:not(.poster-group__mark) { position: relative; z-index: 1; }
+  /* Tarjetas USD y café del afiche: la marca de agua centrada, completa y más visible (antes quedaba tenue y cortada). */
+  .poster .market-card__mark { left: 50%; width: 80%; transform: translate(-50%, -50%); opacity: 1; }
+  .share-bar { padding: 10px 12px; gap: 8px 10px; }
+  .share-bar__info { overflow: hidden; }
+  .share-bar__info > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* Acciones en columnas iguales con el icono sobre la etiqueta: caben "Descargando…" y "Descargada" sin cortarse y el toque es cómodo. */
+  .share-bar__actions { grid-auto-flow: row; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 6px; }
+  .share-bar__actions .btn { flex-direction: column; gap: 4px; min-width: 0; min-height: 56px; padding: 6px 4px; border-radius: 16px; font-size: 0.75rem !important; line-height: 1.15; white-space: normal; text-align: center; }
+  .share-bar__actions .btn .bx { font-size: 1.4rem; }
   .page-header__actions { width: 100%; }
   .page-header__actions .btn { flex: 1; }
 }
