@@ -35,7 +35,7 @@ function IndicatorPanel({ data }) {
         }}
         note="Valores en COP."
         href="https://es.investing.com/currencies/usd-cop"
-        aside={<MarketSource info={meta?.dolar} />}
+        aside={<MarketSource info={meta?.dolar} consultadoEn={meta?.consultadoEn} />}
       >
         <MarketStatus open={indicadorDolar.clock === "positivo"} />
       </MarketCard>
@@ -51,7 +51,7 @@ function IndicatorPanel({ data }) {
         }}
         note="Centavos de USD por libra."
         href="https://es.investing.com/commodities/us-coffee-c"
-        aside={<MarketSource info={meta?.cafe} />}
+        aside={<MarketSource info={meta?.cafe} consultadoEn={meta?.consultadoEn} />}
       >
         <MarketStatus open={indicador.clock === "positivo"} />
       </MarketCard>
